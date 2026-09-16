@@ -1,0 +1,245 @@
+Кросскомпиляция qtcreator aarch64
+
+
+Если нужно собирать Qt-приложения под Linux AArch64 из Qt Creator, сам Qt Creator обычно не кросскомпилируют. На x86_64-хосте устанавливаются:
+
+кросс-компилятор aarch64-linux-gnu-gcc/g++;
+sysroot целевого устройства;
+версия Qt, собранная под AArch64;
+kit в Qt Creator.
+Ниже пример для Ubuntu/Debian → Linux ARM64.
+
+1. Установите инструменты
+bash
+
+
+sudo apt update
+sudo apt install build-essential cmake ninja-build git rsync ssh \
+    gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+Проверьте компилятор:
+
+bash
+
+
+aarch64-linux-gnu-gcc --version
+Официальный пример Qt также использует пакеты gcc-aarch64-linux-gnu и g++-aarch64-linux-gnu. 
+qt.io
+
+2. Создайте sysroot с целевого устройства
+На целевом ARM64-устройстве должен быть установлен SSH-сервер. На хосте:
+
+bash
+
+
+mkdir -p ~/sysroots/target/{lib,usr,opt}
+
+rsync -avz --delete user@TARGET_IP:/lib/ \
+    ~/sysroots/target/lib/
+
+rsync -avz --delete user@TARGET_IP:/usr/include/ \
+    ~/sysroots/target/usr/include/
+
+rsync -avz --delete user@TARGET_IP:/usr/lib/ \
+    ~/sysroots/target/usr/lib/
+
+rsync -avz --delete user@TARGET_IP:/opt/ \
+    ~/sysroots/target/opt/
+Замените user@TARGET_IP на пользователя и IP ARM-устройства. Такой sysroot должен содержать заголовки и библиотеки именно той ОС, на которой будет запускаться приложение. 
+qt.io
+
+Чтобы исправить абсолютные символические ссылки внутри sysroot:
+
+bash
+
+
+sudo apt install symlinks
+symlinks -rc ~/sysroots/target
+3. Создайте CMake toolchain-файл
+Файл ~/toolchains/aarch64-linux.cmake:
+
+cmake
+
+
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)
+
+set(CMAKE_SYSROOT "$ENV{HOME}/sysroots/target")
+
+set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+set(CMAKE_ASM_COMPILER aarch64-linux-gnu-gcc)
+
+set(CMAKE_FIND_ROOT_PATH
+    "${CMAKE_SYSROOT}"
+)
+
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+
+set(CMAKE_EXE_LINKER_FLAGS
+    "--sysroot=${CMAKE_SYSROOT}"
+)
+Если в sysroot используются библиотеки с абсолютными путями, иногда дополнительно требуется:
+
+cmake
+
+
+set(CMAKE_C_FLAGS
+    "--sysroot=${CMAKE_SYSROOT}"
+)
+
+set(CMAKE_CXX_FLAGS
+    "--sysroot=${CMAKE_SYSROOT}"
+)
+4. Соберите Qt под AArch64
+Для Qt 6 потребуется исходный код Qt и зависимости. Общая схема:
+
+bash
+
+
+mkdir -p ~/build/qt-aarch64
+cd ~/build/qt-aarch64
+
+/path/to/qt-source/configure \
+    -release \
+    -opensource \
+    -confirm-license \
+    -prefix /opt/qt6-aarch64 \
+    -extprefix "$HOME/qt6-aarch64" \
+    -sysroot "$HOME/sysroots/target" \
+    -qt-host-path "$HOME/Qt/6.x.x/gcc_64" \
+    -submodules qtbase,qtdeclarative \
+    -nomake examples \
+    -nomake tests \
+    -cmake-generator Ninja
+Затем:
+
+bash
+
+
+cmake --build . --parallel
+cmake --install .
+Названия параметров могут отличаться между версиями Qt. Для Qt 6 важно использовать Qt host tools той же версии, что и собираемый Qt.
+
+Если Qt под AArch64 уже установлен на устройстве, например в /opt/qt6, его можно скопировать на хост:
+
+bash
+
+
+rsync -avz user@TARGET_IP:/opt/qt6/ ~/qt6-aarch64/
+5. Настройте Qt Creator
+Откройте:
+
+text
+
+
+Tools → Options → Kits
+Compilers
+Во вкладке Compilers добавьте:
+
+text
+
+
+C:   /usr/bin/aarch64-linux-gnu-gcc
+C++: /usr/bin/aarch64-linux-gnu-g++
+Qt Versions
+Во вкладке Qt Versions добавьте qmake для Qt 5 или qtpaths/CMake-конфигурацию для Qt 6.
+
+Например:
+
+text
+
+
+~/qt6-aarch64/bin/qtpaths
+Если Qt Creator требует qmake, укажите:
+
+text
+
+
+~/qt5-aarch64/bin/qmake
+Devices
+Во вкладке Devices добавьте:
+
+text
+
+
+Generic Linux Device
+Укажите:
+
+IP-адрес ARM-устройства;
+имя пользователя;
+SSH-ключ.
+Qt Creator умеет проверять SSH-подключение и использовать устройство для деплоя приложения. 
+qt.io
+
+Kits
+Создайте новый kit:
+
+text
+
+
+Device type: Generic Linux Device
+Device:      ваше ARM64-устройство
+C compiler:  aarch64-linux-gnu-gcc
+C++ compiler:aarch64-linux-gnu-g++
+Qt version:  Qt под AArch64
+В настройках CMake добавьте:
+
+text
+
+
+-DCMAKE_TOOLCHAIN_FILE:FILEPATH=/home/USER/toolchains/aarch64-linux.cmake
+Для Qt 6 также может понадобиться:
+
+text
+
+
+-DQT_HOST_PATH=/home/USER/Qt/6.x.x/gcc_64
+Пример официальной настройки Qt Creator для ARM64 включает добавление кросс-компилятора, Qt-версии, Generic Linux Device и qt.toolchain.cmake в настройках CMake. 
+qt.io
+
+6. Проверьте сборку вручную
+Создайте простой проект и выполните:
+
+bash
+
+
+cmake -S . -B build \
+    -G Ninja \
+    -DCMAKE_TOOLCHAIN_FILE=$HOME/toolchains/aarch64-linux.cmake
+
+cmake --build build
+file build/my_app
+Ожидаемый результат:
+
+text
+
+
+ELF 64-bit LSB pie executable, ARM aarch64
+Если программа собирается, но не запускается, проверьте на устройстве:
+
+bash
+
+
+ldd ./my_app
+Частые причины ошибок:
+
+sysroot взят от другой версии ОС;
+отсутствуют библиотеки Qt на устройстве;
+не совпадают glibc или архитектура;
+Qt собран с xcb, eglfs или wayland, которых нет на целевой системе;
+отсутствует LD_LIBRARY_PATH.
+Например:
+
+bash
+
+
+export LD_LIBRARY_PATH=/opt/qt6/lib:$LD_LIBRARY_PATH
+./my_app
+Для Raspberry Pi и похожих устройств Qt 6 обычно собирают с sysroot, полученным через rsync, а в Qt Creator используют отдельный ARM64 kit и Generic Linux Device. 
+qt.io
+
+
+
