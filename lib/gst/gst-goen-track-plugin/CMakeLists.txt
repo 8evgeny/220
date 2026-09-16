@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(libgoentrack)
 set(CMAKE_CXX_STANDARD 17)
-
+set(OpenCV_DIR $ENV{HOME}/opencv/install_4_7_0_contrib)
 find_package(OpenCL REQUIRED )
-find_package(OpenCV REQUIRED)
+find_package(OpenCV REQUIRED PATHS ${OpenCV_DIR} NO_DEFAULT_PATH)
 
 set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компиляции.
 
@@ -54,7 +54,8 @@ set(OpenCV_DIR "/usr/include/opencv4")
 
 list(APPEND CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/opencv4")
 find_package(OpenCL REQUIRED )
-find_package(OpenCV REQUIRED   )
+set(OpenCV_DIR $ENV{HOME}/opencv/install_4_7_0_contrib)
+find_package(OpenCV REQUIRED PATHS ${OpenCV_DIR} NO_DEFAULT_PATH)
 
 #set(OpenCV_INCLUDE_DIRS   "/usr/include/opencv4")
 message(STATUS "Found OpenCV: ${OpenCV_VERSION}")
@@ -241,7 +242,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${OpenCV_INCLUDE_DIRS}
 )
 
-link_directories("/media/user/WORK/Github/Sublime_tests/Current/goen_220/lib/gst/gst-goen-track-plugin/lib")
+link_directories("/home/khadas/QtProg/220/lib/gst/gst-goen-track-plugin/lib")
 
 target_link_libraries(${PROJECT_NAME}
     ${OpenCV_LIBS}
@@ -250,14 +251,14 @@ target_link_libraries(${PROJECT_NAME}
     ${GSTVIDEO_LIBRARY}
     ${LIBGIO_LIBRARY}
     ${LIBDBUS_LIBRARY}
-    -L"/media/user/WORK/Github/Sublime_tests/Current/goen_220/prebuild/"${trac_lib_name}
+    -L"/home/khadas/QtProg/220/prebuild/"${trac_lib_name}
 )
 
 message(" OCV " ${OpenCV_INCLUDE_DIRS} " LIB:"    ${OpenCV_LIBS})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY "/media/user/WORK/Github/Sublime_tests/Current/goen_220/Debug/gst"
+    LIBRARY_OUTPUT_DIRECTORY "/home/khadas/QtProg/220/Debug/gst"
 )
 
 include(GNUInstallDirs)

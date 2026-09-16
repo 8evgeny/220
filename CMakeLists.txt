@@ -12,6 +12,8 @@ set( GYRO_PLATFORM_HOST_ENABLE true)
 
 add_compile_options(-fopenmp )
 
+set(OpenCV_DIR $ENV{HOME}/opencv/install_4_7_0_contrib)
+
 find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network DBus
     PATHS "${CMAKE_PREFIX_PATH}"
     NO_DEFAULT_PATHcd 
@@ -19,7 +21,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network DBus
 )
 
 find_package(OpenMP REQUIRED   )
-find_package(OpenCV REQUIRED)
+find_package(OpenCV REQUIRED PATHS ${OpenCV_DIR} NO_DEFAULT_PATH)
 
 #set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компиляции.
 

@@ -1,0 +1,1394 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "qgst-goen220"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"install",
+			"target_link_libraries",
+			"add_subdirectory",
+			"set_target_properties",
+			"include",
+			"find_package",
+			"find_dependency",
+			"_qt_internal_find_qt_dependencies",
+			"set_property",
+			"_qt_internal_find_third_party_dependencies",
+			"add_compile_options",
+			"add_definitions",
+			"add_compile_definitions",
+			"include_directories",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"app/CMakeLists.txt",
+			"CMakeLists.txt",
+			"lib/gsp/Goen220GyroPlatformHost/CMakeLists.txt",
+			"lib/gsp/Goen220Vdb/CMakeLists.txt",
+			"/usr/lib/aarch64-linux-gnu/cmake/Qt6Gui/Qt6GuiVersionlessTargets.cmake",
+			"/usr/lib/aarch64-linux-gnu/cmake/Qt6Gui/Qt6GuiConfig.cmake",
+			"/usr/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake",
+			"/usr/lib/aarch64-linux-gnu/cmake/Qt6/QtPublicDependencyHelpers.cmake",
+			"/usr/lib/aarch64-linux-gnu/cmake/Qt6StateMachine/Qt6StateMachineDependencies.cmake",
+			"/usr/lib/aarch64-linux-gnu/cmake/Qt6StateMachine/Qt6StateMachineConfig.cmake",
+			"/usr/lib/aarch64-linux-gnu/cmake/Qt6/Qt6Config.cmake",
+			"/usr/share/cmake-3.28/Modules/FindOpenGL.cmake",
+			"/usr/lib/aarch64-linux-gnu/cmake/Qt6/FindWrapOpenGL.cmake",
+			"/usr/lib/aarch64-linux-gnu/cmake/Qt6Gui/Qt6GuiDependencies.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 192,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 317,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 256,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 42,
+				"parent" : 4
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 147,
+				"parent" : 6
+			},
+			{
+				"file" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 3,
+				"line" : 101,
+				"parent" : 8
+			},
+			{
+				"command" : 6,
+				"file" : 3,
+				"line" : 18,
+				"parent" : 8
+			},
+			{
+				"file" : 10,
+				"parent" : 10
+			},
+			{
+				"command" : 6,
+				"file" : 10,
+				"line" : 167,
+				"parent" : 11
+			},
+			{
+				"file" : 9,
+				"parent" : 12
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 50,
+				"parent" : 13
+			},
+			{
+				"file" : 8,
+				"parent" : 14
+			},
+			{
+				"command" : 8,
+				"file" : 8,
+				"line" : 39,
+				"parent" : 15
+			},
+			{
+				"command" : 7,
+				"file" : 7,
+				"line" : 108,
+				"parent" : 16
+			},
+			{
+				"command" : 6,
+				"file" : 6,
+				"line" : 76,
+				"parent" : 17
+			},
+			{
+				"file" : 5,
+				"parent" : 18
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 65,
+				"parent" : 19
+			},
+			{
+				"file" : 4,
+				"parent" : 20
+			},
+			{
+				"command" : 4,
+				"file" : 4,
+				"line" : 71,
+				"parent" : 21
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 50,
+				"parent" : 19
+			},
+			{
+				"file" : 13,
+				"parent" : 23
+			},
+			{
+				"command" : 10,
+				"file" : 13,
+				"line" : 30,
+				"parent" : 24
+			},
+			{
+				"command" : 7,
+				"file" : 7,
+				"line" : 33,
+				"parent" : 25
+			},
+			{
+				"command" : 6,
+				"file" : 6,
+				"line" : 76,
+				"parent" : 26
+			},
+			{
+				"file" : 12,
+				"parent" : 27
+			},
+			{
+				"command" : 6,
+				"file" : 12,
+				"line" : 10,
+				"parent" : 28
+			},
+			{
+				"file" : 11,
+				"parent" : 29
+			},
+			{
+				"command" : 9,
+				"file" : 11,
+				"line" : 673,
+				"parent" : 30
+			},
+			{
+				"command" : 4,
+				"file" : 11,
+				"line" : 671,
+				"parent" : 30
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 159,
+				"parent" : 6
+			},
+			{
+				"command" : 6,
+				"file" : 2,
+				"line" : 47,
+				"parent" : 6
+			},
+			{
+				"file" : 10,
+				"parent" : 34
+			},
+			{
+				"command" : 6,
+				"file" : 10,
+				"line" : 167,
+				"parent" : 35
+			},
+			{
+				"file" : 9,
+				"parent" : 36
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 50,
+				"parent" : 37
+			},
+			{
+				"file" : 8,
+				"parent" : 38
+			},
+			{
+				"command" : 8,
+				"file" : 8,
+				"line" : 39,
+				"parent" : 39
+			},
+			{
+				"command" : 7,
+				"file" : 7,
+				"line" : 108,
+				"parent" : 40
+			},
+			{
+				"command" : 6,
+				"file" : 6,
+				"line" : 76,
+				"parent" : 41
+			},
+			{
+				"file" : 5,
+				"parent" : 42
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 65,
+				"parent" : 43
+			},
+			{
+				"file" : 4,
+				"parent" : 44
+			},
+			{
+				"command" : 4,
+				"file" : 4,
+				"line" : 71,
+				"parent" : 45
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 50,
+				"parent" : 43
+			},
+			{
+				"file" : 13,
+				"parent" : 47
+			},
+			{
+				"command" : 10,
+				"file" : 13,
+				"line" : 30,
+				"parent" : 48
+			},
+			{
+				"command" : 7,
+				"file" : 7,
+				"line" : 33,
+				"parent" : 49
+			},
+			{
+				"command" : 6,
+				"file" : 6,
+				"line" : 76,
+				"parent" : 50
+			},
+			{
+				"file" : 12,
+				"parent" : 51
+			},
+			{
+				"command" : 6,
+				"file" : 12,
+				"line" : 10,
+				"parent" : 52
+			},
+			{
+				"file" : 11,
+				"parent" : 53
+			},
+			{
+				"command" : 9,
+				"file" : 11,
+				"line" : 673,
+				"parent" : 54
+			},
+			{
+				"command" : 4,
+				"file" : 11,
+				"line" : 671,
+				"parent" : 54
+			},
+			{
+				"command" : 11,
+				"file" : 1,
+				"line" : 13,
+				"parent" : 4
+			},
+			{
+				"command" : 12,
+				"file" : 0,
+				"line" : 132,
+				"parent" : 0
+			},
+			{
+				"command" : 13,
+				"file" : 1,
+				"line" : 29,
+				"parent" : 4
+			},
+			{
+				"command" : 12,
+				"file" : 0,
+				"line" : 165,
+				"parent" : 0
+			},
+			{
+				"command" : 12,
+				"file" : 0,
+				"line" : 168,
+				"parent" : 0
+			},
+			{
+				"command" : 12,
+				"file" : 0,
+				"line" : 169,
+				"parent" : 0
+			},
+			{
+				"command" : 14,
+				"file" : 1,
+				"line" : 34,
+				"parent" : 4
+			},
+			{
+				"command" : 14,
+				"file" : 0,
+				"line" : 114,
+				"parent" : 0
+			},
+			{
+				"command" : 15,
+				"file" : 0,
+				"line" : 243,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-DQT_QML_DEBUG -g -std=gnu++20 -fdiagnostics-color=always"
+				},
+				{
+					"backtrace" : 57,
+					"fragment" : "-fopenmp"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fopenmp"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 58,
+					"define" : "CCM_8UC3"
+				},
+				{
+					"backtrace" : 59,
+					"define" : "GYRO_PLATFORM_HOST"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_CORE_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_DBUS_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_NETWORK_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_SERIALPORT_LIB"
+				},
+				{
+					"backtrace" : 60,
+					"define" : "USE_CL"
+				},
+				{
+					"backtrace" : 61,
+					"define" : "class_name=trac_tmml"
+				},
+				{
+					"backtrace" : 62,
+					"define" : "create_name=create_track"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"path" : "/home/khadas/QtProg/220/Debug/app"
+				},
+				{
+					"path" : "/home/khadas/QtProg/220/app"
+				},
+				{
+					"backtrace" : 0,
+					"path" : "/home/khadas/QtProg/220/Debug/app/qgst-goen220_autogen/include"
+				},
+				{
+					"backtrace" : 63,
+					"path" : "/home/khadas/QtProg/220/prebuild"
+				},
+				{
+					"backtrace" : 63,
+					"path" : "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+				},
+				{
+					"backtrace" : 64,
+					"path" : "/home/khadas/QtProg/220/app/$CMAKE_SOURCE_DIR}"
+				},
+				{
+					"backtrace" : 65,
+					"path" : "/usr/include/gstreamer-1.0"
+				},
+				{
+					"backtrace" : 65,
+					"path" : "/usr/include/glib-2.0"
+				},
+				{
+					"backtrace" : 65,
+					"path" : "/usr/lib/aarch64-linux-gnu/glib-2.0/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/khadas/QtProg/220/lib/gsp/Goen220GyroPlatformHost/include"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/usr/include/aarch64-linux-gnu/qt6/QtCore"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/usr/include/aarch64-linux-gnu/qt6"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/usr/lib/aarch64-linux-gnu/qt6/mkspecs/linux-g++"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/usr/include/aarch64-linux-gnu/qt6/QtNetwork"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/usr/include/aarch64-linux-gnu/qt6/QtDBus"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/usr/include/aarch64-linux-gnu/qt6/QtSerialPort"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/khadas/opencv/install_4_7_0_contrib/include/opencv4"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					3,
+					3,
+					3
+				],
+				"standard" : "20"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				4,
+				6,
+				8,
+				10,
+				12,
+				14,
+				16,
+				18,
+				20,
+				22,
+				24,
+				26,
+				27,
+				29,
+				31,
+				33,
+				36,
+				37,
+				39,
+				41,
+				43
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "Goen220Vdb::@73e52c1eccf86e964046"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "Goen220GyroPlatformHost::@02af3b5a86ba2dba43e7"
+		},
+		{
+			"id" : "qgst-goen220_autogen_timestamp_deps::@5f5a17c01335469806cb"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "qgst-goen220_autogen::@5f5a17c01335469806cb"
+		}
+	],
+	"id" : "qgst-goen220::@5f5a17c01335469806cb",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "bin"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/home/khadas/QtProg/220/Debug"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-DQT_QML_DEBUG -g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/home/khadas/opencv/install_4_7_0_contrib/lib:",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6DBus.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libOpenCL.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libOpenCL.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_gapi.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_stitching.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_aruco.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_barcode.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_bgsegm.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_bioinspired.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_ccalib.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_cvv.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_dnn_objdetect.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_dnn_superres.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_dpm.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_face.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_fuzzy.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_hfs.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_img_hash.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_intensity_transform.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_line_descriptor.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_mcc.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_quality.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_rapid.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_reg.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_rgbd.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_saliency.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_stereo.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_structured_light.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_superres.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_surface_matching.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_tracking.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_videostab.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_wechat_qrcode.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_xfeatures2d.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_xobjdetect.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_xphoto.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libgstreamer-1.0.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libglib-2.0.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libdbus-1.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libgobject-2.0.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-L\"/home/khadas/QtProg/220/Debug/gst\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lfpsmonitor",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-L\"/home/khadas/QtProg/220/Debug/gst\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lgoentrack",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-L\"/home/khadas/QtProg/220/prebuild/gst/lib_trac_tmml_8_CL.so\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "../lib/gsp/Goen220GyroPlatformHost/libGoen220GyroPlatformHost.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "/usr/lib/gcc/aarch64-linux-gnu/13/libgomp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libpthread.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_shape.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_highgui.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_datasets.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_plot.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_text.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_ml.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_phase_unwrapping.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_optflow.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_ximgproc.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_video.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_videoio.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_imgcodecs.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_objdetect.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_calib3d.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_dnn.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_features2d.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_flann.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_photo.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_imgproc.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/khadas/opencv/install_4_7_0_contrib/lib/libopencv_core.so.4.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "../lib/gsp/Goen220Vdb/libGoen220Vdb.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6Network.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6SerialPort.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 9,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6Scxml.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 9,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6StateMachine.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 22,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6Gui.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 31,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libGLX.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 32,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libOpenGL.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 33,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6Scxml.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 33,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6StateMachine.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 46,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6Gui.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libQt6Core.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 55,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libGLX.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 56,
+				"fragment" : "/usr/lib/aarch64-linux-gnu/libOpenGL.so",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX",
+		"sysroot" : 
+		{
+			"path" : ""
+		}
+	},
+	"name" : "qgst-goen220",
+	"nameOnDisk" : "qgst-goen220",
+	"paths" : 
+	{
+		"build" : "app",
+		"source" : "app"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				4,
+				6,
+				8,
+				10,
+				12,
+				14,
+				16,
+				18,
+				20,
+				22,
+				24,
+				26,
+				27,
+				29,
+				31,
+				33,
+				36,
+				37,
+				39,
+				41,
+				43
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				3,
+				5,
+				7,
+				9,
+				11,
+				13,
+				15,
+				17,
+				19,
+				21,
+				23,
+				25,
+				28,
+				30,
+				32,
+				34,
+				35,
+				38,
+				40,
+				42,
+				44,
+				45
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				46
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				47
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "Debug/app/qgst-goen220_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/main.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/cmd_parser.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/cmd_parser.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/main_app.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/main_app.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/network.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/network.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/settingsmanager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/settingsmanager.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/telemetry.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/telemetry.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ldc20i/ldc20i_controller.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ldc20i/ldc20i_controller.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ldc20i/ldc20i_qserial.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ldc20i/ldc20i_qserial.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ldc20i/ldc20i_worker.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ldc20i/ldc20i_worker.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/mini640/mini640_controller.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/mini640/mini640_controller.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/mini640/mini640_qserial.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/mini640/mini640_qserial.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/mini640/mini640_worker.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/mini640/mini640_worker.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ev9500m/visca/libvisca.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ev9500m/visca/libvisca.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ev9500m/visca/libvisca_posix.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ev9500m/camera_ev9500m.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ev9500m/camera_ev9500m.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ev9500m/camera_ev9500m_worker.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ev9500m/camera_ev9500m_worker.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/j200/lens_j200.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/j200/lens_j200.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/j200/lens_j200_controller.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/j200/lens_j200_controller.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/j200/lens_j200_wrapper.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/j200/lens_j200_wrapper.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/gst_wrapper.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/gst_wrapper.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/j200/lens_j200_worker.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/j200/lens_j200_worker.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/gpf/GyroPlatformHandler.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/gpf/GyroPlatformHandler.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/gpf/Pid.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/gpf/Pid.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/vdb_registers.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "Debug/app/qgst-goen220_autogen/timestamp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "Debug/app/qgst-goen220_autogen/timestamp.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "EXECUTABLE"
+}

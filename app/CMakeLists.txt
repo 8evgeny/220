@@ -13,7 +13,7 @@ set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компи
 
 #add_compile_options(-fopenmp )
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core LinguistTools)
+find_package(QT NAMES Qt6 #[[Qt5]] REQUIRED COMPONENTS Core LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core LinguistTools)
 
 find_package(Qt6 REQUIRED COMPONENTS Network)
@@ -119,8 +119,8 @@ endif() # END if(${USE_GPU} EQUAL 2)
 
 set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компиляции.
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/media/user/WORK/Github/Sublime_tests/Current/goen_220/Debug") # директория сборки проекта
-#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "/media/user/WORK/Github/Sublime_tests/Current/goen_220/lib")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/home/khadas/QtProg/220/Debug") # директория сборки проекта
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "/home/khadas/QtProg/220/lib")
 
 set(LIST_VALID_COLOR_CHANNEL_MODES 8UC1 8UC2 8UC3 8UC4)
 
@@ -264,9 +264,10 @@ target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
     ${GLIB_LIBRARY}
     ${LIBDBUS_LIBRARY}
     ${LIBGOBJECT_LIBRARY}
-    -L"/media/user/WORK/Github/Sublime_tests/Current/goen_220/Debug/gst"  -lfpsmonitor
-    -L"/media/user/WORK/Github/Sublime_tests/Current/goen_220/Debug/gst"  -lgoentrack
-    -L"/media/user/WORK/Github/Sublime_tests/Current/goen_220/prebuild/gst"  ${trac_lib_name}
+    -L"/home/khadas/QtProg/220/Debug/gst/libfpsmonitor.so"
+    -L"/home/khadas/QtProg/220/Debug/gst/libgoentrack.so"
+    # -L"/home/khadas/QtProg/220/prebuild/gst"  ${trac_lib_name}
+    -L"/home/khadas/QtProg/220/prebuild/gst/lib_trac_tmml_8_CL.so"
 
     ${GYRO_PLATFORM_HOST_LIB_NAME}
 )

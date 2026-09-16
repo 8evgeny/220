@@ -1,0 +1,288 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "lib/gst/gst-goen-fps-mon-plugin",
+					"jsonFile" : "directory-lib.gst.gst-goen-fps-mon-plugin-Debug-f9667a308fb00aaac162.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "lib/gst/gst-goen-fps-mon-plugin",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "lib/gst/gst-goen-track-plugin",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-lib.gst.gst-goen-track-plugin-Debug-19a00d745f6f6ea96df6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "lib/gst/gst-goen-track-plugin",
+					"targetIndexes" : 
+					[
+						7
+					]
+				},
+				{
+					"build" : "app",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-app-Debug-ac2800f51f42859738f4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "app",
+					"targetIndexes" : 
+					[
+						8,
+						9,
+						10
+					]
+				},
+				{
+					"build" : "lib/gsp/Goen220Vdb",
+					"jsonFile" : "directory-lib.gsp.Goen220Vdb-Debug-8abbbef16c9677443cb8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "lib/gsp/Goen220Vdb",
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"build" : "lib/gsp/Goen220GyroPlatformHost",
+					"jsonFile" : "directory-lib.gsp.Goen220GyroPlatformHost-Debug-a908e01238b7d132b456.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "lib/gsp/Goen220GyroPlatformHost",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "qgst-goen220-daemon"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "libfpsmonitor",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "libgoentrack",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						7
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "qgst-goen220",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						8,
+						9,
+						10
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "Goen220Vdb",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "Goen220GyroPlatformHost",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 5,
+					"id" : "Goen220GyroPlatformHost::@02af3b5a86ba2dba43e7",
+					"jsonFile" : "target-Goen220GyroPlatformHost-Debug-1e6a34516d08d4f90837.json",
+					"name" : "Goen220GyroPlatformHost",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "Goen220GyroPlatformHost_autogen::@02af3b5a86ba2dba43e7",
+					"jsonFile" : "target-Goen220GyroPlatformHost_autogen-Debug-36bcc4273e9a898fd2e6.json",
+					"name" : "Goen220GyroPlatformHost_autogen",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "Goen220GyroPlatformHost_autogen_timestamp_deps::@02af3b5a86ba2dba43e7",
+					"jsonFile" : "target-Goen220GyroPlatformHost_autogen_timestamp_deps-Debug-2c572324e0f911d57031.json",
+					"name" : "Goen220GyroPlatformHost_autogen_timestamp_deps",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "Goen220Vdb::@73e52c1eccf86e964046",
+					"jsonFile" : "target-Goen220Vdb-Debug-cfc4372fcf71f654a611.json",
+					"name" : "Goen220Vdb",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "Goen220Vdb_autogen::@73e52c1eccf86e964046",
+					"jsonFile" : "target-Goen220Vdb_autogen-Debug-947dfaacfed1a18b5477.json",
+					"name" : "Goen220Vdb_autogen",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "Goen220Vdb_autogen_timestamp_deps::@73e52c1eccf86e964046",
+					"jsonFile" : "target-Goen220Vdb_autogen_timestamp_deps-Debug-cb89c47e7efcb61653bc.json",
+					"name" : "Goen220Vdb_autogen_timestamp_deps",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "libfpsmonitor::@d0c7915ed2d05c0b62e9",
+					"jsonFile" : "target-libfpsmonitor-Debug-28138fa7f2e379165fae.json",
+					"name" : "libfpsmonitor",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "libgoentrack::@4a344f8c026b6bc303d8",
+					"jsonFile" : "target-libgoentrack-Debug-cd10d5cb26592cf2119e.json",
+					"name" : "libgoentrack",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "qgst-goen220::@5f5a17c01335469806cb",
+					"jsonFile" : "target-qgst-goen220-Debug-ed956d615b5188731622.json",
+					"name" : "qgst-goen220",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "qgst-goen220_autogen::@5f5a17c01335469806cb",
+					"jsonFile" : "target-qgst-goen220_autogen-Debug-eaf368de4e29c05928bc.json",
+					"name" : "qgst-goen220_autogen",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "qgst-goen220_autogen_timestamp_deps::@5f5a17c01335469806cb",
+					"jsonFile" : "target-qgst-goen220_autogen_timestamp_deps-Debug-44a142f9cb5092179f15.json",
+					"name" : "qgst-goen220_autogen_timestamp_deps",
+					"projectIndex" : 3
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/khadas/QtProg/220/Debug",
+		"source" : "/home/khadas/QtProg/220"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
