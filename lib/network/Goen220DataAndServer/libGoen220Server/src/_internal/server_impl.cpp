@@ -165,7 +165,8 @@ int ServerImpl::lastErrorCode() const
 
 void ServerImpl::setListening(bool state)
 {
-    auto f = [this](bool state) {
+    auto f = [this, state]()
+    {
         if (state)
             m_tcp.start(m_tcpPort);
         else
@@ -173,19 +174,19 @@ void ServerImpl::setListening(bool state)
     };
 
     if (QThread::currentThread() == thread())
-        f(state);
+        f();
     else
-        QMetaObject::invokeMethod(this, f, Qt::QueuedConnection, state);
+        QMetaObject::invokeMethod(this, f, Qt::QueuedConnection);
 }
 
 void ServerImpl::setKeepAliveProcEnabled(bool state)
 {
-    auto f = [this](bool state) { m_tcp.setKeepAliveProcEnabled(state); };
+    auto f = [this, state]() { m_tcp.setKeepAliveProcEnabled(state); };
 
     if (QThread::currentThread() == thread())
-        f(state);
+        f();
     else
-        QMetaObject::invokeMethod(this, f, Qt::QueuedConnection, state);
+        QMetaObject::invokeMethod(this, f, Qt::QueuedConnection);
 }
 
 void ServerImpl::setTcpPort(quint16 port)
@@ -210,7 +211,7 @@ void ServerImpl::cmdAck(Cmd cmd, CmdAck ack)
             return;
 
         QByteArray ba(sizeof(TcpServer::VdpHeader), 0);
-        auto *h = (TcpServer::VdpHeader *) ba.data();
+        auto *h = reinterpret_cast<TcpServer::VdpHeader *>(ba.data());
         h->cmd = 0x80;            // set response
         h->status = (quint8) ack; // acknowledge
         h->src.function = (quint8) cmd;

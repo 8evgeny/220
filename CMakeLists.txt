@@ -41,7 +41,7 @@ include_directories(
  add_subdirectory( app)
 
 add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Data)
-# add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Server)
+add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Server)
 
 if(GYRO_PLATFORM_HOST_ENABLE)
     add_subdirectory( lib/gsp/Goen220Vdb)
