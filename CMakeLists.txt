@@ -32,7 +32,6 @@ endif()
 
 include_directories(
     "${CMAKE_CURRENT_LIST_DIR}/prebuild/"
-    "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
     )
 
  add_subdirectory( lib/gst/gst-goen-ircam-plugin)
