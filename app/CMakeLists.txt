@@ -177,7 +177,6 @@ if(${USE_GPU} EQUAL 2)
     endif() # END if(${USE_CORR_TYPE} EQUAL 10)
 endif() # END if(${USE_GPU} EQUAL 2)
 
-find_package(OpenCV REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS SerialPort)
 
 if( GYRO_PLATFORM_HOST_ENABLE)

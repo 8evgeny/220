@@ -1,11 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(libgray16togray8)
 set(CMAKE_CXX_STANDARD 17)
+
 find_package(OpenCL REQUIRED )
-find_package(OpenCV REQUIRED)
-
-set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компиляции.
-
 include_directories(${OpenCL_INCLUDE_DIRS})
 
 set(USE_CUDA_RESIZE_DEVICE_IMX219 0) # использование resize через cv::cuda на уровне device
@@ -15,11 +12,9 @@ set(OpenCV_DIR "/usr/include/opencv4")
 
 list(APPEND CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/opencv4")
 find_package(OpenCL REQUIRED )
-find_package(OpenCV REQUIRED   )
 
 find_package(OpenMP REQUIRED   )
 
-#set(OpenCV_INCLUDE_DIRS   "/usr/include/opencv4")
 message(STATUS "Found OpenCV: ${OpenCV_VERSION}")
 message(STATUS "OpenCV Libraries: ${OpenCV_LIBS}")
 

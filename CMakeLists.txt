@@ -22,8 +22,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network DBus
 
 find_package(OpenMP REQUIRED   )
 find_package(OpenCV REQUIRED PATHS ${OpenCV_DIR} NO_DEFAULT_PATH)
-
-#set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компиляции.
+find_package(OpenCL REQUIRED )
 
 if( GYRO_PLATFORM_HOST_ENABLE)
     add_compile_definitions( GYRO_PLATFORM_HOST)
@@ -36,8 +35,8 @@ include_directories(
     "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
     )
 
+ # add_subdirectory( lib/gst/gst-goen-ircam-plugin)
  add_subdirectory( lib/gst/gst-goen-fps-mon-plugin)
-# add_subdirectory( lib/gst/gst-goen-ircam-plugin)
  add_subdirectory( lib/gst/gst-goen-track-plugin)
  add_subdirectory( app)
 
