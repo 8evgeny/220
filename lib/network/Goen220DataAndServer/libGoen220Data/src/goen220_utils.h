@@ -152,15 +152,24 @@ public:
             (*this << v);
         } else if constexpr (std::is_fundamental_v<T>) {
             m_dr.append((const char *) &val, sizeof(T));
-        } else if constexpr (IsTuple<T>) {
-            constexpr auto N = std::tuple_size_v<T>;
-            [&]<std::size_t I = 0>() mutable {
-                if constexpr (I < N) {
-                    *this << std::get<I>(val);
-                    operator()<I+1>();
-                }
-            }();
-        } else {
+        // } else if constexpr (IsTuple<T>)
+        // {
+        //     constexpr auto N = std::tuple_size_v<T>;
+        //     [&]<std::size_t I = 0>() mutable
+        //     {
+        //         if constexpr (I < N) {
+        //             *this << std::get<I>(val);
+        //             operator()<I+1>();
+        //         }
+        //     }();
+        // }
+        }
+        else if constexpr (IsTuple<T>)
+        {
+            std::apply([this](const auto&... items) { ((*this << items), ...); }, val);
+        }
+        else
+        {
             Q_ASSERT_X(false, "Goen220::Utils::DataStream", "Unsupported data type");
         }
         return *this;
@@ -193,15 +202,21 @@ public:
                 throw std::out_of_range("pos out of range");
             val = *(const T*)(m_dr.constData() + m_pos);
             m_pos += sizeof(T);
-        } else if constexpr (IsTuple<T>) {
-            constexpr auto N = std::tuple_size_v<T>;
-            [&]<std::size_t I = 0>() mutable {
-                if constexpr (I < N) {
-                    *this >> std::get<I>(val);
-                    operator()<I+1>();
-                }
-            }();
-        } else {
+        }
+        // else if constexpr (IsTuple<T>) {
+        //     constexpr auto N = std::tuple_size_v<T>;
+        //     [&]<std::size_t I = 0>() mutable {
+        //         if constexpr (I < N) {
+        //             *this >> std::get<I>(val);
+        //             operator()<I+1>();
+        //         }
+        //     }();
+        else if constexpr (IsTuple<T>)
+        {
+            std::apply([this](const auto&... items) { ((*this << items), ...); }, val);
+        }
+        else
+        {
             Q_ASSERT_X(false, "Goen220::Utils::DataStream", "Unsupported data type");
         }
         return *this;
