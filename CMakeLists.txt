@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(qgst-goen220-daemon)
+project(qgst-goen220-daemon LANGUAGES CXX)
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/Debug")
 set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "" FORCE)

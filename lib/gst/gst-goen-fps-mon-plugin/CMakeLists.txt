@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(libfpsmonitor)
+project(libfpsmonitor LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 #include_directories(${OpenCL_INCLUDE_DIRS})
 

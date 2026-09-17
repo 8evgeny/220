@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(libgray16togray8)
+project(libgray16togray8 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(OpenCL REQUIRED )
@@ -95,8 +95,6 @@ add_library(${PROJECT_NAME} MODULE
     g16g8_ir.cpp
     g16g8_ir.h
 )
-
-file(GLOB TracShatsFiles "${CMAKE_CURRENT_LIST_DIR}/tracshats/*")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""

@@ -233,8 +233,6 @@ add_library(${PROJECT_NAME} MODULE
     gstgoentrack_cb.cpp
 )
 
-file(GLOB TracShatsFiles "${CMAKE_CURRENT_LIST_DIR}/tracshats/*")
-
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${GSTREAMER_INCLUDE_DIR}
     ${GLIB_INCLUDE_DIR}

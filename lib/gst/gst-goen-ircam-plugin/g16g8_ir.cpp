@@ -9,8 +9,8 @@ using float32_t = float;
 #include <fstream>
 #include <iostream>
 #include <gio/gio.h>
-//#include <arm_neon.h>
-//#include <omp.h>
+#include <arm_neon.h>
+#include <omp.h>
 #define PLUGIN_NAME "gray16togray8"
 
 #define GST_TYPE_GRAY16TOGRAY8 (Gray16ToGray8::get_type())

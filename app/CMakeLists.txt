@@ -245,10 +245,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${OCV_INCLUDE_DIR}
 )
 
-file(GLOB TracShatsFiles "${CMAKE_CURRENT_LIST_DIR}/tracshats/*")
-
-#message("---CMAKE_CURRENT_LIST_DIR:" ${CMAKE_CURRENT_LIST_DIR}/lib)
-
 link_directories(${CMAKE_CURRENT_LIST_DIR}/lib)
 
 target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
