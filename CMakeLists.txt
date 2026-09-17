@@ -40,7 +40,7 @@ include_directories(
  add_subdirectory( lib/gst/gst-goen-track-plugin)
  add_subdirectory( app)
 
-# add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Data)
+add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Data)
 # add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Server)
 
 if(GYRO_PLATFORM_HOST_ENABLE)

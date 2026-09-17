@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(libGoen220Server LANGUAGES CXX)
 
+add_compile_options(-fpermissive)
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
