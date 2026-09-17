@@ -264,10 +264,9 @@ target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
     ${GLIB_LIBRARY}
     ${LIBDBUS_LIBRARY}
     ${LIBGOBJECT_LIBRARY}
-    -L"/home/khadas/QtProg/220/Debug/gst/libfpsmonitor.so"
-    -L"/home/khadas/QtProg/220/Debug/gst/libgoentrack.so"
-    # -L"/home/khadas/QtProg/220/prebuild/gst"  ${trac_lib_name}
-    -L"/home/khadas/QtProg/220/prebuild/gst/lib_trac_tmml_8_CL.so"
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Debug/gst/libfpsmonitor.so
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Debug/gst/libgoentrack.so
+    ${CMAKE_CURRENT_SOURCE_DIR}/../prebuild/lib_trac_tmml_8_CL.so
 
     ${GYRO_PLATFORM_HOST_LIB_NAME}
 )
