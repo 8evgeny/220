@@ -1,28 +1,28 @@
 cmake_minimum_required(VERSION 3.10)
 project(libgray16togray8 LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
-find_package(OpenCL REQUIRED )
-include_directories(${OpenCL_INCLUDE_DIRS})
+# find_package(OpenCL REQUIRED )
+# include_directories(${OpenCL_INCLUDE_DIRS})
 
-set(USE_CUDA_RESIZE_DEVICE_IMX219 0) # использование resize через cv::cuda на уровне device
-set(SYSTEM_ENDIANNESS LITTLE) # системный порядок байтов LITTLE / BIG (зачастую LITTLE).
+# set(USE_CUDA_RESIZE_DEVICE_IMX219 0) # использование resize через cv::cuda на уровне device
+# set(SYSTEM_ENDIANNESS LITTLE) # системный порядок байтов LITTLE / BIG (зачастую LITTLE).
 
-set(OpenCV_DIR "/usr/include/opencv4")
+# set(OpenCV_DIR "/usr/include/opencv4")
 
-list(APPEND CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/opencv4")
-find_package(OpenCL REQUIRED )
+# list(APPEND CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/opencv4")
+# find_package(OpenCL REQUIRED )
 
-find_package(OpenMP REQUIRED   )
+# find_package(OpenMP REQUIRED   )
 
 message(STATUS "Found OpenCV: ${OpenCV_VERSION}")
 message(STATUS "OpenCV Libraries: ${OpenCV_LIBS}")
 
 # Enable NEON flags for ARM
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|ARM|aarch64|AARCH64")
-    add_compile_options(-mfpu=neon -mfloat-abi=hard)
-    message(STATUS "NEON flags enabled: -mfpu=neon -mfloat-abi=hard")
-endif()
+# if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|ARM|aarch64|AARCH64")
+#     add_compile_options(-mfpu=neon -mfloat-abi=hard)
+#     message(STATUS "NEON flags enabled: -mfpu=neon -mfloat-abi=hard")
+# endif()
 
 # GStreamer configuration
 find_path(GSTREAMER_INCLUDE_DIR gst/gst.h

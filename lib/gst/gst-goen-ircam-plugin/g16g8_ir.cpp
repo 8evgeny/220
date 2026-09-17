@@ -1,4 +1,3 @@
-using float32_t = float;
 #include <gst/gst.h>
 #include <gst/base/gstbasetransform.h>
 #include <gst/video/video.h> // For GstVideoFrame and GstVideoInfo

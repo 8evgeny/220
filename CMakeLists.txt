@@ -35,7 +35,7 @@ include_directories(
     "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
     )
 
- # add_subdirectory( lib/gst/gst-goen-ircam-plugin)
+ add_subdirectory( lib/gst/gst-goen-ircam-plugin)
  add_subdirectory( lib/gst/gst-goen-fps-mon-plugin)
  add_subdirectory( lib/gst/gst-goen-track-plugin)
  add_subdirectory( app)
