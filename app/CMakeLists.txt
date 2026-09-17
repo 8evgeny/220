@@ -118,8 +118,8 @@ endif() # END if(${USE_GPU} EQUAL 2)
 
 set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компиляции.
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/home/khadas/QtProg/220/Debug") # директория сборки проекта
-#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "/home/khadas/QtProg/220/lib")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Debug") # директория сборки проекта
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ""${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 
 set(LIST_VALID_COLOR_CHANNEL_MODES 8UC1 8UC2 8UC3 8UC4)
 

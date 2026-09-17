@@ -242,7 +242,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${OpenCV_INCLUDE_DIRS}
 )
 
-link_directories("/home/khadas/QtProg/220/lib/gst/gst-goen-track-plugin/lib")
+link_directories("${CMAKE_CURRENT_SOURCE_DIR}/lib")
 
 target_link_libraries(${PROJECT_NAME}
     ${OpenCV_LIBS}
@@ -251,7 +251,7 @@ target_link_libraries(${PROJECT_NAME}
     ${GSTVIDEO_LIBRARY}
     ${LIBGIO_LIBRARY}
     ${LIBDBUS_LIBRARY}
-    -L"/home/khadas/QtProg/220/prebuild/"${trac_lib_name}
+    # -L"/home/khadas/QtProg/220/prebuild/"${trac_lib_name}
 )
 
 message(" OCV " ${OpenCV_INCLUDE_DIRS} " LIB:"    ${OpenCV_LIBS})
