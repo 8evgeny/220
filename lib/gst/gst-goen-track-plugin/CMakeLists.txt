@@ -251,7 +251,6 @@ target_link_libraries(${PROJECT_NAME}
     ${GSTVIDEO_LIBRARY}
     ${LIBGIO_LIBRARY}
     ${LIBDBUS_LIBRARY}
-    # -L"/home/khadas/QtProg/220/prebuild/"${trac_lib_name}
 )
 
 message(" OCV " ${OpenCV_INCLUDE_DIRS} " LIB:"    ${OpenCV_LIBS})
