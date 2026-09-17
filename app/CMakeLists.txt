@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.16)
-
 project(qgst-goen220 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
@@ -267,10 +266,8 @@ target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
     ${CMAKE_CURRENT_SOURCE_DIR}/../Debug/gst/libfpsmonitor.so
     ${CMAKE_CURRENT_SOURCE_DIR}/../Debug/gst/libgoentrack.so
     ${CMAKE_CURRENT_SOURCE_DIR}/../prebuild/lib_trac_tmml_8_CL.so
-
     ${GYRO_PLATFORM_HOST_LIB_NAME}
 )
-#    -L"${CMAKE_BINARY_DIR}/../../build/gst/"  ${trac_lib_name}
 
 function(copy_qt_libraries target)
     # Get linked Qt libraries

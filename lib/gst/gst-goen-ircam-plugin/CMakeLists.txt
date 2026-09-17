@@ -105,7 +105,7 @@ file(GLOB TracShatsFiles "${CMAKE_CURRENT_LIST_DIR}/tracshats/*")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
-     LIBRARY_OUTPUT_DIRECTORY "/media/user/WORK/Github/Sublime_tests/Current/goen_220/Debug/gst"
+     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../../Debug/gst"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
