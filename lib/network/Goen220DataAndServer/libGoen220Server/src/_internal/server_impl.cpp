@@ -206,10 +206,10 @@ void ServerImpl::setTlmTransmissionIntervalMs(int ms)
 
 void ServerImpl::cmdAck(Cmd cmd, CmdAck ack)
 {
-    auto f = [this](Cmd cmd, CmdAck ack) {
+    auto f = [this, cmd, ack]
+    {
         if (m_client == nullptr)
             return;
-
         QByteArray ba(sizeof(TcpServer::VdpHeader), 0);
         auto *h = reinterpret_cast<TcpServer::VdpHeader *>(ba.data());
         h->cmd = 0x80;            // set response
@@ -225,9 +225,9 @@ void ServerImpl::cmdAck(Cmd cmd, CmdAck ack)
     };
 
     if (QThread::currentThread() == thread())
-        f(cmd, ack);
+        f();
     else
-        QMetaObject::invokeMethod(this, f, Qt::QueuedConnection, cmd, ack);
+        QMetaObject::invokeMethod(this, f, Qt::QueuedConnection);
 }
 
 } // namespace Server
