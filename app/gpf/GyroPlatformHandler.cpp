@@ -4,11 +4,8 @@
 #include "Goen220GyroPlatformHost.h"
 #include "Pid.h"
 
-
 #include <QDebug>
 #include <QTimer>
-
-
 
 GyroPlatformHandler::GyroPlatformHandler( Goen220GyroPlatformHost *const host, QObject *parent)
     : QObject( parent)
@@ -38,7 +35,6 @@ GyroPlatformHandler::GyroPlatformHandler( Goen220GyroPlatformHost *const host, Q
     initGyroPlatform();
 }
 
-
 GyroPlatformHandler::~GyroPlatformHandler()
 {
     if( m_pTimerForUpdateSpeed)
@@ -50,7 +46,6 @@ GyroPlatformHandler::~GyroPlatformHandler()
     if( m_pPidW)
         delete m_pPidW;
 }
-
 
 void GyroPlatformHandler::setDrivePositionMode( const bool zero, const bool pohod, const bool pilot, const bool park)
 {
@@ -95,7 +90,6 @@ void GyroPlatformHandler::setDrivePositionMode( const bool zero, const bool poho
 
     emit positionModeChanged( m_zero, m_pohod, m_pilot, m_park, m_stabilization);
 }
-
 
 void GyroPlatformHandler::setStabilization( const bool enable)
 {
@@ -163,7 +157,6 @@ void GyroPlatformHandler::setControlSpeed( const float z, const float x)
     }
 }
 
-
 void GyroPlatformHandler::setControlPositionRel( const float z, const float x)
 {
     if( m_pHost == nullptr)
@@ -182,7 +175,6 @@ void GyroPlatformHandler::setControlPositionAbs( const float z, const float x)
     qDebug() << Q_FUNC_INFO << z << x;
     m_pHost->setControlPosition( z, x);
 }
-
 
 void GyroPlatformHandler::turnOffMotors()
 {
