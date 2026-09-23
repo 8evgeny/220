@@ -8,11 +8,9 @@ LDC20I_Controller::LDC20I_Controller(QString port, quint32 baudrate, QObject *pa
    baudrate(baudrate),
    com(port,baudrate,this)
 {
-
-
-
     moveToThread(&thread);
-    connect(&thread, &QThread::started, this, [this]{
+    connect(&thread, &QThread::started, this, [this]
+    {
         crc7_generate_table();
 
         connect(this, &LDC20I_Controller::comInitConnection, &com, &LDC20I_QSerial::initConnection, Qt::QueuedConnection );
@@ -26,11 +24,7 @@ LDC20I_Controller::LDC20I_Controller(QString port, quint32 baudrate, QObject *pa
 
         connect(&com,&LDC20I_QSerial::dataParse, this, &LDC20I_Controller::proc_dataParse, Qt::QueuedConnection) ;
 
-
-
        // connect(&this, &LDC20I_QSerial::deviceConnected, this, &LDC20I_Controller::proc_deviceConnected, Qt::QueuedConnection );
-
-
 
         qDebug() << Q_FUNC_INFO << "LDC-20I QSerial thread id: " << QThread::currentThreadId();
 
@@ -41,18 +35,14 @@ LDC20I_Controller::LDC20I_Controller(QString port, quint32 baudrate, QObject *pa
 
         connect(m_NotificationTimer, &QTimer::timeout, this, &LDC20I_Controller::proc_timerUpdate);
         rolling_init(&rs);
-
     });
 
     QObject::connect(&thread, &QThread::finished, this, &LDC20I_Controller::proc_Thread_Finished);
 
     thread.start();
 
-
     //timer.start(200);
 }
-
-
 
 LDC20I_Controller::~LDC20I_Controller()
 {
@@ -66,10 +56,7 @@ void LDC20I_Controller::proc_Thread_Finished()
     qDebug() << Q_FUNC_INFO;
     m_NotificationTimer->stop();
     delete m_NotificationTimer;
-
 }
-
-
 
 void LDC20I_Controller::proc_timerUpdate()
 {
@@ -81,7 +68,6 @@ void LDC20I_Controller::proc_timerUpdate()
 
 void LDC20I_Controller::proc_deviceConnected()
 {
-
    emit comDeviceConnected();
 }
 bool  LDC20I_Controller::bufClear(int32_t* cycle_limit ){
@@ -95,7 +81,6 @@ bool  LDC20I_Controller::bufClear(int32_t* cycle_limit ){
             else
          return true;
 }
-
 
 void LDC20I_Controller::proc_dataParse(QByteArray ba)
 {
@@ -139,8 +124,6 @@ void LDC20I_Controller::proc_dataParse(QByteArray ba)
             else
                 if(bufClear(&cycle_limit)) break;
         }
-
-
     }
 #ifdef DEBUG_LOG
 
@@ -234,9 +217,7 @@ void LDC20I_Controller::proc_serialANS(QByteArray buf)
 #endif
         emit recieved_LDC_DS_ANS((LDC_ANS_enum)head->CMD, dev_state);
 
-
 }
-
 
 qint32 LDC20I_Controller::proc_initConnection()
 {
@@ -245,18 +226,12 @@ qint32 LDC20I_Controller::proc_initConnection()
     return 0;
 }
 
-
-
-
 qint32 LDC20I_Controller::proc_closeConnection()
 {
     qDebug() <<Q_FUNC_INFO << "Thread id:" << QThread::currentThreadId();;
     emit comCloseConnection();
     return 0;
 }
-
-
-
 
 void LDC20I_Controller::crc7_generate_table()
 {
@@ -277,11 +252,12 @@ void LDC20I_Controller::crc7_generate_table()
         }
     }
 }
+
 uint8_t LDC20I_Controller::crc7_calc(uint8_t crc, uint8_t data)
 {
     return crc7_table[(crc << 1) ^ data];
-
 }
+
 uint8_t LDC20I_Controller::crc7_calculate_buf(QByteArray message)
 {
     uint8_t i;
@@ -307,6 +283,7 @@ QByteArray LDC20I_Controller::pack_data(uint32_t data)
     return QByteArray(buf);
     ;
 }
+
 int32_t LDC20I_Controller::unpack_data(uint8_t * buf)
 {
     // получить число формата int32_t из последовательности байтов формата uint7_t
@@ -315,10 +292,6 @@ int32_t LDC20I_Controller::unpack_data(uint8_t * buf)
     data = (int32_t)((uint32_t)data << 4) >> 4;
     return data;
 }
-
-
-
-
 
 void LDC20I_Controller::measurementsDecode(MEASUREMENTS_LDC_RAW* raw)
 {
@@ -340,11 +313,6 @@ void LDC20I_Controller::measurementsDecode(MEASUREMENTS_LDC_RAW* raw)
     //return meas;
 }
 
-
-
-
-
-
 // Инициализация структуры
 void LDC20I_Controller:: rolling_init(RollingStats *rs) {
     rs->index = 0;
@@ -354,7 +322,8 @@ void LDC20I_Controller:: rolling_init(RollingStats *rs) {
 }
 
 // Обновление при поступлении одного нового значения дистанции
-void LDC20I_Controller:: rolling_update(RollingStats *rs, float new_value, float *mean, float *stddev) {
+void LDC20I_Controller:: rolling_update(RollingStats *rs, float new_value, float *mean, float *stddev)
+{
     // если окно заполнено — удаляем старое значение
     if (rs->count == WINDOW_SIZE) {
         float old = rs->buffer[rs->index];
@@ -378,7 +347,6 @@ void LDC20I_Controller:: rolling_update(RollingStats *rs, float new_value, float
     *stddev = sqrtf(variance > 0 ? variance : 0);
 }
 
-
 void LDC20I_Controller::distanceDecode(DISTANCE_LDC_RAW* raw)
 {
     auto dist = &dev_state.dist;
@@ -388,8 +356,6 @@ void LDC20I_Controller::distanceDecode(DISTANCE_LDC_RAW* raw)
     dist->distance = raw->distance*1.79;
 
     rolling_update(&rs, dist->distance,  &dist->distance_mean,  &dist->distance_stddev);
-
-
 }
 
 QByteArray LDC20I_Controller::createLDCSendBuf(LDC_HEAD_STR ldc_head, QByteArray ldc_data)
@@ -406,8 +372,6 @@ QByteArray LDC20I_Controller::createLDCSendBuf(LDC_HEAD_STR ldc_head, QByteArray
     ba.append(crc7);
     return ba;
 }
-
-
 
 void LDC20I_Controller::proc_LDC_CMD(LDC_CMD_enum cmd, quint32 par)
 {
@@ -454,8 +418,6 @@ void LDC20I_Controller::proc_LDC_CMD(LDC_CMD_enum cmd, quint32 par)
 QThread::msleep(10);
 }
 
-
-
 qint32 LDC20I_Controller::proc_LDC_GET_MEASUREMENTS()
 {
 #ifdef DEBUG_LOG
@@ -470,7 +432,6 @@ qint32 LDC20I_Controller::proc_LDC_GET_MEASUREMENTS()
 
     return 0;
 }
-
 
 qint32 LDC20I_Controller::proc_LDC_GET_DISTANCE()
 {
@@ -518,7 +479,6 @@ qint32 LDC20I_Controller::proc_LDC_SET_TEMP_REG_STATE(uint8_t state)
     return 0;
 }
 
-
 qint32 LDC20I_Controller::proc_LDC_GET_EMIT_STATE()
 {
 #ifdef DEBUG_LOG
@@ -538,7 +498,6 @@ qint32 LDC20I_Controller::proc_LDC_SET_EMIT_MODE(uint8_t mode)
 #ifdef DEBUG_LOG
     qDebug() <<Q_FUNC_INFO;
 #endif
-
     if(mode == 0)
         return 0;
     LDC_HEAD_STR ldc_head;
@@ -548,15 +507,10 @@ qint32 LDC20I_Controller::proc_LDC_SET_EMIT_MODE(uint8_t mode)
     QByteArray ldc_data;
     ldc_data.append(mode);
     QByteArray ba= createLDCSendBuf(ldc_head,ldc_data);
-
     dev_state.continous_emit = (mode==2)?true:false;;
-
     emit sendData(ba);
-
-
     return 0;
 }
-
 
 qint32 LDC20I_Controller::proc_LDC_SET_EMIT_STATE(uint8_t state)
 {
@@ -573,7 +527,6 @@ qint32 LDC20I_Controller::proc_LDC_SET_EMIT_STATE(uint8_t state)
 
     dev_state.emit_en = (state==1)?true:false;
     emit sendData(ba);
-
 
     return 0;
 }
@@ -593,7 +546,6 @@ qint32 LDC20I_Controller::proc_LDC_SET_IMPULSE_PERIOD(uint32_t val)
     emit sendData(ba);
     return 0;
 }
-
 
 qint32 LDC20I_Controller::proc_LDC_SET_IMPULSE_MFREQ(uint32_t val)
 {

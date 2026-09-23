@@ -8,23 +8,11 @@ MINI640_QSerial::MINI640_QSerial(QString port, quint32 baudrate, QObject *parent
     : port {port}
     , baudrate {baudrate}
 {
-
-
-
-     moveToThread(&thread);
-
-    connect(&thread, &QThread::started, this, [this]{
-
-
-
-
-
- });
-     QObject::connect(&thread, &QThread::finished, this, &MINI640_QSerial::proc_Thread_Finished);
-
-     thread.start();
+    moveToThread(&thread);
+    connect(&thread, &QThread::started, this, [this]{ });
+    QObject::connect(&thread, &QThread::finished, this, &MINI640_QSerial::proc_Thread_Finished);
+    thread.start();
 }
-
 
 void MINI640_QSerial::proc_Thread_Finished()
 {
@@ -42,18 +30,15 @@ MINI640_QSerial::~MINI640_QSerial()
     thread.wait();
 }
 
-
-void MINI640_QSerial::serialBytesWritten(qint64 bytes) {
+void MINI640_QSerial::serialBytesWritten(qint64 bytes)
+{
 #ifdef DEBUG_LOG
         qDebug() << "Sent data: " << bytes << " bytes.";
 #endif
-    };
+};
 
 qint32 MINI640_QSerial::initConnection()
 {
-
-
-
   //  QTimer::singleShot(100, this, [&](){
 
         m_serialPort = new QSerialPort(this);
@@ -72,7 +57,8 @@ qint32 MINI640_QSerial::initConnection()
         m_serialPort->setStopBits(QSerialPort::StopBits::OneStop);
        // m_serialPort->open(QSerialPort::OpenModeFlag::ReadWrite);
 
-        if (!m_serialPort->open(QIODevice::ReadWrite)) {
+        if (!m_serialPort->open(QIODevice::ReadWrite))
+        {
             qDebug() << "Error opening serial port:" << m_serialPort->errorString();
             delete m_serialPort;
             m_serialPort = nullptr;
@@ -86,23 +72,16 @@ qint32 MINI640_QSerial::initConnection()
             <<" PTR"  << m_serialPort;
 
         emit sig_READY();
-
-   // });
-
+    // });
     qDebug() << "*** Connection init successfully" << Q_FUNC_INFO;
-
-
     //emit deviceConnected();
-
     return 0;// !m_serialPort->isOpen();
-
 }
 
 void MINI640_QSerial::serialError(QSerialPort::SerialPortError error)
 {
      qDebug() << Q_FUNC_INFO << QThread::currentThreadId() << error;
 }
-
 
 qint32 MINI640_QSerial::closeConnection()
 {
@@ -113,10 +92,11 @@ qint32 MINI640_QSerial::closeConnection()
     disconnect(m_serialPort,&QSerialPort::readyRead, this, &MINI640_QSerial::serialReceived) ;
     disconnect(m_serialPort,&QSerialPort::bytesWritten, this, &MINI640_QSerial::serialBytesWritten) ;
 
-     if (m_serialPort->isOpen()) {
-         m_serialPort->close();
-         qDebug() << "MINI640_QSerial port closed";
-     }
+    if (m_serialPort->isOpen())
+    {
+        m_serialPort->close();
+        qDebug() << "MINI640_QSerial port closed";
+    }
     return 0;
 }
 
@@ -139,13 +119,10 @@ void MINI640_QSerial::serialReceived()
 
 void MINI640_QSerial::proc_sendData(QByteArray ba)
 {
-
     if(m_serialPort == nullptr)
         return;
-
    // qDebug() << Q_FUNC_INFO << "MINI640 QSerial proc_sendData: " << QThread::currentThreadId() << "m_serialPort"<< m_serialPort->isOpen()
   //           <<" PTR"  << m_serialPort;
-
     if(!m_serialPort->isOpen())
     {
       //    qDebug() << "TRY SEND but closed: " << ba;
@@ -155,11 +132,9 @@ void MINI640_QSerial::proc_sendData(QByteArray ba)
     qDebug() << "TRY SEND: " << ba.length() << " bytes.";
 #endif
 
-
  //  qDebug() << "SEND: " << ba.length() << " bytes.";
     m_serialPort->write(ba);
  //   serialPort->waitForBytesWritten();
-
 
 }
 

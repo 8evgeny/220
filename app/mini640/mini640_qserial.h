@@ -8,7 +8,6 @@
 class MINI640_QSerial: public QObject
 {
     Q_OBJECT
-
     QThread thread;
 
 public:
@@ -16,11 +15,8 @@ public:
     ~MINI640_QSerial();
     QSerialPort* m_serialPort = nullptr;
 private:
-
     QString port = "";
     quint32 baudrate = 0;
-
-
 
     QByteArray buf;
 public slots:
@@ -38,7 +34,6 @@ Q_SIGNALS:
     void dataParse(QByteArray ba);
     void deviceConnected();
     void sig_READY();
-
 };
 
 #endif // MINI640_QSERIAL_H

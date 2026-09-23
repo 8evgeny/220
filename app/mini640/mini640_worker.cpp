@@ -9,19 +9,15 @@ MINI640_Worker::MINI640_Worker(QString port, quint32 baudrate, quint32 exp_perio
     qDebug() << Q_FUNC_INFO << "OUT THREAD" << QThread::currentThreadId();
 
     moveToThread(&thread);
-    connect(&thread, &QThread::started, this, [this]{
+    connect(&thread, &QThread::started, this, [this]
+    {
         qDebug() << Q_FUNC_INFO << "IN THREAD" << QThread::currentThreadId();
-
         mini_ctrl = new MINI640_Controller(this->m_port, this->m_baudrate, this);
         connect(mini_ctrl, &MINI640_Controller::sig_READY, this, &MINI640_Worker::proc_InitReady, Qt::QueuedConnection );
-
         connect(this, &MINI640_Worker::send_MINI640_CMD, mini_ctrl, &MINI640_Controller::proc_MINI640_CMD, Qt::QueuedConnection);
         connect(this, &MINI640_Worker::send_GOWIN_CMD, mini_ctrl, &MINI640_Controller::proc_GOWIN_CMD, Qt::QueuedConnection);
-
         connect(this, &MINI640_Worker::sig_CtrlInitConnection, mini_ctrl, &MINI640_Controller::proc_initConnection, Qt::QueuedConnection);
         connect(this, &MINI640_Worker::sig_CtrlCloseConnection, mini_ctrl, &MINI640_Controller::proc_closeConnection, Qt::QueuedConnection);
-
-
         connect(mini_ctrl, &MINI640_Controller::recieved_MINI640_ANS, this,  &MINI640_Worker::proc_recieved_MINI640_ANS);
         connect(mini_ctrl, &MINI640_Controller::comDeviceConnected, this,  &MINI640_Worker::proc_COMDeviceConnected, Qt::QueuedConnection);
         qDebug() << Q_FUNC_INFO << "MINI640 Worker thread id: " << QThread::currentThreadId();
@@ -37,15 +33,12 @@ MINI640_Worker::MINI640_Worker(QString port, quint32 baudrate, quint32 exp_perio
     QObject::connect(&thread, &QThread::finished, this, &MINI640_Worker::proc_Thread_Finished);
 
     thread.start();
-
-
 }
 
 void MINI640_Worker::proc_Thread_Finished()
 {
     m_NotificationTimer->stop();
     delete(mini_ctrl);
-
 }
 
 MINI640_Worker::~MINI640_Worker()
@@ -54,14 +47,11 @@ MINI640_Worker::~MINI640_Worker()
     thread.exit();
     thread.wait();
     qDebug()<<Q_FUNC_INFO << "MINI640_Worker thread exit";
-
 }
-
-
 
 void MINI640_Worker::proc_InitReady()
 {
-      qDebug() << Q_FUNC_INFO << QThread::currentThreadId();
+    qDebug() << Q_FUNC_INFO << QThread::currentThreadId();
     m_NotificationTimer = new QTimer(this);
     m_NotificationTimer->setInterval(1);
     //m_NotificationTimer->setSingleShot(true);
@@ -72,7 +62,6 @@ void MINI640_Worker::proc_InitReady()
     m_NotificationTimer->start();
     emit sig_READY();
 }
-
 
 void MINI640_Worker::synq_send_MINI640(MINI640_REG_MAP_enum addr, quint32 cmd, quint32 par)
 {
@@ -95,9 +84,7 @@ void MINI640_Worker::synq_send_MINI640(MINI640_REG_MAP_enum addr, quint32 cmd, q
         }
 
     } else
-        m_RptCnt=0;
-
-
+    m_RptCnt=0;
 }
 
 void MINI640_Worker::synq_send_GOWIN(quint32 cmd)
@@ -122,18 +109,12 @@ void MINI640_Worker::synq_send_GOWIN(quint32 cmd)
 
     } else
         m_RptCnt=0;
-
-
-
-
-
 }
 
 int count =0;
 
 void MINI640_Worker::req_next_DS_CMD()
 {
-
    // m_qlock.lock();
   //  qDebug() << Q_FUNC_INFO << QThread::currentThreadId() << ++count;
     //qDebug() << "proc_addr_list: " <<proc_addr_list.size();
@@ -187,14 +168,12 @@ void MINI640_Worker::req_next_DS_CMD()
 void MINI640_Worker::proc_timerUpdate()
 {
    // qDebug() << Q_FUNC_INFO << QThread::currentThreadId();
-
     req_next_DS_CMD();
 }
 
 void MINI640_Worker::proc_CtrlInitConnection()
 {
     qDebug() << Q_FUNC_INFO << QThread::currentThreadId();
-
     //mini_ctrl->proc_initConnection();
     emit sig_CtrlInitConnection();
 }
@@ -202,20 +181,15 @@ void MINI640_Worker::proc_CtrlInitConnection()
 void MINI640_Worker::proc_CtrlCloseConnection()
 {
     qDebug() << Q_FUNC_INFO << QThread::currentThreadId();
-
     m_NotificationTimer->stop();
    // mini_ctrl->proc_closeConnection();
     emit sig_CtrlCloseConnection();
     qDebug()<<"MINI640 UART Closed";
-
-
-
 }
 
 void MINI640_Worker::proc_MINI640_ExecCmd(MINI640_CMD_enum cmd, quint32 uvalue, float fvalue)
 {
     //m_NotificationTimer->stop();
-
    // m_qlock.lock();
     //qDebug() << Q_FUNC_INFO << QThread::currentThreadId();
     FPA_PATTERN_CTRL_STR pcs;
@@ -278,21 +252,14 @@ void MINI640_Worker::proc_MINI640_ExecCmd(MINI640_CMD_enum cmd, quint32 uvalue, 
      //   m_NotificationTimer->start();
 
      //   m_qlock.unlock();
-
-
 }
-
-
 
 void MINI640_Worker::proc_COMDeviceConnected()
 {
-
-
 }
 
 void MINI640_Worker::proc_recieved_MINI640_ANS(MINI640_ANS_enum ans)
 {
-
    // qDebug() << Q_FUNC_INFO << QThread::currentThreadId() << "ANS: " << ans;
 
     if(ans == MINI_ANS_NO_REPLY)
@@ -303,6 +270,4 @@ void MINI640_Worker::proc_recieved_MINI640_ANS(MINI640_ANS_enum ans)
     else
         m_isTimeout = false;
     emit recv_MINI640_ans_notify();
-
-
 }
