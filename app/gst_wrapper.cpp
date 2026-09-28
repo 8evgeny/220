@@ -61,22 +61,15 @@
     return TRUE;
 }
 
-
-
 GST_Wrapper::GST_Wrapper(SettingsManager *sm, QObject *parent)
     : QObject(parent)
     , sm {sm}
-
 {
-     qDebug() << Q_FUNC_INFO<< "GST_Wrapper thread ";
-
-
-    connect(&thread, &QThread::started, this, [this]{
-        gst_PipelineInit();
-        qDebug()<<"GST Pipe init done" ;
-
-
-    }, Qt::DirectConnection);
+    connect(&thread, &QThread::started, this, [this]
+            {
+                gst_PipelineInit();
+                qDebug()<<"-----------------GST Pipe init done" <<QThread::currentThreadId();
+            }, Qt::DirectConnection);
 
     QObject::connect(&thread, &QThread::finished, this, &GST_Wrapper::proc_Thread_Finished);
 
@@ -84,7 +77,7 @@ GST_Wrapper::GST_Wrapper(SettingsManager *sm, QObject *parent)
     thread.start();
     gst_wrapper_inst = this;
 
-}
+}// -- GST_Wrapper::GST_Wrapper(SettingsManager *sm, QObject *parent)
 
 void GST_Wrapper::proc_Thread_Finished()
 {
@@ -301,8 +294,6 @@ void GST_Wrapper::gst_StartIRPipeline()
 
 void GST_Wrapper::gst_StartTVPipeline()
 {
-
-
     m_pipelineTV =    run_GST_TVStream(sm->settings_store.tv_cam_video_device, sm->settings_store.ip_host, 5000);
 
     if (!m_pipelineTV) {
@@ -329,19 +320,14 @@ void GST_Wrapper::gst_StartTVPipeline()
 
 }
 
-
 void GST_Wrapper::gst_PipelineInit()
 {
+    qDebug() << "-*- " <<__FUNCTION__;
     connect(this, &GST_Wrapper::sig_RstIRPipeline, this, &GST_Wrapper::proc_RestartIRPipeline , Qt::QueuedConnection);
     connect(this, &GST_Wrapper::sig_RstTVPipeline, this, &GST_Wrapper::proc_RestartTVPipeline , Qt::QueuedConnection);
-
-
-
     gst_StartTVPipeline();
     gst_StartIRPipeline();
-
-
-}
+}// -- void GST_Wrapper::gst_PipelineInit()
 
 
 

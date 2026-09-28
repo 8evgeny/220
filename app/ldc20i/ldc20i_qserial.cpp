@@ -8,7 +8,7 @@ LDC20I_QSerial::LDC20I_QSerial(QString port, quint32 baudrate, QObject *parent)
 {
     moveToThread(&thread);
     connect(&thread, &QThread::started, this, [this]{
-        qDebug() << Q_FUNC_INFO << "LDC-20I QSerial thread id: " << QThread::currentThreadId()<< "Port:" << this->port << "Baudrate"<< this->baudrate;
+        qDebug() <<"-*- "<< __FUNCTION__ << "LDC-20I QSerial thread id: " << QThread::currentThreadId()<< "Port:" << this->port << "Baudrate"<< this->baudrate;
     });
 
     QObject::connect(&thread, &QThread::finished, this, &LDC20I_QSerial::proc_Thread_Finished);

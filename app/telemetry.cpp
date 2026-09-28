@@ -6,9 +6,6 @@
 
 //#define DEBUG_LOG
 
-
-
-
 Telemetry::Telemetry()
     : ba_vpkt {sizeof(udp_video_pack), 0x00},
       ba_svpkt {sizeof(udp_video_service_pack), 0x00},
@@ -20,17 +17,14 @@ Telemetry::Telemetry()
     spkt_ptr = (udp_service_pack*)ba_svpkt.data();
 
     memset(&s_telstatus, 0x00, sizeof(s_telstatus));
-    qDebug()<<"status bytecnt"<< sizeof(telematic_status);
+    qDebug()<<"-*- "<<__FUNCTION__<<"status bytecnt"<< sizeof(telematic_status);
 
     //qDebug()<<"POS TARGET_A_Z"<<  (uint8_t*)(&spkt_ptr->service_msg.PAYLOAD.TARGET[2].TARGET_A_Z) - (uint8_t*)(&spkt_ptr->service_msg.PAYLOAD);
-
 
     s_telstatus.GSP_STATUS      = 0x01;
     s_telstatus.GSP_MODE.flags  = 0x0000;
 
-}
-
-
+}// Telemetry::Telemetry()
 
 QByteArray Telemetry::setData(uint16_t video_pkt_id, char* video_subframe)
 {
@@ -45,7 +39,7 @@ QByteArray Telemetry::setData(uint16_t video_pkt_id, char* video_subframe)
     memcpy(vpkt_ptr->video_pkt_data,video_subframe, udp_payload_len);
 
     return out;
-}
+}// QByteArray Telemetry::setData(uint16_t video_pkt_id, char* video_subframe)
 
 QByteArray Telemetry::setVideoServiceData(uint16_t video_frame_num, uint16_t video_width, uint16_t video_height, uint16_t video_frame_type)
 {

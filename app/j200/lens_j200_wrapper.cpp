@@ -8,7 +8,7 @@ LensJ200Wrapper::LensJ200Wrapper(QString port, quint32 baudrate, QObject *parent
     connect(&thread, &QThread::started, this, [this]{
         m_j200_ctrl = new LensJ200Controller();
 
-        qDebug() << Q_FUNC_INFO <<"Lens J200 Wrapper thread id: " << QThread::currentThreadId();
+        qDebug() <<"-*- "<< Q_FUNC_INFO <<"Lens J200 Wrapper thread id: " << QThread::currentThreadId();
 
         m_NotificationTimer = new QTimer(this);
         m_NotificationTimer->setInterval(100);

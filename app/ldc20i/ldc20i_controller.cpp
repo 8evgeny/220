@@ -15,18 +15,14 @@ LDC20I_Controller::LDC20I_Controller(QString port, quint32 baudrate, QObject *pa
 
         connect(this, &LDC20I_Controller::comInitConnection, &com, &LDC20I_QSerial::initConnection, Qt::QueuedConnection );
         connect(this, &LDC20I_Controller::comCloseConnection, &com, &LDC20I_QSerial::closeConnection, Qt::QueuedConnection );
-
         connect(this, &LDC20I_Controller::sendData, &com, &LDC20I_QSerial::proc_sendData , Qt::QueuedConnection);
-
         //connect(&com, &LDC20I_QSerial::serialANS, this, &LDC20I_Controller::proc_serialANS, Qt::QueuedConnection );
         connect(&com, &LDC20I_QSerial::deviceConnected, this, &LDC20I_Controller::proc_deviceConnected, Qt::QueuedConnection );
         connect(this, &LDC20I_Controller::send_LDC_CMD, this, &LDC20I_Controller::proc_LDC_CMD, Qt::QueuedConnection);
-
         connect(&com,&LDC20I_QSerial::dataParse, this, &LDC20I_Controller::proc_dataParse, Qt::QueuedConnection) ;
-
        // connect(&this, &LDC20I_QSerial::deviceConnected, this, &LDC20I_Controller::proc_deviceConnected, Qt::QueuedConnection );
 
-        qDebug() << Q_FUNC_INFO << "LDC-20I QSerial thread id: " << QThread::currentThreadId();
+        qDebug() <<"-*- "<< Q_FUNC_INFO << "LDC-20I QSerial thread id: " << QThread::currentThreadId();
 
         m_NotificationTimer = new QTimer(this);
         m_NotificationTimer->setInterval(10000);

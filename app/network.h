@@ -82,7 +82,6 @@ private:
     int size;
     bool isBusy;
 
-
     quint64 bytesToBeWritten = 0;
     quint64 bytesWritten = 0;
     std::list<QByteArray> m_udpFifo;

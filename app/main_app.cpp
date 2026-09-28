@@ -32,7 +32,6 @@ void disconnectAllInThread(QObject* thread) {
     QObject::disconnect(thread, nullptr, nullptr, nullptr);
 }
 
-
 void disconnectAll(QObject* obj) {
     if (!obj) return;
 
@@ -96,7 +95,6 @@ void handleSignal0()
 
 Main_app::~Main_app()
 {
-
     // free(net_conn);
     // qDebug()<<"net_conn free";
 
@@ -114,18 +112,18 @@ Main_app::~Main_app()
     }
 
 #endif
-}
+}// Main_app::~Main_app()
 
 #include <csignal>
 
-void handleSegfault(int sig) {
+void handleSegfault(int sig)
+{
     qDebug() << "Segfault occurred. Signal: " << sig;
     // Print stack trace if possible
     exit(1);
-}
+}// void handleSegfault(int sig)
 
-Main_app::Main_app(QCoreApplication *app, QObject *parent)
-    : QObject{parent}
+Main_app::Main_app(QCoreApplication *app, QObject *parent): QObject{parent}
 #ifdef GYRO_PLATFORM_HOST
     , m_pGyroPlatform{ nullptr}
 #endif
@@ -137,116 +135,120 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
 
     starttime= QDateTime::currentMSecsSinceEpoch();
 
-    qDebug() << "Main thread id: " << QThread::currentThreadId();
+    qDebug() <<"-*- "<< __FUNCTION__<<"Main thread id: " << QThread::currentThreadId() << "start in " << QDateTime::currentDateTime().toString("dd.MM.yyyy HH:mm:ss");
 
     m_main_app = this;
 
 #ifdef GYRO_PLATFORM_USE_DEBUG_CONFIG
     sm = new SettingsManager( "/home/khadas/qt_projects/qgst-goen220/config_test_gsp.ini", this);
-
 #else
-
     sm = new SettingsManager( "config.ini", this);
 #endif
-
     sm->loadSettings();
 
-
     GstPlay *player;
-    qDebug()<<"sm->settings_store.ip_host"<<sm->settings_store.ip_host;
+    qDebug()<<"-*- " << __FUNCTION__ << "sm->settings_store.ip_host"<<sm->settings_store.ip_host;
+
     // sm->settings_store.ip_dev = "192.168.1.91";
-    //  sm->settings_store.ip_host = "192.168.1.18";
+    // sm->settings_store.ip_host = "192.168.1.18";
     // sm->settings_store.ip_host = "192.168.1.105";
-    //   sm->settings_store.ip_host = "192.168.1.118";
-    //  //sm->settings_store.ip_host = "192.168.1.125";
-    //  sm->settings_store.udp_port_host = 52515;
-    //  sm->settings_store.udp_port_dev  = 52516;
+    // sm->settings_store.ip_host = "192.168.1.118";
+    // sm->settings_store.udp_port_dev  = 52516;
     // sm->settings_store.tv_cam_height = 1080;
     // sm->settings_store.tv_cam_width  = 1920;
     // sm->settings_store.tv_cam_timeout = 15000;
     // sm->settings_store.tv_cam_video_device = "/dev/video0";
     // sm->settings_store.tv_cam_uart_port="/dev/ttyS4";
     // sm->settings_store.tv_cam_uart_baudrate=115200;
-
-    // sm->settings_store.ir_cam_height = 512;
+    // sm->settings_store.ir_cam_height = 512;run_opencl
     // sm->settings_store.ir_cam_width  = 640;
     // sm->settings_store.ir_cam_timeout = 15000;
     // sm->settings_store.ir_cam_video_device = "/dev/video11";
     // sm->settings_store.ir_cam_uart_port="/dev/ttyS3";
-
     // sm->settings_store.ir_lens_uart_port = "/dev/ttyCH9344USB6";
     // sm->settings_store.ir_lens_uart_baudrate=19200;
-
     // sm->settings_store.ldc_uart_port= "/dev/ttyCH9344USB1";
     // sm->settings_store.ldc_uart_baudrate = 115200;
+    // sm->writeAllSettings();
 
-     //sm->writeAllSettings();
+// run_opencl();
 
+// run_GST_Stream(sm->settings_store.ir_cam_video_device, 5001);
 
-
-
-
-  //  run_opencl();
-
-
-
-  // run_GST_Stream(sm->settings_store.ir_cam_video_device, 5001);
-
+    qDebug() << "-*- " << __FUNCTION__<<"new GST_Wrapper thread ";
     gst_wrp = new GST_Wrapper(sm);
 
+    qDebug() << "-*- " <<__FUNCTION__<< "new Network thread ";
     net_conn = new Network(sm, gst_wrp);
-
-    connect(&net_conn->cmd_parser, &CMD_Parser::sig_Switch_Channel, this,  &Main_app::proc_Switch_Channel, Qt::QueuedConnection);
-
- //   net_conn->initSocket();
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_Switch_Channel, this,
+            &Main_app::proc_Switch_Channel, Qt::QueuedConnection);
 
     tv_video_timer.start(sm->settings_store.tv_cam_timeout);
 
-
-
-   connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetTargetObject,
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetTargetObject,
            gst_wrp, &GST_Wrapper::proc_setTargetObject, Qt::QueuedConnection);
 
-   connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetStopTracking,
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetStopTracking,
           gst_wrp, &GST_Wrapper::proc_setStopTracking, Qt::QueuedConnection);
 
-   ldc_worker = new LDC20I_Worker(sm->settings_store.ldc_uart_port, sm->settings_store.ldc_uart_baudrate, this);
+    qDebug() << "-*- " <<__FUNCTION__<< "new ldc_worker thread ";
+    ldc_worker = new LDC20I_Worker(sm->settings_store.ldc_uart_port, sm->settings_store.ldc_uart_baudrate, this);
 
+    connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY, this,
+           &Main_app::proc_GST_InitReady , Qt::QueuedConnection);
 
+    connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking,
+           net_conn, &Network::procUpdateActiveLockTracking , Qt::QueuedConnection);
 
-   connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY, this, &Main_app::proc_GST_InitReady , Qt::QueuedConnection);
-   connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking, net_conn, &Network::procUpdateActiveLockTracking , Qt::QueuedConnection);
-   connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject, net_conn, &Network::procUpdateTrackerObject , Qt::QueuedConnection);
+    connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject,
+           net_conn, &Network::procUpdateTrackerObject , Qt::QueuedConnection);
 
-   connect(this, &Main_app::sig_GST_StopCapture , gst_wrp, &GST_Wrapper::proc_stopCapture);
+    connect(this, &Main_app::sig_GST_StopCapture ,
+           gst_wrp, &GST_Wrapper::proc_stopCapture);
 
+    isTvUartInit=false;
 
+    connect(ldc_worker, &LDC20I_Worker::send_LDC_State,
+           net_conn, &Network::procLDCstatus, Qt::QueuedConnection);
 
-   isTvUartInit=false;
-   connect(ldc_worker, &LDC20I_Worker::send_LDC_State,net_conn, &Network::procLDCstatus, Qt::QueuedConnection);
-   connect(&(net_conn->cmd_parser), &CMD_Parser::sig_LDC_CMD, ldc_worker, &LDC20I_Worker::proc_LDCSendCmd, Qt::QueuedConnection);
-   connect(this, &Main_app::sig_LDC_CloseConnection, ldc_worker, &LDC20I_Worker::proc_CtrlCloseConnection, Qt::QueuedConnection);
+    connect(&(net_conn->cmd_parser), &CMD_Parser::sig_LDC_CMD,
+           ldc_worker, &LDC20I_Worker::proc_LDCSendCmd, Qt::QueuedConnection);
 
+    connect(this, &Main_app::sig_LDC_CloseConnection,
+           ldc_worker, &LDC20I_Worker::proc_CtrlCloseConnection, Qt::QueuedConnection);
 
-
+    qDebug() << "-*- " <<__FUNCTION__<< "new mini640_worker thread ";
     mini640_worker = new MINI640_Worker (sm->settings_store.ir_cam_uart_port,9600,
                                          sm->settings_store.ir_cam_period,
                                          sm->settings_store.ir_cam_exp,
                                          sm->settings_store.ir_cam_gpol, this   );
 
-    connect(mini640_worker, &MINI640_Worker::recv_MINI640_State, net_conn, &Network::proc_MINI640_State , Qt::QueuedConnection);
-    connect(this, &Main_app::sig_MINI640_InitConnection, mini640_worker, &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);
-    connect(this, &Main_app::sig_MINI640_CloseConnection, mini640_worker, &MINI640_Worker::proc_CtrlCloseConnection , Qt::QueuedConnection);
+    connect(mini640_worker, &MINI640_Worker::recv_MINI640_State,
+            net_conn, &Network::proc_MINI640_State , Qt::QueuedConnection);
 
-    connect(mini640_worker, &MINI640_Worker::sig_READY, this, &Main_app::proc_MINI640_InitReady, Qt::QueuedConnection);
+    connect(this, &Main_app::sig_MINI640_InitConnection,
+            mini640_worker, &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);
 
+    connect(this, &Main_app::sig_MINI640_CloseConnection,
+            mini640_worker, &MINI640_Worker::proc_CtrlCloseConnection , Qt::QueuedConnection);
+
+    connect(mini640_worker, &MINI640_Worker::sig_READY, this,
+            &Main_app::proc_MINI640_InitReady, Qt::QueuedConnection);
+
+    qDebug() << "-*- " <<__FUNCTION__<< "new lens_j200_wrapper thread ";
     lens_j200_wrapper = new LensJ200Wrapper(sm->settings_store.ir_lens_uart_port, sm->settings_store.ir_lens_uart_baudrate);
 
-    connect(lens_j200_wrapper, &LensJ200Wrapper::sig_ReportReady, net_conn , &Network::procJ200status, Qt::QueuedConnection);
-    connect(&(net_conn->cmd_parser),  &CMD_Parser::sig_J200_CMD, lens_j200_wrapper, &LensJ200Wrapper::proc_SendCMD, Qt::QueuedConnection);
-    connect(&(net_conn->cmd_parser), &CMD_Parser::sig_MINI640_CMD, mini640_worker, &MINI640_Worker::proc_MINI640_ExecCmd, Qt::QueuedConnection);
+    connect(lens_j200_wrapper, &LensJ200Wrapper::sig_ReportReady,
+            net_conn , &Network::procJ200status, Qt::QueuedConnection);
 
-    connect(this, &Main_app::sig_LensJ200_CloseConnection, lens_j200_wrapper, &LensJ200Wrapper::proc_CtrlCloseConnection, Qt::QueuedConnection);
+    connect(&(net_conn->cmd_parser),  &CMD_Parser::sig_J200_CMD,
+            lens_j200_wrapper, &LensJ200Wrapper::proc_SendCMD, Qt::QueuedConnection);
+
+    connect(&(net_conn->cmd_parser), &CMD_Parser::sig_MINI640_CMD,
+            mini640_worker, &MINI640_Worker::proc_MINI640_ExecCmd, Qt::QueuedConnection);
+
+    connect(this, &Main_app::sig_LensJ200_CloseConnection,
+            lens_j200_wrapper, &LensJ200Wrapper::proc_CtrlCloseConnection, Qt::QueuedConnection);
 
     signal(SIGINT, handleSignal);
     signal(SIGTERM, handleSignal);
@@ -259,11 +261,7 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
 
     // });
 
-
-
     //QTimer::singleShot(100, this, [&](){
-
-
 
       //  connect(mini640_worker, &MINI640_Worker::recv_MINI640_State, net_conn, &Network::proc_MINI640_State , Qt::QueuedConnection);
       //  connect(this, &Main_app::sig_MINI640_InitConnection, mini640_worker, &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);
@@ -274,11 +272,9 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
   // });
 
 
-
- QTimer::singleShot(1000, this, [&](){
-
+ QTimer::singleShot(1000, this, [&]()
+    {
         qDebug()<<"GST PIPE STARTED";
-
        // dbus_wrapper.dbus_CommInit();
         ldc_worker->proc_CtrlInitConnection();
        // mini640_worker->proc_CtrlInitConnection();
@@ -295,9 +291,10 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
 
         cw->cameraInit();
 
-     });
+    });
 
-   QTimer::singleShot(5000, this, [&](){
+    QTimer::singleShot(5000, this, [&]()
+    {
        // QString serviceName = "org.example.Gray16ToGray8";
        // QString objectPath = "/org/example/Gray16ToGray8";
        // QString interfaceName = "org.example.Gray16ToGray8";
@@ -308,31 +305,24 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
       //  dbus_wrapper.setBrightness(0.5);
       // dbus_wrapper.setTargetObject(500,500,50,50);
 
-
-
       emit sig_VISCA_CONNECT(sm->settings_store.tv_cam_uart_port, sm->settings_store.tv_cam_uart_baudrate);
-
-
        //
-   });
-
+    });
 
 #ifdef GYRO_PLATFORM_HOST
-    qDebug() << "GSP: Init";
+    qDebug() <<"-*- "<< __FUNCTION__<<"GSP: Init";
     m_pGyroPlatform = new Goen220GyroPlatformHost();
     m_pGyroPlatformHandler = new GyroPlatformHandler( m_pGyroPlatform);
     initGyroPlatform();
 
 #endif
 
-}
+}// Main_app::Main_app(QCoreApplication *app, QObject *parent): QObject{parent}
 
 void Main_app::proc_GST_InitReady()
 {
  //   qDebug()<<"GST PIPE STARTED";
-
   //  dbus_wrapper.dbus_CommInit();
-
 }
 
 void Main_app::proc_MINI640_InitReady()
@@ -529,7 +519,6 @@ void Main_app::ir_video_reset_wd()
     isIRUartInit=true;
 
 }
-
 
 // static cl::Program* program;
 // void Main_app::run_opencl()

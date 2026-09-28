@@ -17,8 +17,6 @@ class CMD_Parser: public QObject
 public:
     CMD_Parser();
     ~CMD_Parser();
-
-
  private:
    ucp* cm;
    usm* msg;

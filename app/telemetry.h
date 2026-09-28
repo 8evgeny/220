@@ -13,15 +13,11 @@
 
 const qsizetype udp_payload_len = 5120;
 
-
 class Telemetry
 {
-
 public:
     explicit Telemetry();
-    
-    
-    
+
     QByteArray setData(uint16_t video_pkt_id, char* video_subframe);
     QByteArray setVideoServiceData(uint16_t video_frame_num, uint16_t video_width, uint16_t video_height, uint16_t video_frame_type);
     QByteArray setServiceData();
@@ -45,7 +41,6 @@ public:
     void procGspMotorSpeed( const float z, const float y);
 
     float getTvFieldGrad( float *const aovV = nullptr);
-
 
     typedef struct {
         uint8_t conn_pc_eth:1;
@@ -91,7 +86,6 @@ public:
         uint8_t reserv_b;
     } __attribute__((packed)) selftest_status_str;
 
-
     typedef struct {
         uint8_t TARGET_STATE;
         uint16_t TARGET_X;
@@ -130,7 +124,6 @@ public:
     uint8_t reserv_2;
 } __attribute__((packed))   rf_state_str;
 
-
     typedef union
     {
         uint16_t        flags;
@@ -150,12 +143,10 @@ public:
     }
     __attribute__((packed))   gsp_mode;
 
-
-
     typedef struct
     {
-        uint8_t TV_SENSOR_STATUS;         //преамбула UDP
-        uint8_t TV_LENS_STATUS;//флаг видео пакета
+        uint8_t TV_SENSOR_STATUS;   //преамбула UDP
+        uint8_t TV_LENS_STATUS;     //флаг видео пакета
         uint8_t  TV_FPS;
         uint16_t TV_VRES;
         uint16_t TV_HRES;
@@ -311,9 +302,6 @@ public:
 
     } __attribute__((packed))  udp_video_service_pack;
 
-
-
-
     typedef struct
     {
         uint8_t  TV_SENSOR_STATUS;
@@ -349,19 +337,18 @@ public:
     typedef struct
     {
         uint16_t pkt_preambule;         //преамбула UDP
-        uint16_t service_pkt_flag;//флаг видео пакета
-        udp_service_msg  service_msg;                //дополнение до минимального размера сообщения 60 байт
+        uint16_t service_pkt_flag;      //флаг видео пакета
+        udp_service_msg  service_msg;   //дополнение до минимального размера сообщения 60 байт
 
     } __attribute__((packed)) udp_service_pack;
 
     typedef struct
     {
         uint16_t pkt_preambule;         //преамбула UDP
-        uint16_t service_pkt_flag;//флаг видео пакета
-        udp_command_msg  service_msg;                //дополнение до минимального размера сообщения 60 байт
+        uint16_t service_pkt_flag;      //флаг видео пакета
+        udp_command_msg  service_msg;   //дополнение до минимального размера сообщения 60 байт
 
     } __attribute__((packed)) udp_command_pack;
-
 
 private:
 
@@ -379,8 +366,6 @@ private:
 
     float 	m_aovV;
 };
-
-
 
 
 #endif // TELEMETRY_H

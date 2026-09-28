@@ -74,8 +74,6 @@ private:
 
 #endif
 
-
-
 private slots:
     void tv_video_timeout();
     void ir_video_timeout();

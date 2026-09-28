@@ -6,13 +6,12 @@ SettingsManager::SettingsManager(QString settings_file_name , QObject *parent)
 {
 }
 
-
 void SettingsManager::loadSettings()
 {
     // .ini format example
     QSettings settings(settings_file_name, QSettings::IniFormat);
 
-    qDebug()<< settings.fileName();
+    qDebug()<<"-*- " <<__FUNCTION__<<settings.fileName();
     bool bOk = false;
     settings_store.ip_dev = settings.value("Network.IP_Edge2").toString();
     settings_store.ip_host = settings.value("Network.IP_HostPC").toString();
@@ -61,7 +60,7 @@ void SettingsManager::loadSettings()
     settings_store.m_gyroPlatform_compensateGyroDrift = settings.value( "GyroPlatform.CompensateGyroDrift", false).toBool();
     settings_store.m_gyroPlatform_yawGyroDrift = settings.value( "GyroPlatform.YawGyroDrift", -0.355f).toFloat();
     settings_store.m_gyroPlatform_pitchGyroDrift = settings.value( "GyroPlatform.PitchGyroDrift", -0.530f).toFloat();
-}
+}// void SettingsManager::loadSettings()
 
 void SettingsManager::writeAllSettings()
 {

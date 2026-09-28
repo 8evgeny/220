@@ -15,11 +15,9 @@ Network::Network(SettingsManager *sm, GST_Wrapper *gst_wrapper , QObject *parent
     bool b_cols = false;
     int video_width = sm->settings_store.tv_cam_width;
     int video_height = sm->settings_store.tv_cam_height;
-    qDebug() << Q_FUNC_INFO<< "Network thread "<< video_width* video_height;
+    qDebug() << "-*- " <<__FUNCTION__<< "Network_thread "<< video_width* video_height;
     thread = new QThread;
     initSocket();
-
-
 }
 
 Network::~Network()
@@ -43,39 +41,34 @@ void Network::initSocket()
 {
     moveToThread(thread);
 
-    connect(thread, &QThread::started, this, [this]{
-
-
-        qDebug() << " ************* Network thread id: " << QThread::currentThreadId() << Q_FUNC_INFO;
-
+    connect(thread, &QThread::started, this, [this]
+    {
+        qDebug() <<"-*- "<< Q_FUNC_INFO<<" Network thread id: " << QThread::currentThreadId() ;
         socket = new QUdpSocket();
         bool result =  socket->bind(QHostAddress::AnyIPv4, sm->settings_store.udp_port_dev);
         socket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, QVariant(1024 * 8000));
-
-
-        udpSocketSend = new QUdpSocket();
+            udpSocketSend = new QUdpSocket();
       //  dst_host =QHostAddress("192.168.1.11");
         dst_host = QHostAddress(sm->settings_store.ip_host);// QHostAddress("192.168.1.125");
         dst_port = sm->settings_store.udp_port_host;// 5000;QHostAddress::Broadcast;//
       //  emit sig_FrameRequestTV(sFrame);
 
-
-
         if(result)
         {
-            qDebug() << "Socket PASS";
+            qDebug() <<"-*- "<< Q_FUNC_INFO<< "Socket PASS";
         }
         else
         {
-            qDebug() << "Socket FAIL";
+            qDebug() <<"-*- "<< Q_FUNC_INFO<< "Socket FAIL";
         }
 
         processPendingDatagrams();
         connect(socket, &QUdpSocket::readyRead, this, &Network::processPendingDatagrams);
 
-        connect(udpSocketSend, &QUdpSocket::bytesWritten, this, [this] (qint64 b){
-            dequeuePacket();
-        }, Qt::QueuedConnection);
+        connect(udpSocketSend, &QUdpSocket::bytesWritten, this, [this] (qint64 b)
+                {
+                    dequeuePacket();
+                }, Qt::QueuedConnection);
 
         telemetry_timer = new QTimer(this);
 
@@ -83,8 +76,8 @@ void Network::initSocket()
         telemetry_timer->start(40);
         connect(this, &Network::sig_checkCmd, &cmd_parser, &CMD_Parser::proc_checkCmd, Qt::QueuedConnection);
 
-
-    }, Qt::DirectConnection); //cant have parameter sorry, when using connect
+    },// -- connect(thread, &QThread::started, this, [this]
+    Qt::DirectConnection); //cant have parameter sorry, when using connect
 
     // int video_width = 1920;
     // int video_height = 1080;
@@ -307,10 +300,6 @@ void Network::enqueueIRFrame()
     it_frame_num++;
 }
 
-
-
-
-
 // void network::tvframeReady(frame_t sFrame)
 // {
 //     static int fc = 0;
@@ -370,14 +359,9 @@ void Network::enqueueIRFrame()
 
 // }
 
-
-
-
 void Network::processPendingDatagrams()
 {
-
-
-    qDebug() << "in !";
+    qDebug() <<"-*- "<< __FUNCTION__<<"in !";
     QHostAddress sender;
     quint16 port;
 
@@ -401,7 +385,7 @@ void Network::processPendingDatagrams()
 
         //udpSocketSend->close();
     }
-}
+}// -- void Network::processPendingDatagrams()
 
 
 void Network::procVICAPstatus(CameraStatus status)
@@ -409,7 +393,6 @@ void Network::procVICAPstatus(CameraStatus status)
     m_telemetry.procVICAPstatus(status);
     float tvFieldV = 0.0f;
     const float tvFieldH = m_telemetry.getTvFieldGrad( &tvFieldV);
-
     emit tvFieldChanged( tvFieldH, tvFieldV);
 }
 
@@ -418,30 +401,25 @@ void Network::procLDCstatus(LDC_STATE dev_state)
     m_telemetry.procLDCstatus(dev_state);
 }
 
-
 void Network::procJ200status(J200_DEVSTATE ds)
 {
     m_telemetry.procJ200status(ds);
 }
-
 
 void Network::proc_MINI640_State(MINI640_DEV_STATE dev_state)
 {
     m_telemetry.proc_MINI640_State(dev_state);
 }
 
-
 void Network::procGspStatus( const bool connected)
 {
     m_telemetry.procGspStatus( connected);
 }
 
-
 void Network::procGspPositionMode( const bool zero, const bool pohod, const bool pilot, const bool park, const bool stabilization)
 {
     m_telemetry.procGspPositionMode( zero, pohod, pilot, park, stabilization);
 }
-
 
 void Network::procGspMotorAngle(const float z, const float y)
 {
@@ -454,11 +432,11 @@ void Network::procGspMotorSpeed( const float z, const float y)
     m_telemetry.procGspMotorSpeed( z, y);
 }
 
-
 void Network::procUpdateTrackerObject(ushort x,ushort y, ushort width, ushort heigth)
 {
     m_telemetry.proc_UpdateTrackerObject(x,y, width,heigth);
 }
+
 void Network::procUpdateActiveLockTracking(bool active, bool tracking)
 {
     m_telemetry.proc_UpdateTrackerActiveLockTracking(active, tracking);

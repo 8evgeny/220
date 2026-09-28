@@ -5,11 +5,8 @@
 #include <QObject>
 #include <qthread.h>
 
-
-
 class GST_Wrapper :public QObject
 {
-
     Q_OBJECT
     QThread thread;
 public:
@@ -104,12 +101,9 @@ public slots:
     void proc_stopCapture();
 
 
-};
-
+}; //class GST_Wrapper :public QObject
 
 static GST_Wrapper *gst_wrapper_inst = nullptr;
 static int gst_pipe_cnt = 0;
-
-
 
 #endif // GST_WRAPPER_H

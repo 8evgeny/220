@@ -6,12 +6,12 @@ MINI640_Worker::MINI640_Worker(QString port, quint32 baudrate, quint32 exp_perio
     :m_baudrate (baudrate), m_port(port), m_exp_period(exp_period), m_exp(exp), m_gpol(gpol)  //:
                             // ldc(port, baudrate)
 {    // LDC20I_Controller ldc("/dev/ttyUSB0", 115200);
-    qDebug() << Q_FUNC_INFO << "OUT THREAD" << QThread::currentThreadId();
+    qDebug() <<"-*- "<< __FUNCTION__ << "OUT THREAD" << QThread::currentThreadId();
 
     moveToThread(&thread);
     connect(&thread, &QThread::started, this, [this]
     {
-        qDebug() << Q_FUNC_INFO << "IN THREAD" << QThread::currentThreadId();
+        qDebug() <<"-*- "<< Q_FUNC_INFO << "IN THREAD" << QThread::currentThreadId();
         mini_ctrl = new MINI640_Controller(this->m_port, this->m_baudrate, this);
         connect(mini_ctrl, &MINI640_Controller::sig_READY, this, &MINI640_Worker::proc_InitReady, Qt::QueuedConnection );
         connect(this, &MINI640_Worker::send_MINI640_CMD, mini_ctrl, &MINI640_Controller::proc_MINI640_CMD, Qt::QueuedConnection);
@@ -20,7 +20,7 @@ MINI640_Worker::MINI640_Worker(QString port, quint32 baudrate, quint32 exp_perio
         connect(this, &MINI640_Worker::sig_CtrlCloseConnection, mini_ctrl, &MINI640_Controller::proc_closeConnection, Qt::QueuedConnection);
         connect(mini_ctrl, &MINI640_Controller::recieved_MINI640_ANS, this,  &MINI640_Worker::proc_recieved_MINI640_ANS);
         connect(mini_ctrl, &MINI640_Controller::comDeviceConnected, this,  &MINI640_Worker::proc_COMDeviceConnected, Qt::QueuedConnection);
-        qDebug() << Q_FUNC_INFO << "MINI640 Worker thread id: " << QThread::currentThreadId();
+        qDebug() <<"-*- "<< Q_FUNC_INFO << "MINI640 Worker thread id: " << QThread::currentThreadId();
 
         // m_NotificationTimer = new QTimer(this);
         // m_NotificationTimer->setInterval(1);

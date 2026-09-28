@@ -338,11 +338,13 @@ enum CMD_CODE{
 
 CMD_Parser::CMD_Parser() {
     moveToThread(&thread);
-    connect(&thread, &QThread::started, this, [this]{
-        qDebug() << Q_FUNC_INFO << "Network UDP CMD parser thread id: " << QThread::currentThreadId();
-    });
-    QObject::connect(&thread, &QThread::finished, this, &CMD_Parser::proc_Thread_Finished);
 
+    connect(&thread, &QThread::started, this, [this]
+            {
+                qDebug() << "-*- " <<Q_FUNC_INFO<< "Network UDP CMD parser thread id: " <<
+                QThread::currentThreadId();
+            });
+    QObject::connect(&thread, &QThread::finished, this, &CMD_Parser::proc_Thread_Finished);
     thread.start();
 
 }

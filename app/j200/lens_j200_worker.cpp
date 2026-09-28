@@ -25,13 +25,12 @@ void LensJ200Worker::proc_Thread_Finished()
     delete lens;
 }
 
-
 void LensJ200Worker::init()
 {
-    qDebug()<<Q_FUNC_INFO<<"Main thread id:"<<QThread::currentThreadId();
+    qDebug()<<"-*- "<<Q_FUNC_INFO<<"Main thread id:"<<QThread::currentThreadId();
     moveToThread(&thread);
     connect(&thread, &QThread::started, this, [this]{
-        qDebug() << Q_FUNC_INFO << "Lens thread started with id:" << QThread::currentThreadId();
+        qDebug() <<"-*- "<< Q_FUNC_INFO << "Lens thread started with id:" << QThread::currentThreadId();
         lens = new LensJ200;
         timer = new QTimer;
         timer->setSingleShot(true);
