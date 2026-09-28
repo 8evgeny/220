@@ -335,9 +335,6 @@ void Main_app::proc_MINI640_InitReady()
     //mini640_worker->proc_CtrlInitConnection();
 }
 
-
-
-
 void Main_app::proc_Switch_Channel(quint32 channel, quint8 en)
 {
 
@@ -353,7 +350,6 @@ void Main_app::proc_Switch_Channel(quint32 channel, quint8 en)
 //        ir_v4l2.enableFrameRequest(en);
     }
 }
-
 
 #ifdef GYRO_PLATFORM_HOST
 
@@ -385,7 +381,6 @@ void Main_app::proc_Switch_Channel(quint32 channel, quint8 en)
         m_pGyroPlatformHandler->enableCompensateGyroDrift( sm->settings_store.m_gyroPlatform_compensateGyroDrift);
         m_pGyroPlatformHandler->setGyroDrift(   sm->settings_store.m_gyroPlatform_yawGyroDrift,
                                                 sm->settings_store.m_gyroPlatform_pitchGyroDrift);
-
 
         connect( m_pGyroPlatform, &Goen220GyroPlatformHost::stateConnectToRemoteDeviceChanged, net_conn, &Network::procGspStatus, Qt::QueuedConnection);
         connect( m_pGyroPlatformHandler, &GyroPlatformHandler::motorAngleChanged, net_conn, &Network::procGspMotorAngle, Qt::QueuedConnection);
@@ -439,8 +434,6 @@ void Main_app::proc_Switch_Channel(quint32 channel, quint8 en)
         }
         #endif
     }
-
-
 
 #endif
     void Main_app::proc_deinitGyroPlatform()
