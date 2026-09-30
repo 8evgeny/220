@@ -71,7 +71,8 @@ GST_Wrapper::GST_Wrapper(SettingsManager *sm, QObject *parent)
                 qDebug()<<"-----------------GST Pipe init done" <<QThread::currentThreadId();
             }, Qt::DirectConnection);
 
-    QObject::connect(&thread, &QThread::finished, this, &GST_Wrapper::proc_Thread_Finished);
+    QObject::connect(&thread, &QThread::finished, this,
+                     &GST_Wrapper::proc_Thread_Finished);
 
     moveToThread(&thread);
     thread.start();
@@ -323,8 +324,11 @@ void GST_Wrapper::gst_StartTVPipeline()
 void GST_Wrapper::gst_PipelineInit()
 {
     qDebug() << "-*- " <<__FUNCTION__;
-    connect(this, &GST_Wrapper::sig_RstIRPipeline, this, &GST_Wrapper::proc_RestartIRPipeline , Qt::QueuedConnection);
-    connect(this, &GST_Wrapper::sig_RstTVPipeline, this, &GST_Wrapper::proc_RestartTVPipeline , Qt::QueuedConnection);
+    connect(this, &GST_Wrapper::sig_RstIRPipeline, this,
+            &GST_Wrapper::proc_RestartIRPipeline , Qt::QueuedConnection);
+
+    connect(this, &GST_Wrapper::sig_RstTVPipeline, this,
+            &GST_Wrapper::proc_RestartTVPipeline , Qt::QueuedConnection);
     gst_StartTVPipeline();
     gst_StartIRPipeline();
 }// -- void GST_Wrapper::gst_PipelineInit()

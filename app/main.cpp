@@ -5,7 +5,8 @@
 #include "main_app.h"
 #include <gst/gst.h>
 
-void handleSegfaultMain(int sig) {
+void handleSegfaultMain(int sig)
+{
     qDebug() << "Segfault occurred. Signal: " << sig;
     // Print stack trace if possible
     exit(1);

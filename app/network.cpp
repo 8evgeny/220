@@ -63,18 +63,25 @@ void Network::initSocket()
         }
 
         processPendingDatagrams();
-        connect(socket, &QUdpSocket::readyRead, this, &Network::processPendingDatagrams);
 
-        connect(udpSocketSend, &QUdpSocket::bytesWritten, this, [this] (qint64 b)
+        connect(socket, &QUdpSocket::readyRead, this,
+                &Network::processPendingDatagrams);
+
+        connect(udpSocketSend, &QUdpSocket::bytesWritten, this,
+                [this] (qint64 b)
                 {
                     dequeuePacket();
                 }, Qt::QueuedConnection);
 
         telemetry_timer = new QTimer(this);
 
-        connect(telemetry_timer, &QTimer::timeout, this, &Network::telemetry_timer_send);
+        connect(telemetry_timer, &QTimer::timeout, this,
+                &Network::telemetry_timer_send);
+
         telemetry_timer->start(40);
-        connect(this, &Network::sig_checkCmd, &cmd_parser, &CMD_Parser::proc_checkCmd, Qt::QueuedConnection);
+
+        connect(this, &Network::sig_checkCmd, &cmd_parser,
+                &CMD_Parser::proc_checkCmd, Qt::QueuedConnection);
 
     },// -- connect(thread, &QThread::started, this, [this]
     Qt::DirectConnection); //cant have parameter sorry, when using connect
