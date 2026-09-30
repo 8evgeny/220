@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="hK55RehtdFottux-LSXx">
-    <mxGraphModel dx="5505" dy="2409" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2424" dy="482" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -31,7 +31,7 @@
           <mxGeometry height="30" width="140" y="120" as="geometry" />
         </mxCell>
         <mxCell id="Mpi5OAcGNNYdTBFcH7fG-25" parent="1" style="swimlane;" value="main_app.cpp" vertex="1">
-          <mxGeometry height="3020" width="534.51" x="24" y="365" as="geometry" />
+          <mxGeometry height="3081" width="534.51" x="22" y="366" as="geometry" />
         </mxCell>
         <mxCell id="Mpi5OAcGNNYdTBFcH7fG-27" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="starttime= QDateTime::currentMSecsSinceEpoch();" vertex="1">
           <mxGeometry height="30" width="370" x="-40" y="70" as="geometry" />
@@ -153,6 +153,15 @@
         </mxCell>
         <mxCell id="pGlbGP96VcB8P0gvGuK_-110" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;cw-&amp;gt;cameraInit();&lt;/b&gt;" vertex="1">
           <mxGeometry height="36" width="121" x="14.003828124999998" y="2854.9941145833336" as="geometry" />
+        </mxCell>
+        <mxCell id="L4Jps9zwj14BxxZN105e-1" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;m_pGyroPlatform = new Goen220GyroPlatformHost();&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="317" x="5.005982142857338" y="2973.0004464285716" as="geometry" />
+        </mxCell>
+        <mxCell id="L4Jps9zwj14BxxZN105e-3" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;m_pGyroPlatformHandler = new GyroPlatformHandler( m_pGyroPlatform);&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="477" x="6.5" y="3006" as="geometry" />
+        </mxCell>
+        <mxCell id="L4Jps9zwj14BxxZN105e-4" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;initGyroPlatform();&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="125" x="8.000892857142663" y="3047.9973214285715" as="geometry" />
         </mxCell>
         <mxCell id="Mpi5OAcGNNYdTBFcH7fG-26" edge="1" parent="1" source="Mpi5OAcGNNYdTBFcH7fG-24" style="endArrow=classic;html=1;rounded=0;entryX=0.496;entryY=-0.017;entryDx=0;entryDy=0;entryPerimeter=0;" target="Mpi5OAcGNNYdTBFcH7fG-25" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
@@ -448,7 +457,10 @@
           <mxGeometry height="51" width="216" x="31.99541666666697" y="3271.997578125" as="geometry" />
         </mxCell>
         <mxCell id="pGlbGP96VcB8P0gvGuK_-116" parent="1" style="text;whiteSpace=wrap;html=1;" value="emit sig_VISCA_CONNECT" vertex="1">
-          <mxGeometry height="36" width="178" x="32.003072916666966" y="3311.9951302083336" as="geometry" />
+          <mxGeometry height="36" width="178" x="38.003072916666966" y="3297.9951302083336" as="geometry" />
+        </mxCell>
+        <mxCell id="L4Jps9zwj14BxxZN105e-2" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;}&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="12.32" x="32" y="3310" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
