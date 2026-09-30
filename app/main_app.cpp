@@ -158,16 +158,16 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent): QObject{parent}
     // sm->settings_store.tv_cam_width  = 1920;
     // sm->settings_store.tv_cam_timeout = 15000;
     // sm->settings_store.tv_cam_video_device = "/dev/video0";
-    // sm->settings_store.tv_cam_uart_port="/dev/ttyS4";
+// sm->settings_store.tv_cam_uart_port="/dev/ttyS4";
     // sm->settings_store.tv_cam_uart_baudrate=115200;
     // sm->settings_store.ir_cam_height = 512;run_opencl
     // sm->settings_store.ir_cam_width  = 640;
     // sm->settings_store.ir_cam_timeout = 15000;
     // sm->settings_store.ir_cam_video_device = "/dev/video11";
-    // sm->settings_store.ir_cam_uart_port="/dev/ttyS3";
-    // sm->settings_store.ir_lens_uart_port = "/dev/ttyCH9344USB6";
+// sm->settings_store.ir_cam_uart_port="/dev/ttyS3";
+// sm->settings_store.ir_lens_uart_port = "/dev/ttyCH9344USB6";
     // sm->settings_store.ir_lens_uart_baudrate=19200;
-    // sm->settings_store.ldc_uart_port= "/dev/ttyCH9344USB1";
+// sm->settings_store.ldc_uart_port= "/dev/ttyCH9344USB1";
     // sm->settings_store.ldc_uart_baudrate = 115200;
     // sm->writeAllSettings();
 
@@ -180,6 +180,7 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent): QObject{parent}
 
     qDebug() << "-*- " <<__FUNCTION__<< "new Network thread ";
     net_conn = new Network(sm, gst_wrp);
+
     connect(&net_conn->cmd_parser, &CMD_Parser::sig_Switch_Channel, this,
             &Main_app::proc_Switch_Channel, Qt::QueuedConnection);
 
@@ -281,13 +282,20 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent): QObject{parent}
         emit sig_MINI640_InitConnection();
 
         cw = new Camera_EV9500M_Worker();
-        connect(&net_conn->cmd_parser, &CMD_Parser::sig_VISCA_CMD, cw, &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
+        connect(&net_conn->cmd_parser, &CMD_Parser::sig_VISCA_CMD, cw,
+                &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
 
-        connect(this, &Main_app::sig_VISCA_CMD, cw, &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
+        connect(this, &Main_app::sig_VISCA_CMD, cw,
+                &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
 
-        connect(this, &Main_app::sig_VISCA_CONNECT, cw, &Camera_EV9500M_Worker::proc_VISCA_CONNECT, Qt::QueuedConnection);
-        connect(this, &Main_app::sig_VISCA_DISCONNECT, cw, &Camera_EV9500M_Worker::proc_VISCA_DISCONNECT, Qt::QueuedConnection);
-        connect(cw, &Camera_EV9500M_Worker::sendStatus, net_conn, &Network::procVICAPstatus, Qt::QueuedConnection);
+        connect(this, &Main_app::sig_VISCA_CONNECT, cw,
+                &Camera_EV9500M_Worker::proc_VISCA_CONNECT, Qt::QueuedConnection);
+
+        connect(this, &Main_app::sig_VISCA_DISCONNECT, cw,
+                &Camera_EV9500M_Worker::proc_VISCA_DISCONNECT, Qt::QueuedConnection);
+
+        connect(cw, &Camera_EV9500M_Worker::sendStatus, net_conn,
+                &Network::procVICAPstatus, Qt::QueuedConnection);
 
         cw->cameraInit();
 
