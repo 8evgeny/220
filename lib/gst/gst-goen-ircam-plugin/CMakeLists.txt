@@ -20,10 +20,11 @@ message(STATUS "Found OpenCV: ${OpenCV_VERSION}")
 message(STATUS "OpenCV Libraries: ${OpenCV_LIBS}")
 
 # Enable NEON flags for ARM
-# if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|ARM|aarch64|AARCH64")
-#     add_compile_options(-mfpu=neon -mfloat-abi=hard)
-#     message(STATUS "NEON flags enabled: -mfpu=neon -mfloat-abi=hard")
-# endif()
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|ARM|aarch64|AARCH64")
+    # add_compile_options(-mfpu=neon -mfloat-abi=hard)
+    add_compile_options(-march=armv8-a)
+    message(STATUS "NEON flags enabled: -mfpu=neon -mfloat-abi=hard")
+endif()
 
 # GStreamer configuration
 find_path(GSTREAMER_INCLUDE_DIR gst/gst.h

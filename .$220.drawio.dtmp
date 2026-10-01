@@ -1,0 +1,456 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="hK55RehtdFottux-LSXx">
+    <mxGraphModel dx="6147" dy="2810" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-14" parent="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAABK0lEQVR4AezcMQ7CQBAEQYv/P5p4w1U78OmKbINGUB5Sfo9XEgCY+J4HIMAoEHMLBBgFYm6BAKNAzC0QYBSIuQUCjAIxv3GBkWzmAKfH+gK4JpsBwOmxvgCuyWYAcHqsL4BrshkAnB7rC+CabAYAp8f6ArgmmwHA6bG+AK7JZnAI4PzQX7oAxqcBEGAUiLkFAowCMbdAgFEg5hYIMArE3AIBRoGYW+BnAeMHOyW3wPikAAKMAjG3QIBRIOYWCDAKxNwCAUaBmFsgwCgQcwt8EzC+15W5BcbHDhBgFIi5BQKMAjG3QIBRIOYWCDAKxNwCAUaBmF+/wOjn39sAVoHY+wkDjAIxt0CAUSDmFggwCsTcAgFGgZhbIMAoEPMTFxi/8rs5wOgJEGAUiPkfAAD//+alV6wAAAAGSURBVAMAI4AAoUQB40AAAAAASUVORK5CYII=&quot; width=&quot;5&quot; height=&quot;5&quot;&gt;&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAABK0lEQVR4AezcMQ7CQBAEQYv/P5p4w1U78OmKbINGUB5Sfo9XEgCY+J4HIMAoEHMLBBgFYm6BAKNAzC0QYBSIuQUCjAIxv3GBkWzmAKfH+gK4JpsBwOmxvgCuyWYAcHqsL4BrshkAnB7rC+CabAYAp8f6ArgmmwHA6bG+AK7JZnAI4PzQX7oAxqcBEGAUiLkFAowCMbdAgFEg5hYIMArE3AIBRoGYW+BnAeMHOyW3wPikAAKMAjG3QIBRIOYWCDAKxNwCAUaBmFsgwCgQcwt8EzC+15W5BcbHDhBgFIi5BQKMAjG3QIBRIOYWCDAKxNwCAUaBmF+/wOjn39sAVoHY+wkDjAIxt0CAUSDmFggwCsTcAgFGgZhbIMAoEPMTFxi/8rs5wOgJEGAUiPkfAAD//+alV6wAAAAGSURBVAMAI4AAoUQB40AAAAAASUVORK5CYII=&quot; width=&quot;5&quot; height=&quot;5&quot;&gt;" vertex="1">
+          <mxGeometry height="26" width="60" x="230" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-16" parent="1" style="swimlane;" value="main.cpp" vertex="1">
+          <mxGeometry height="150" width="290" x="40" y="166" as="geometry">
+            <mxRectangle height="30" width="90" x="40" y="166" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-18" parent="Mpi5OAcGNNYdTBFcH7fG-16" style="text;whiteSpace=wrap;html=1;" value="int main(int argc, char *argv[])" vertex="1">
+          <mxGeometry height="40" width="190" x="10" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-19" parent="Mpi5OAcGNNYdTBFcH7fG-16" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;b&gt;static Main_app *app_inst;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="160" x="10" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-21" parent="Mpi5OAcGNNYdTBFcH7fG-16" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="QCoreApplication a(argc, argv);" vertex="1">
+          <mxGeometry height="30" width="190" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-22" parent="Mpi5OAcGNNYdTBFcH7fG-16" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="gst_init(&amp;amp;argc, &amp;amp;argv);" vertex="1">
+          <mxGeometry height="30" width="160" x="-10" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-23" parent="Mpi5OAcGNNYdTBFcH7fG-16" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="qInstallMessageHandler(customMessageHandler)" vertex="1">
+          <mxGeometry height="30" width="110" x="90" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-24" parent="Mpi5OAcGNNYdTBFcH7fG-16" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Main_app app(&amp;amp;a);&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="140" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-25" parent="1" style="swimlane;" value="main_app.cpp" vertex="1">
+          <mxGeometry height="3020" width="534.51" x="24" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-27" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="starttime= QDateTime::currentMSecsSinceEpoch();" vertex="1">
+          <mxGeometry height="30" width="370" x="-40" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-28" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="Main_app::Main_app" vertex="1">
+          <mxGeometry height="40" width="150" x="10" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-29" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;static Main_app *&lt;span style=&quot;color: rgb(255, 51, 51);&quot;&gt;m_main_app&lt;/span&gt;;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="200" x="10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-30" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;m_main_app = this;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="140" x="10" y="90" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;b style=&quot;color: rgb(204, 0, 0);&quot;&gt;sm&lt;/b&gt; = new &lt;b style=&quot;color: light-dark(rgb(135, 59, 89), rgb(255, 51, 51));&quot;&gt;SettingsManager( &quot;config.ini&quot;, this)&lt;/b&gt;&lt;b style=&quot;color: light-dark(rgb(135, 59, 89), rgb(255, 0, 0));&quot;&gt;;&lt;/b&gt;" link="sm = new SettingsManager( &quot;config.ini&quot;, this);" id="Mpi5OAcGNNYdTBFcH7fG-31">
+          <mxCell parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;align=left;verticalAlign=top;" vertex="1">
+            <mxGeometry height="40" width="280" x="10" y="110" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-34" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="sm-&gt;loadSettings();" vertex="1">
+          <mxGeometry height="20" width="130" x="10" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-1" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="gst_wrp = new &lt;b&gt;&lt;span style=&quot;color: rgb(255, 51, 51);&quot;&gt;GST_Wrapper(sm)&lt;/span&gt;;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="220" x="10" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-2" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="GstPlay *player;" vertex="1">
+          <mxGeometry height="40" width="120" x="10" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-26" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="net_conn = &lt;b style=&quot;color: light-dark(rgb(255, 51, 51), rgb(204, 0, 0));&quot;&gt;new Network(sm, gst_wrp);&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="240" x="10" y="620" as="geometry" />
+        </mxCell>
+        <UserObject label="tv_video_timer.start(sm-&gt;settings_store.tv_cam_timeout);" link="tv_video_timer.start(sm-&gt;settings_store.tv_cam_timeout);" id="pGlbGP96VcB8P0gvGuK_-62">
+          <mxCell parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="40" width="340" x="10" y="696" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-65" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(&amp;net_conn-&gt;cmd_parser, &amp;CMD_Parser::sig_Switch_Channel, this,&#xa;            &amp;Main_app::proc_Switch_Channel, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="433" x="10.001767241379532" y="652.0049353448277" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-68" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(&amp;amp;net_conn-&amp;gt;cmd_parser, &amp;amp;CMD_Parser::sig_TrackingSetTargetObject,&lt;br&gt;           gst_wrp, &amp;amp;GST_Wrapper::&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 51, 51));&quot;&gt;proc_setTargetObject&lt;/b&gt;, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="453" x="9.998922413793025" y="726.9968318965518" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-69" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(&amp;amp;net_conn-&amp;gt;cmd_parser, &amp;amp;CMD_Parser::sig_TrackingSetStopTracking,&lt;br&gt;          gst_wrp, &amp;amp;GST_Wrapper::&lt;b&gt;proc_setStopTracking,&lt;/b&gt; Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="455" x="10.003660714285779" y="777.9963392857142" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-70" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;align=left;verticalAlign=top;" value="&lt;b&gt;ldc_worker = new LDC20I_Worker&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="211" x="21.99682291666697" y="1095.004479166667" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-79" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(gst_wrp, &amp;GST_Wrapper::sig_STREAM_RDY, this,&#xa;           &amp;Main_app::proc_GST_InitReady , Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="348" x="21.993489583333485" y="1478.996197916667" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-80" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(gst_wrp, &amp;GST_Wrapper::sig_rdyActiveLockTracking,&#xa;           net_conn, &amp;Network::procUpdateActiveLockTracking , Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="448" x="13.00153017241395" y="1547.9997844827585" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-81" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(gst_wrp, &amp;GST_Wrapper::sig_rdyOutObject,&#xa;           net_conn, &amp;Network::procUpdateTrackerObject , Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="420" x="8.000237068965582" y="1609.001077586207" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-82" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;Main_app::sig_GST_StopCapture ,&#xa;           gst_wrp, &amp;GST_Wrapper::proc_stopCapture);" vertex="1">
+          <mxGeometry height="51" width="294" x="7.99625" y="1678.0018103448274" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-83" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(ldc_worker, &amp;LDC20I_Worker::send_LDC_State,&#xa;           net_conn, &amp;Network::procLDCstatus, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="359" x="7.999784482758606" y="1729.0041594827585" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-84" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(&amp;(net_conn-&gt;cmd_parser), &amp;CMD_Parser::sig_LDC_CMD,&#xa;           ldc_worker, &amp;LDC20I_Worker::proc_LDCSendCmd, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="437" x="7.998232758620922" y="1772.9997844827585" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-85" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;Main_app::sig_LDC_CloseConnection,&#xa;           ldc_worker, &amp;LDC20I_Worker::proc_CtrlCloseConnection, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="469" x="7.99952586206884" y="1824.0019827586211" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-86" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;mini640_worker = new MINI640_Worker&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="242" x="10.003297413793021" y="1882.003728448276" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-89" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(mini640_worker, &amp;MINI640_Worker::recv_MINI640_State,&#xa;            net_conn, &amp;Network::proc_MINI640_State , Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="393" x="5.003318452380736" y="1925.0045386904762" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-90" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;Main_app::sig_MINI640_InitConnection,&#xa;            mini640_worker, &amp;MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="489" x="5.005223214285779" y="1976.008913690476" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-91" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;Main_app::sig_MINI640_CloseConnection,&#xa;            mini640_worker, &amp;MINI640_Worker::proc_CtrlCloseConnection , Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="504" x="5.003497023809633" y="2038.0003422619047" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-92" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(mini640_worker, &amp;MINI640_Worker::sig_READY, this,&#xa;            &amp;Main_app::proc_MINI640_InitReady, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="364" x="5.503511904761925" y="2091.9953869047617" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-93" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;lens_j200_wrapper = new LensJ200Wrapper&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="266" x="7.998630952380736" y="2142.992202380952" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-96" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(lens_j200_wrapper, &amp;LensJ200Wrapper::sig_ReportReady,&#xa;            net_conn , &amp;Network::procJ200status, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="389" x="7.994687500000001" y="2184.995625" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-97" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(&amp;(net_conn-&gt;cmd_parser),  &amp;CMD_Parser::sig_J200_CMD,&#xa;            lens_j200_wrapper, &amp;LensJ200Wrapper::proc_SendCMD, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="470" x="7.994687499999909" y="2245.999375" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-98" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(&amp;(net_conn-&gt;cmd_parser), &amp;CMD_Parser::sig_MINI640_CMD,&#xa;            mini640_worker, &amp;MINI640_Worker::proc_MINI640_ExecCmd, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="495" x="9.50593749999991" y="2306.9996874999997" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-99" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;Main_app::sig_LensJ200_CloseConnection,&#xa;            lens_j200_wrapper, &amp;LensJ200Wrapper::proc_CtrlCloseConnection, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="525" x="9.510312499999998" y="2368.0015625" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-101" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="ldc_worker-&amp;gt;proc_CtrlInitConnection();&lt;br&gt;emit sig_MINI640_InitConnection();" vertex="1">
+          <mxGeometry height="47" width="270" x="22" y="2481" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-102" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;cw = new Camera_EV9500M_Worker();&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="240" x="25.996250000000003" y="2519.00375" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-104" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;Main_app::sig_VISCA_CMD, cw,&#xa;                &amp;Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="427" x="5.003482142857337" y="2615.003125" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-106" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(&amp;net_conn-&gt;cmd_parser, &amp;CMD_Parser::sig_VISCA_CMD, cw,&#xa;                &amp;Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="427" x="7.99432291666697" y="2547.0034375" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-107" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;Main_app::sig_VISCA_CONNECT, cw,&#xa;                &amp;Camera_EV9500M_Worker::proc_VISCA_CONNECT, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="457" x="7.997838541666972" y="2675.001354166667" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-108" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;Main_app::sig_VISCA_DISCONNECT, cw,&#xa;                &amp;Camera_EV9500M_Worker::proc_VISCA_DISCONNECT, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="477" x="5.504166666666968" y="2738.00171875" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-109" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="connect(cw, &amp;Camera_EV9500M_Worker::sendStatus, net_conn,&#xa;                &amp;Network::procVICAPstatus, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="376" x="10.998854166666973" y="2803.9975" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-110" parent="Mpi5OAcGNNYdTBFcH7fG-25" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;cw-&amp;gt;cameraInit();&lt;/b&gt;" vertex="1">
+          <mxGeometry height="36" width="121" x="14.003828124999998" y="2854.9941145833336" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-26" edge="1" parent="1" source="Mpi5OAcGNNYdTBFcH7fG-24" style="endArrow=classic;html=1;rounded=0;entryX=0.165;entryY=0.001;entryDx=0;entryDy=0;entryPerimeter=0;" target="Mpi5OAcGNNYdTBFcH7fG-25" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="290" y="410" as="sourcePoint" />
+            <mxPoint x="340" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-32" parent="1" style="swimlane;" value="settingsmanager.cpp" vertex="1">
+          <mxGeometry height="60" width="200" x="593" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-35" parent="Mpi5OAcGNNYdTBFcH7fG-32" style="text;whiteSpace=wrap;html=1;" value="loadSettings()" vertex="1">
+          <mxGeometry height="40" width="110" x="10" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Mpi5OAcGNNYdTBFcH7fG-33" edge="1" parent="1" source="Mpi5OAcGNNYdTBFcH7fG-31" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.086;entryDx=0;entryDy=0;entryPerimeter=0;" target="Mpi5OAcGNNYdTBFcH7fG-32" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="450" y="410" as="sourcePoint" />
+            <mxPoint x="500" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-3" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="gst_wrapper.cpp" vertex="1">
+          <mxGeometry height="200" width="315" x="578" y="616" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-4" parent="pGlbGP96VcB8P0gvGuK_-3" style="text;whiteSpace=wrap;html=1;" value="GST_Wrapper::GST_Wrapper" vertex="1">
+          <mxGeometry height="40" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-6" parent="pGlbGP96VcB8P0gvGuK_-3" style="text;whiteSpace=wrap;html=1;" value="&lt;div&gt;connect(&amp;amp;thread, &amp;amp;QThread::started, this, [this]&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; {&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;b&gt;gst_PipelineInit();&lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;&amp;nbsp;&lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;},&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="260" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-8" parent="pGlbGP96VcB8P0gvGuK_-3" style="text;whiteSpace=wrap;html=1;" value="QObject::connect(&amp;amp;thread, &amp;amp;QThread::finished, this,&lt;br&gt;                     &amp;amp;GST_Wrapper::&lt;b&gt;proc_Thread_Finished)&lt;/b&gt;;" vertex="1">
+          <mxGeometry height="50" width="310" x="5" y="100" as="geometry" />
+        </mxCell>
+        <UserObject label="moveToThread(&amp;thread);&#xa;    thread.start();" link="moveToThread(&amp;thread);&#xa;    thread.start();" id="pGlbGP96VcB8P0gvGuK_-11">
+          <mxCell parent="pGlbGP96VcB8P0gvGuK_-3" style="text;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="50" width="170" y="140" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-5" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-1" style="endArrow=classic;html=1;rounded=0;entryX=0.006;entryY=0.063;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.977;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="370" y="660" as="sourcePoint" />
+            <mxPoint x="420" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-9" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-weight: 400; text-align: left;&quot;&gt;gst_PipelineInit()&lt;/span&gt;" vertex="1">
+          <mxGeometry height="220" width="390" x="940" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-10" parent="pGlbGP96VcB8P0gvGuK_-9" style="text;whiteSpace=wrap;html=1;" value="void GST_Wrapper::&lt;b&gt;gst_PipelineInit()&lt;/b&gt;&lt;br&gt;{&lt;br&gt;connect(this, &amp;amp;GST_Wrapper::sig_RstIRPipeline, this,&lt;br&gt;            &amp;amp;GST_Wrapper::proc_RestartIRPipeline , Qt::QueuedConnection);&lt;br&gt;&lt;br&gt;    connect(this, &amp;amp;GST_Wrapper::sig_RstTVPipeline, this,&lt;br&gt;            &amp;amp;GST_Wrapper::proc_RestartTVPipeline , Qt::QueuedConnection);&lt;div&gt;&lt;br&gt;    gst_StartTVPipeline();&lt;br&gt;    gst_StartIRPipeline();&lt;br&gt;}&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="390" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-12" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-6" style="endArrow=classic;html=1;rounded=0;entryX=-0.007;entryY=0.069;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-9" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="930" y="780" as="sourcePoint" />
+            <mxPoint x="980" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-13" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="proc_Thread_Finished()" vertex="1">
+          <mxGeometry height="50" width="180" x="930" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-14" parent="pGlbGP96VcB8P0gvGuK_-13" style="text;whiteSpace=wrap;html=1;" value="Пустая функция" vertex="1">
+          <mxGeometry height="40" width="160" x="30" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-15" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-8" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="pGlbGP96VcB8P0gvGuK_-13" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="850" y="880" as="sourcePoint" />
+            <mxPoint x="900" y="830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-16" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="gst_StartTVPipeline();" vertex="1">
+          <mxGeometry height="70" width="200" x="1460" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-25" parent="pGlbGP96VcB8P0gvGuK_-16" style="text;whiteSpace=wrap;html=1;" value="run_GST_TVStream" vertex="1">
+          <mxGeometry height="40" width="140" x="10" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-17" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-10" style="endArrow=classic;html=1;rounded=0;entryX=-0.017;entryY=0.078;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-16" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1230" y="970" as="sourcePoint" />
+            <mxPoint x="1430" y="830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-22" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="gst_StartIRPipeline()" vertex="1">
+          <mxGeometry height="70" width="200" x="1370" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-24" parent="pGlbGP96VcB8P0gvGuK_-22" style="text;whiteSpace=wrap;html=1;" value="run_GST_IRStreamISP" vertex="1">
+          <mxGeometry height="40" width="160" x="10" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-23" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-10" style="endArrow=classic;html=1;rounded=0;entryX=0.306;entryY=0.016;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.667;exitDx=0;exitDy=0;exitPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-22" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1380" y="880" as="sourcePoint" />
+            <mxPoint x="1430" y="830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-28" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="network.cpp" vertex="1">
+          <mxGeometry height="520" width="360" x="584" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-30" parent="pGlbGP96VcB8P0gvGuK_-28" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="initSocket()" vertex="1">
+          <mxGeometry height="30" width="60" x="15" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-31" parent="pGlbGP96VcB8P0gvGuK_-28" style="text;whiteSpace=wrap;html=1;" value="processPendingDatagrams();" vertex="1">
+          <mxGeometry height="40" width="190" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-36" parent="pGlbGP96VcB8P0gvGuK_-28" style="text;whiteSpace=wrap;html=1;" value="connect(socket, &amp;QUdpSocket::readyRead, this,&#xa;                &amp;Network::processPendingDatagrams);&#xa;&#xa;        connect(udpSocketSend, &amp;QUdpSocket::bytesWritten, this,&#xa;                [this] (qint64 b)&#xa;                {&#xa;                    dequeuePacket();&#xa;                }, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="140" width="350" x="10" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-40" parent="pGlbGP96VcB8P0gvGuK_-28" style="text;whiteSpace=wrap;html=1;" value="telemetry_timer = new QTimer(this);" vertex="1">
+          <mxGeometry height="40" width="220" x="10" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-41" parent="pGlbGP96VcB8P0gvGuK_-28" style="text;whiteSpace=wrap;html=1;" value="connect(telemetry_timer, &amp;QTimer::timeout, this,&#xa;                &amp;Network::telemetry_timer_send);" vertex="1">
+          <mxGeometry height="50" width="290" x="10" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-43" parent="pGlbGP96VcB8P0gvGuK_-28" style="text;whiteSpace=wrap;html=1;" value="telemetry_timer-&amp;gt;start(40);&lt;br&gt;&lt;br&gt;        connect(this, &amp;amp;Network::sig_checkCmd, &amp;amp;cmd_parser,&lt;br&gt;                &amp;amp;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 51, 51));&quot;&gt;CMD_Parser::proc_checkCmd&lt;/b&gt;, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="80" width="340" x="10" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-63" parent="pGlbGP96VcB8P0gvGuK_-28" style="text;whiteSpace=wrap;html=1;" value="&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 0, 0));&quot;&gt;CMD_Parser cmd_parser;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="10" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-29" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-26" style="endArrow=classic;html=1;rounded=0;entryX=0.004;entryY=0.093;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="pGlbGP96VcB8P0gvGuK_-28" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="450" y="1130" as="sourcePoint" />
+            <mxPoint x="500" y="1080" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-32" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="processPendingDatagrams();" vertex="1">
+          <mxGeometry height="130" width="200" x="1035" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-34" parent="pGlbGP96VcB8P0gvGuK_-32" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="emit sig_checkCmd(datagram);" vertex="1">
+          <mxGeometry height="30" width="200" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-35" parent="pGlbGP96VcB8P0gvGuK_-32" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Прием сообщения" vertex="1">
+          <mxGeometry height="30" width="170" x="10" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-33" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-31" style="endArrow=classic;html=1;rounded=0;entryX=0.008;entryY=0.065;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-32" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="590" y="1110" as="sourcePoint" />
+            <mxPoint x="640" y="1060" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-37" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="dequeuePacket()" vertex="1">
+          <mxGeometry height="90" width="200" x="1000" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-39" parent="pGlbGP96VcB8P0gvGuK_-37" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="udpSocketSend-&amp;gt;writeDatagram" vertex="1">
+          <mxGeometry height="30" width="200" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-38" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-36" style="endArrow=classic;html=1;rounded=0;" target="pGlbGP96VcB8P0gvGuK_-37" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="700" y="1220" as="sourcePoint" />
+            <mxPoint x="750" y="1170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-44" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-weight: 400; text-align: left;&quot;&gt;telemetry_timer_send&lt;/span&gt;" vertex="1">
+          <mxGeometry height="110" width="290" x="1000" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-46" parent="pGlbGP96VcB8P0gvGuK_-44" style="text;whiteSpace=wrap;html=1;" value="m_gst_wrapper-&gt;proc_getOutObject();&#xa;    m_gst_wrapper-&gt;proc_getActiveLockTracking();" vertex="1">
+          <mxGeometry height="50" width="290" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-52" parent="pGlbGP96VcB8P0gvGuK_-44" style="text;whiteSpace=wrap;html=1;" value="dequeuePacket();" vertex="1">
+          <mxGeometry height="40" width="130" x="10" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-45" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-41" style="endArrow=classic;html=1;rounded=0;entryX=0.003;entryY=0.053;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-44" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="820" y="1340" as="sourcePoint" />
+            <mxPoint x="870" y="1290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-47" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="proc_getOutObject()" vertex="1">
+          <mxGeometry height="90" width="390" x="1380" y="1270" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-53" parent="pGlbGP96VcB8P0gvGuK_-47" style="text;whiteSpace=wrap;html=1;" value="handle_get_out_object(m_trackerTV, cx_out, cy_out,  w_out, h_out);&#xa;&#xa;    emit sig_rdyOutObject(cx_out, cy_out,  w_out, h_out);" vertex="1">
+          <mxGeometry height="70" width="390" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-48" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-46" style="endArrow=classic;html=1;rounded=0;entryX=-0.006;entryY=0.092;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-47" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1360" y="1300" as="sourcePoint" />
+            <mxPoint x="1410" y="1250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-49" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-weight: 400; text-align: left;&quot;&gt;proc_getActiveLockTracking();&lt;/span&gt;" vertex="1">
+          <mxGeometry height="90" width="380" x="1380" y="1370" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-51" parent="pGlbGP96VcB8P0gvGuK_-49" style="text;whiteSpace=wrap;html=1;" value="handle_get_active_lock(m_trackerTV, active_out, tracking_out);&#xa;    emit sig_rdyActiveLockTracking(active_out, tracking_out);" vertex="1">
+          <mxGeometry height="50" width="370" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-50" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-46" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="pGlbGP96VcB8P0gvGuK_-49" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1360" y="1380" as="sourcePoint" />
+            <mxPoint x="1410" y="1330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-54" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="CMD_Parser::proc_checkCmd" vertex="1">
+          <mxGeometry height="200" width="210" x="1059" y="1474" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-57" parent="pGlbGP96VcB8P0gvGuK_-54" style="text;whiteSpace=wrap;html=1;" value="processCmdGowinMini640();" vertex="1">
+          <mxGeometry height="40" width="190" x="20" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-56" parent="pGlbGP96VcB8P0gvGuK_-54" style="text;whiteSpace=wrap;html=1;" value="processCmd()" vertex="1">
+          <mxGeometry height="40" width="110" x="30" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-55" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-43" style="endArrow=classic;html=1;rounded=0;entryX=0.011;entryY=0.048;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-54" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="830" y="1430" as="sourcePoint" />
+            <mxPoint x="880" y="1380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-58" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-weight: 400; text-align: left;&quot;&gt;processCmd()&lt;/span&gt;" vertex="1">
+          <mxGeometry height="95" width="200" x="1320" y="1530" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-64" parent="pGlbGP96VcB8P0gvGuK_-58" style="text;whiteSpace=wrap;html=1;" value="Парсинг кода и определение команды" vertex="1">
+          <mxGeometry height="36" width="167" x="16.496249999999918" y="42.99928571428586" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-59" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-weight: 400; text-align: left;&quot;&gt;processCmdGowinMini640();&lt;/span&gt;" vertex="1">
+          <mxGeometry height="73" width="200" x="1340" y="1661" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-60" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-56" style="endArrow=classic;html=1;rounded=0;entryX=0.005;entryY=0.047;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-58" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="200" y="1770" as="sourcePoint" />
+            <mxPoint x="250" y="1720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-61" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-57" style="endArrow=classic;html=1;rounded=0;entryX=0.083;entryY=-0.004;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-59" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="200" y="1770" as="sourcePoint" />
+            <mxPoint x="250" y="1720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-66" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="proc_Switch_Channel" vertex="1">
+          <mxGeometry height="51" width="200" x="-263" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-67" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-65" style="endArrow=classic;html=1;rounded=0;entryX=0.998;entryY=0.076;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-66" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="132" y="1131" as="sourcePoint" />
+            <mxPoint x="182" y="1081" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-71" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="ldc20i_worker.cpp" vertex="1">
+          <mxGeometry height="326" width="424.99658854166694" x="596" y="1534.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-73" parent="pGlbGP96VcB8P0gvGuK_-71" style="text;whiteSpace=wrap;html=1;" value="ldc = new LDC20I_Controller(m_port, m_baudrate, this);" vertex="1">
+          <mxGeometry height="36" width="326" x="1.0009374999999636" y="40.004687500000045" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-74" parent="pGlbGP96VcB8P0gvGuK_-71" style="text;whiteSpace=wrap;html=1;" value="connect(this, &amp;LDC20I_Worker::send_LDC_CMD,ldc,&#xa;                &amp;LDC20I_Controller::proc_LDC_CMD, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="367" x="6.996901041667002" y="76.00236979166698" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-75" parent="pGlbGP96VcB8P0gvGuK_-71" style="text;whiteSpace=wrap;html=1;" value="connect(ldc, &amp;LDC20I_Controller::recieved_LDC_DS_ANS, this,&#xa;                &amp;LDC20I_Worker::proc_recieved_LDC_DS_ANS);" vertex="1">
+          <mxGeometry height="51" width="370" x="6.999921875000041" y="129.9966927083335" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-77" parent="pGlbGP96VcB8P0gvGuK_-71" style="text;whiteSpace=wrap;html=1;" value="connect(ldc, &amp;LDC20I_Controller::comDeviceConnected, this,&#xa;                &amp;LDC20I_Worker::proc_COMDeviceConnected, Qt::QueuedConnection);" vertex="1">
+          <mxGeometry height="51" width="418" x="6.996588541666938" y="189.99507812499996" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-78" parent="pGlbGP96VcB8P0gvGuK_-71" style="text;whiteSpace=wrap;html=1;" value="Далее по таймеру измерения" vertex="1">
+          <mxGeometry height="51" width="418" x="3.49838541666702" y="255.00096354166703" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-72" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-70" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.047;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-71" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="399" y="1497" as="sourcePoint" />
+            <mxPoint x="449" y="1447" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-87" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="mini640_worker.cpp" vertex="1">
+          <mxGeometry height="200" width="200" x="627" y="2237" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-88" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-86" style="endArrow=classic;html=1;rounded=0;entryX=0.011;entryY=0.074;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-87" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="282" y="2233" as="sourcePoint" />
+            <mxPoint x="332" y="2183" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-94" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="lens_j200_wrapper.cpp" vertex="1">
+          <mxGeometry height="200" width="200" x="596" y="2498" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-95" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-93" style="endArrow=classic;html=1;rounded=0;entryX=0.013;entryY=0.063;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-94" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="501" y="2588" as="sourcePoint" />
+            <mxPoint x="551" y="2538" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-100" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;QTimer::singleShot(1000, this, [&amp;amp;]()&lt;br&gt;    {&lt;/b&gt;" vertex="1">
+          <mxGeometry height="51" width="216" x="35.5625" y="2808.443824404762" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-103" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="camera_ev9500m_worker.cpp" vertex="1">
+          <mxGeometry height="47" width="230" x="596" y="2837" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-105" edge="1" parent="1" source="pGlbGP96VcB8P0gvGuK_-102" style="endArrow=classic;html=1;rounded=0;entryX=0.003;entryY=0.051;entryDx=0;entryDy=0;entryPerimeter=0;" target="pGlbGP96VcB8P0gvGuK_-103" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="417" y="2969" as="sourcePoint" />
+            <mxPoint x="467" y="2919" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-111" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;}&lt;/b&gt;" vertex="1">
+          <mxGeometry height="63.32" width="133" x="32" y="3237.99" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-114" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="VISCA" vertex="1">
+          <mxGeometry height="200" width="200" x="576" y="2996" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-115" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;QTimer::singleShot(5000, this, [&amp;amp;]()&lt;br&gt;    {&lt;/b&gt;" vertex="1">
+          <mxGeometry height="51" width="216" x="31.99541666666697" y="3271.997578125" as="geometry" />
+        </mxCell>
+        <mxCell id="pGlbGP96VcB8P0gvGuK_-116" parent="1" style="text;whiteSpace=wrap;html=1;" value="emit sig_VISCA_CONNECT" vertex="1">
+          <mxGeometry height="36" width="178" x="32.003072916666966" y="3311.9951302083336" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
