@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+docker run -it \
+  -v /home/user/sysroot_arm64_firefly:/sysroot \
+  -v /media/user/WORK/Github/220/220_cross/test_cross_Qt:/project \
+  --name ubuntu24_and_crosscompiler \
+  ubuntu:24.04 /bin/bash

@@ -1,0 +1,47 @@
+Кросскомпиляция Проект Qt6, CMake  host: x86 ubuntu 22  target: arm64 folder sysroot: /home/user/sysroot_arm64  folder Qt libs for Arm64 : /home/user/stage
+
+Duck.ai said
+
+Для кросскомпиляции проекта на Qt6 с использованием CMake вам необходимо создать файл инструментария (toolchain file), который укажет CMake, какие компиляторы использовать и где искать заголовочные файлы и библиотеки целевой платформы.
+
+1. Создание файла toolchain.cmake
+Создайте файл с названием toolchain.cmake в корне вашего проекта или в отдельной папке. Замените пути на ваши, если они отличаются, но исходя из вашего запроса, файл должен выглядеть так:
+
+cmake
+
+
+# Целевая система
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)
+
+# Путь к sysroot (заголовочные файлы и библиотеки ОС ARM64)
+set(CMAKE_SYSROOT /home/user/sysroot_arm64)
+
+# Кросскомпиляторы (убедитесь, что они установлены в системе, например: sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu)
+set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+
+# Путь к скомпилированному Qt6 для ARM64
+set(CMAKE_PREFIX_PATH /home/user/stage)
+
+# Поиск программ в хост-системе, а библиотек и заголовков — только в sysroot/stage
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+
+# Дополнительные флаги для корректного поиска Qt
+set(CMAKE_FIND_ROOT_PATH /home/user/sysroot_arm64 /home/user/stage)
+2. Сборка проекта
+Для сборки используйте стандартный процесс CMake, передав созданный файл через параметр CMAKE_TOOLCHAIN_FILE. Рекомендуется делать это в отдельной папке для сборки:
+
+Создайте папку для сборки:
+mkdir build_arm64 && cd build_arm64
+Запустите конфигурацию CMake:
+cmake -DCMAKE_TOOLCHAIN_FILE=../toolchain.cmake ..
+Скомпилируйте проект:
+cmake --build .
+Важные уточнения
+Компиляторы: Убедитесь, что пакеты gcc-aarch64-linux-gnu и g++-aarch64-linux-gnu установлены на вашем Ubuntu 22.04.
+Структура stage: В папке /home/user/stage должен находиться файл Qt6Config.cmake (обычно в подпапке lib/cmake/Qt6). Если Qt установлен в другую подпапку внутри stage, укажите полный путь до неё в CMAKE_PREFIX_PATH (например, /home/user/stage/6.x.x/gcc_64).
+Зависимости: Если ваш проект использует сторонние библиотеки, они также должны быть скомпилированы под arm64 и находиться либо в /home/user/sysroot_arm64, либо в /home/user/stage.
+Развертывание: После сборки полученный бинарный файл нужно скопировать на устройство ARM64 вместе с необходимыми библиотеками из папки stage (если они не установлены на самом устройстве).

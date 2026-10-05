@@ -1,0 +1,7 @@
+Создать bash скрипт для кросскомпиляции и arm64_toolchain.cmake
+Проект С++ Qt, CMake  
+host: x86 ubuntu 22  
+target: arm64 
+folder sysroot: /home/user/sysroot_arm64  
+Qt host : /home/user/Qt/6.11.3/gcc_64
+Qt for arm64 : /home/user/Qt/6.11.3_arm/gcc_arm64

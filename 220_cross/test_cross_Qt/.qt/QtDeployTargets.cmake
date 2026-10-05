@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_minimal_qt_test_FILE /media/user/WORK/Github/220/220_cross/test_cross_Qt/minimal_qt_test)
+set(__QT_DEPLOY_TARGET_minimal_qt_test_TYPE EXECUTABLE)
