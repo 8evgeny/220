@@ -3,7 +3,7 @@
 set -e
 
 PROJECT_ROOT=$(pwd)
-BUILD_DIR="$PROJECT_ROOT/Debug"
+BUILD_DIR="$PROJECT_ROOT/build"
 TOOLCHAIN_FILE="$PROJECT_ROOT/arm64_toolchain.cmake"
 QT_HOST_PATH="/home/user/Qt/6.11.3/gcc_64"
 

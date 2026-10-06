@@ -19,9 +19,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core LinguistTools)
 find_package(Qt6 REQUIRED COMPONENTS Network)
 find_package(Qt6 REQUIRED COMPONENTS DBus)
 
-
-
-
 # Найти OpenCL
 #find_package(OpenCL REQUIRED )
 find_package(OpenMP REQUIRED   )
@@ -32,13 +29,16 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
-set( CMAKE_SYSROOT "/home/user/sysroot_arm64" )
+set( CMAKE_SYSROOT "/home/user/sysroot_arm64_firefly")
 
 # GStreamer configuration
+
 find_path(GSTREAMER_INCLUDE_DIR gst/gst.h
-    PATHS ${CMAKE_SYSROOT}/usr/include/gstreamer-1.0
-          ${CMAKE_SYSROOT}/usr/local/include/gstreamer-1.0
+    NAMES gst/gst.h
+    PATHS "${CMAKE_SYSROOT}/usr/include/gstreamer-1.0"
+          NO_DEFAULT_PATH
     DOC "GStreamer include directory")
+
 
 find_path(GLIB_INCLUDE_DIR glib.h
     PATHS ${CMAKE_SYSROOT}/usr/include/glib-2.0
@@ -49,7 +49,6 @@ find_path(GLIB_INCLUDE_DIR glib.h
 find_path(GLIBCFG_INCLUDE_DIR glibconfig.h
     PATHS ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu/glib-2.0/include
     DOC "GLIB include directory")
-
 
 
 find_library(GSTREAMER_LIBRARY
@@ -78,9 +77,8 @@ find_library(LIBDBUS_LIBRARY
     DOC "dbus-1 library")
 
 
-
 if(NOT GSTREAMER_INCLUDE_DIR OR NOT GSTREAMER_LIBRARY OR NOT GSTBASE_LIBRARY OR NOT LIBGOBJECT_LIBRARY)
-#    message(FATAL_ERROR "GStreamer components not found")
+    message(FATAL_ERROR "GStreamer components not found")
 endif()
 
 set(USE_COLOR_CHANNEL_MODE 8UC3)
@@ -185,12 +183,9 @@ if(${USE_GPU} EQUAL 2)
 endif() # END if(${USE_GPU} EQUAL 2)
 
 
-
 find_package(OpenCV REQUIRED)
 
-
 find_package(Qt6 REQUIRED COMPONENTS SerialPort)
-
 
 if( GYRO_PLATFORM_HOST_ENABLE)
     set(	GYRO_PLATFORM_HANDLER_SRC
@@ -200,14 +195,12 @@ if( GYRO_PLATFORM_HOST_ENABLE)
                 gpf/Pid.h)
 endif()
 
-
 add_executable(qgst-goen220
   main.cpp
   cmd_parser.cpp cmd_parser.h       main_app.cpp main_app.h network.cpp network.h settingsmanager.cpp settingsmanager.h telemetry.cpp telemetry.h
   ldc20i/ldc20i_controller.cpp ldc20i/ldc20i_controller.h ldc20i/ldc20i_qserial.cpp ldc20i/ldc20i_qserial.h ldc20i/ldc20i_worker.cpp ldc20i/ldc20i_worker.h
 
   lib/lib_trac_tmml_8_CL.so
-
 
   mini640/mini640_controller.cpp mini640/mini640_controller.h mini640/mini640_qserial.cpp mini640/mini640_qserial.h mini640/mini640_worker.cpp mini640/mini640_worker.h
   ev9500m/visca/libvisca.cpp ev9500m/visca/libvisca.h ev9500m/visca/libvisca_posix.cpp ev9500m/camera_ev9500m.cpp ev9500m/camera_ev9500m.h ev9500m/camera_ev9500m_worker.cpp ev9500m/camera_ev9500m_worker.h
@@ -223,7 +216,7 @@ add_executable(qgst-goen220
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ${GSTREAMER_INCLUDE_DIR}
+    "${GSTREAMER_INCLUDE_DIR}"
     ${GLIB_INCLUDE_DIR}
     ${GLIBCFG_INCLUDE_DIR}
     ${OCV_INCLUDE_DIR}
@@ -234,8 +227,6 @@ file(GLOB TracShatsFiles "${CMAKE_CURRENT_LIST_DIR}/tracshats/*")
 #message("---CMAKE_CURRENT_LIST_DIR:" ${CMAKE_CURRENT_LIST_DIR}/lib)
 
 link_directories(${CMAKE_CURRENT_LIST_DIR}/lib)
-
-
 
 target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
     OpenMP::OpenMP_CXX
@@ -253,7 +244,6 @@ target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
     -L"${CMAKE_BINARY_DIR}/../../build/gst/"  -lgoentrack
     ${GYRO_PLATFORM_HOST_LIB_NAME}
 )
-
 
 function(copy_qt_libraries target)
     # Get linked Qt libraries
