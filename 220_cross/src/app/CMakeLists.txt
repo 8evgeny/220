@@ -54,7 +54,7 @@ find_path(GLIBCFG_INCLUDE_DIR glibconfig.h
 
 find_library(GSTREAMER_LIBRARY
     NAMES gstreamer-1.0
-    PATHS ${CMAKE_SYSROOT}/usr/lib ${CMAKE_SYSROOT}/usr/local/lib
+    PATHS ${CMAKE_SYSROOT}/usr/lib ${CMAKE_SYSROOT}/usr/local/lib ${CMAKE_SYSROOT}/lib/aarch64-linux-gnu
     DOC "GStreamer main library")
 
 find_library(GSTBASE_LIBRARY
