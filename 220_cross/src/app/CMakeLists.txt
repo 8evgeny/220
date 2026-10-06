@@ -80,7 +80,7 @@ find_library(LIBDBUS_LIBRARY
 
 
 if(NOT GSTREAMER_INCLUDE_DIR OR NOT GSTREAMER_LIBRARY OR NOT GSTBASE_LIBRARY OR NOT LIBGOBJECT_LIBRARY)
-    message(FATAL_ERROR "GStreamer components not found")
+#    message(FATAL_ERROR "GStreamer components not found")
 endif()
 
 set(USE_COLOR_CHANNEL_MODE 8UC3)
