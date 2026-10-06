@@ -32,7 +32,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
-set( CMAKE_SYSROOT "/home/projects/goen-220/sysroot" )
+set( CMAKE_SYSROOT "/home/user/sysroot_arm64" )
 
 # GStreamer configuration
 find_path(GSTREAMER_INCLUDE_DIR gst/gst.h
