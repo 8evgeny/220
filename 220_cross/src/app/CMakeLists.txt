@@ -239,9 +239,9 @@ target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
     ${GLIB_LIBRARY}
     ${LIBDBUS_LIBRARY}
     ${LIBGOBJECT_LIBRARY}
-    -L"${CMAKE_BINARY_DIR}/../../build/gst/"  ${trac_lib_name}
-    -L"${CMAKE_BINARY_DIR}/../../build/gst/"  -lfpsmonitor
-    -L"${CMAKE_BINARY_DIR}/../../build/gst/"  -lgoentrack
+    -L"${CMAKE_BINARY_DIR}/../prebuild/gst"  ${trac_lib_name}
+    -L"${CMAKE_BINARY_DIR}/../../build/gst"  -lfpsmonitor
+    -L"${CMAKE_BINARY_DIR}/../../build/gst"  -lgoentrack
     ${GYRO_PLATFORM_HOST_LIB_NAME}
 )
 

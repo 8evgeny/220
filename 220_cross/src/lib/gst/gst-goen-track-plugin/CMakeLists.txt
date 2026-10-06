@@ -272,7 +272,7 @@ target_link_libraries(${PROJECT_NAME}
     ${LIBGIO_LIBRARY}
     ${LIBDBUS_LIBRARY}
 
-   -L"${CMAKE_BINARY_DIR}/../../build/gst/"  ${trac_lib_name}
+   -L"${CMAKE_BINARY_DIR}/../prebuild/gst"  ${trac_lib_name}
 
 
 )
