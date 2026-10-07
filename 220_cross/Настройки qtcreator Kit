@@ -1,0 +1,5 @@
+-DCMAKE_CXX_COMPILER:FILEPATH=%{Compiler:Executable:Cxx}
+-DCMAKE_C_COMPILER:FILEPATH=%{Compiler:Executable:C}
+-DCMAKE_TOOLCHAIN_FILE:FILEPATH=/media/user/WORK/Github/220/220_cross/arm64_toolchain.cmake
+-DQT_HOST_PATH:UNINITIALIZED=/home/user/Qt/6.11.3/gcc_64
+-DQt6CoreTools_DIR:PATH=/home/user/Qt/6.11.3/gcc_64/lib/cmake/Qt6CoreTools

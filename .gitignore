@@ -4,3 +4,5 @@ build
 *.user
 
 .$220.drawio.bkp
+
+220_cross/src/.qtcreator/
