@@ -283,7 +283,7 @@ message(" OCV " ${OpenCV_INCLUDE_DIRS} " LIB:"    ${OpenCV_LIBS})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../build/gst
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../build/gst
 )
 
 

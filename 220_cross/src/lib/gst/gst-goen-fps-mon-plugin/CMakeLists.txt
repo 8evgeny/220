@@ -81,7 +81,7 @@ add_library(${PROJECT_NAME} MODULE
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../build/gst
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../build/gst
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
