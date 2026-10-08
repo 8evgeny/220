@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=GOEN_client
+Type=Application
+Icon=/home/user/QtProg/goen/goen_client/desktop/icon.png
+Exec=/home/user/QtProg/goen/goen_client/desktop/run.sh
+X-GNOME-Autostart-enabled=false

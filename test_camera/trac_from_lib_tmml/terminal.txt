@@ -1,0 +1,12 @@
+
+
+sudo ip link set eno1 mtu 9000
+
+sudo ifconfig eno1 169.254.0.2 netmask 255.255.0.0
+
+ifconfig
+
+В Qt: Параметры -> Среда -> Системное -> Терминал: /usr/bin/gnome-terminal -x sudo
+
+Без SUDO: usr/bin/x--terminal-emulator -e
+
