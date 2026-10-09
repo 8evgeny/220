@@ -223,7 +223,6 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
     connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY,
             this, &Main_app::proc_GST_RDY, Qt::QueuedConnection);
 
-
    connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetTargetObject,
            gst_wrp, &GST_Wrapper::proc_setTargetObject, Qt::QueuedConnection);
 
@@ -233,19 +232,28 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
    ldc_worker = new LDC20I_Worker(sm->settings_store.ldc_uart_port,
                                   sm->settings_store.ldc_uart_baudrate, this);
 
-   connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY, this, &Main_app::proc_GST_InitReady , Qt::QueuedConnection);
-   connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking, net_conn, &Network::procUpdateActiveLockTracking , Qt::QueuedConnection);
-   connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject, net_conn, &Network::procUpdateTrackerObject , Qt::QueuedConnection);
+   connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY,
+           this, &Main_app::proc_GST_InitReady , Qt::QueuedConnection);
 
-   connect(this, &Main_app::sig_GST_StopCapture , gst_wrp, &GST_Wrapper::proc_stopCapture);
+   connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking,
+           net_conn, &Network::procUpdateActiveLockTracking , Qt::QueuedConnection);
+
+   connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject,
+           net_conn, &Network::procUpdateTrackerObject , Qt::QueuedConnection);
+
+   connect(this, &Main_app::sig_GST_StopCapture ,
+           gst_wrp, &GST_Wrapper::proc_stopCapture);
 
    isTvUartInit=false;
-   connect(ldc_worker, &LDC20I_Worker::send_LDC_State,net_conn, &Network::procLDCstatus, Qt::QueuedConnection);
-   connect(&(net_conn->cmd_parser), &CMD_Parser::sig_LDC_CMD, ldc_worker, &LDC20I_Worker::proc_LDCSendCmd, Qt::QueuedConnection);
-   connect(this, &Main_app::sig_LDC_CloseConnection, ldc_worker, &LDC20I_Worker::proc_CtrlCloseConnection, Qt::QueuedConnection);
 
+   connect(ldc_worker, &LDC20I_Worker::send_LDC_State,
+           net_conn, &Network::procLDCstatus, Qt::QueuedConnection);
 
+   connect(&(net_conn->cmd_parser), &CMD_Parser::sig_LDC_CMD,
+           ldc_worker, &LDC20I_Worker::proc_LDCSendCmd, Qt::QueuedConnection);
 
+   connect(this, &Main_app::sig_LDC_CloseConnection,
+           ldc_worker, &LDC20I_Worker::proc_CtrlCloseConnection, Qt::QueuedConnection);
 
     mini640_worker = new MINI640_Worker (sm->settings_store.ir_cam_uart_port,9600,
                                          sm->settings_store.ir_cam_period,

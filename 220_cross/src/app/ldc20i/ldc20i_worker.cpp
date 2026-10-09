@@ -6,11 +6,19 @@ LDC20I_Worker::LDC20I_Worker(QString port, quint32 baudrate, QObject *parent): m
 {    // LDC20I_Controller ldc("/dev/ttyUSB0", 115200);
 
     moveToThread(&thread);
-    connect(&thread, &QThread::started, this, [this]{
+    connect(&thread, &QThread::started, this, [this]
+    {
         ldc = new LDC20I_Controller(m_port, m_baudrate, this);
-        connect(this, &LDC20I_Worker::send_LDC_CMD, ldc, &LDC20I_Controller::proc_LDC_CMD, Qt::QueuedConnection);
-        connect(ldc, &LDC20I_Controller::recieved_LDC_DS_ANS, this,  &LDC20I_Worker::proc_recieved_LDC_DS_ANS);
-        connect(ldc, &LDC20I_Controller::comDeviceConnected, this,  &LDC20I_Worker::proc_COMDeviceConnected, Qt::QueuedConnection);
+
+        connect(this, &LDC20I_Worker::send_LDC_CMD,
+                ldc, &LDC20I_Controller::proc_LDC_CMD, Qt::QueuedConnection);
+
+        connect(ldc, &LDC20I_Controller::recieved_LDC_DS_ANS,
+                this,  &LDC20I_Worker::proc_recieved_LDC_DS_ANS);
+
+        connect(ldc, &LDC20I_Controller::comDeviceConnected,
+                this,  &LDC20I_Worker::proc_COMDeviceConnected, Qt::QueuedConnection);
+
         qDebug() << Q_FUNC_INFO << "LDC-20I Worker thread id: " << QThread::currentThreadId();
 
         m_NotificationTimer = new QTimer(this);
