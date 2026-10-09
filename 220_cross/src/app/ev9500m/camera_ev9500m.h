@@ -30,7 +30,8 @@ class TVCamera : public QObject
 {
     Q_OBJECT
 public:
-    enum Command {
+    enum Command
+    {
         ZoomTele,
         ZoomWide,
         ZoomStop,
@@ -57,7 +58,6 @@ public:
         DefogOff,
         SetNR,
         
-        
         Set23DNR,
         DZoomOn,
         DZoomOff,
@@ -77,17 +77,15 @@ public:
         SpotAWBDispOff,
         SlowShutterAuto,
         SlowShutterManual
-        
+    };//END enum Command
 
-    };
-
-    enum Baudrate {
+    enum Baudrate
+    {
         Br9600 = B9600,
         Br19200 = B19200,
         Br38400 = B38400,
         Br115200 = B115200
     };
-
 
     explicit TVCamera(QObject *parent = nullptr);
     ~TVCamera();

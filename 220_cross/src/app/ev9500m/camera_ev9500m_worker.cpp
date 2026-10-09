@@ -70,10 +70,6 @@ void Camera_EV9500M_Worker::proc_VISCA_CONNECT(QString portName, quint32 baudrat
 
 void Camera_EV9500M_Worker::proc_VISCA_DISCONNECT()
 {
-
-
-
-
     m_isConnected= false;
      m_timer->stop();
     emit connected(false);
@@ -81,7 +77,6 @@ void Camera_EV9500M_Worker::proc_VISCA_DISCONNECT()
 
     m_cam.disconnect();
     qDebug()<<"EV9500M UART closed";
-
 }
 
 

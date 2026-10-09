@@ -157,7 +157,7 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
 
     GstPlay *player;
     qDebug()<<"sm->settings_store.ip_host"<<sm->settings_store.ip_host;
-    // sm->settings_store.ip_dev = "192.168.1.91";
+    // sm->settings_store.ip_dev = "192.168.1.91";enum Command
     //  sm->settings_store.ip_host = "192.168.1.18";
     // sm->settings_store.ip_host = "192.168.1.105";
     //   sm->settings_store.ip_host = "192.168.1.118";
@@ -175,7 +175,7 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
     // sm->settings_store.ir_cam_width  = 640;
     // sm->settings_store.ir_cam_timeout = 15000;
     // sm->settings_store.ir_cam_video_device = "/dev/video11";
-    // sm->settings_store.ir_cam_uart_port="/dev/ttyS3";
+    // sm->settings_store.ir_cam_uart_port="/dev/ttyS3"enum Command;
 
     // sm->settings_store.ir_lens_uart_port = "/dev/ttyCH9344USB6";
     // sm->settings_store.ir_lens_uart_baudrate=19200;
@@ -230,17 +230,14 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
    connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetStopTracking,
           gst_wrp, &GST_Wrapper::proc_setStopTracking, Qt::QueuedConnection);
 
-   ldc_worker = new LDC20I_Worker(sm->settings_store.ldc_uart_port, sm->settings_store.ldc_uart_baudrate, this);
-
-
+   ldc_worker = new LDC20I_Worker(sm->settings_store.ldc_uart_port,
+                                  sm->settings_store.ldc_uart_baudrate, this);
 
    connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY, this, &Main_app::proc_GST_InitReady , Qt::QueuedConnection);
    connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking, net_conn, &Network::procUpdateActiveLockTracking , Qt::QueuedConnection);
    connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject, net_conn, &Network::procUpdateTrackerObject , Qt::QueuedConnection);
 
    connect(this, &Main_app::sig_GST_StopCapture , gst_wrp, &GST_Wrapper::proc_stopCapture);
-
-
 
    isTvUartInit=false;
    connect(ldc_worker, &LDC20I_Worker::send_LDC_State,net_conn, &Network::procLDCstatus, Qt::QueuedConnection);
@@ -256,28 +253,37 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
                                          sm->settings_store.ir_cam_gpol, this   );
    if(sm->settings_store.ir_cam_en)
     {
-        connect(mini640_worker, &MINI640_Worker::recv_MINI640_State, net_conn, &Network::proc_MINI640_State , Qt::QueuedConnection);
-        connect(this, &Main_app::sig_MINI640_InitConnection, mini640_worker, &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);
-        connect(this, &Main_app::sig_MINI640_CloseConnection, mini640_worker, &MINI640_Worker::proc_CtrlCloseConnection , Qt::QueuedConnection);
+        connect(mini640_worker, &MINI640_Worker::recv_MINI640_State,
+               net_conn, &Network::proc_MINI640_State , Qt::QueuedConnection);
 
-        connect(mini640_worker, &MINI640_Worker::sig_READY, this, &Main_app::proc_MINI640_InitReady, Qt::QueuedConnection);
-    }
+        connect(this, &Main_app::sig_MINI640_InitConnection,
+                mini640_worker, &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);
 
+        connect(this, &Main_app::sig_MINI640_CloseConnection,
+                mini640_worker, &MINI640_Worker::proc_CtrlCloseConnection , Qt::QueuedConnection);
 
-    lens_j200_wrapper = new LensJ200Wrapper(sm->settings_store.ir_lens_uart_port, sm->settings_store.ir_lens_uart_baudrate);
+        connect(mini640_worker, &MINI640_Worker::sig_READY,
+                this, &Main_app::proc_MINI640_InitReady, Qt::QueuedConnection);
 
-    connect(lens_j200_wrapper, &LensJ200Wrapper::sig_ReportReady, net_conn , &Network::procJ200status, Qt::QueuedConnection);
-    connect(&(net_conn->cmd_parser),  &CMD_Parser::sig_J200_CMD, lens_j200_wrapper, &LensJ200Wrapper::proc_SendCMD, Qt::QueuedConnection);
-    connect(&(net_conn->cmd_parser), &CMD_Parser::sig_MINI640_CMD, mini640_worker, &MINI640_Worker::proc_MINI640_ExecCmd, Qt::QueuedConnection);
-
-    connect(this, &Main_app::sig_LensJ200_CloseConnection, lens_j200_wrapper, &LensJ200Wrapper::proc_CtrlCloseConnection, Qt::QueuedConnection);
+    }//END if(sm->settings_store.ir_cam_en)enum Command
 
 
+   lens_j200_wrapper = new LensJ200Wrapper(sm->settings_store.ir_lens_uart_port,
+                                            sm->settings_store.ir_lens_uart_baudrate);
 
+    connect(lens_j200_wrapper, &LensJ200Wrapper::sig_ReportReady,
+           net_conn , &Network::procJ200status, Qt::QueuedConnection);
+
+    connect(&(net_conn->cmd_parser),  &CMD_Parser::sig_J200_CMD,
+            lens_j200_wrapper, &LensJ200Wrapper::proc_SendCMD, Qt::QueuedConnection);
+
+    connect(&(net_conn->cmd_parser), &CMD_Parser::sig_MINI640_CMD,
+            mini640_worker, &MINI640_Worker::proc_MINI640_ExecCmd, Qt::QueuedConnection);
+
+    connect(this, &Main_app::sig_LensJ200_CloseConnection,
+            lens_j200_wrapper, &LensJ200Wrapper::proc_CtrlCloseConnection, Qt::QueuedConnection);
 
     //QTimer::singleShot(100, this, [&](){
-
-
 
       //  connect(mini640_worker, &MINI640_Worker::recv_MINI640_State, net_conn, &Network::proc_MINI640_State , Qt::QueuedConnection);
       //  connect(this, &Main_app::sig_MINI640_InitConnection, mini640_worker, &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);
@@ -288,9 +294,8 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
   // });
 
 
-
-     QTimer::singleShot(1000, this, [&](){
-
+     QTimer::singleShot(1000, this, [&]()
+        {
             qDebug()<<"GST PIPE STARTED";
 
            // dbus_wrapper.dbus_CommInit();
@@ -301,30 +306,40 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
             if(sm->settings_store.tv_cam_en)
             {
                     cw = new Camera_EV9500M_Worker();
-                    connect(&net_conn->cmd_parser, &CMD_Parser::sig_VISCA_CMD, cw, &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
-                    connect(this, &Main_app::sig_VISCA_CMD, cw, &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
-                    connect(this, &Main_app::sig_VISCA_CONNECT, cw, &Camera_EV9500M_Worker::proc_VISCA_CONNECT, Qt::QueuedConnection);
-                    connect(this, &Main_app::sig_VISCA_DISCONNECT, cw, &Camera_EV9500M_Worker::proc_VISCA_DISCONNECT, Qt::QueuedConnection);
-                    connect(cw, &Camera_EV9500M_Worker::sendStatus, net_conn, &Network::procVICAPstatus, Qt::QueuedConnection);
+                    connect(&net_conn->cmd_parser, &CMD_Parser::sig_VISCA_CMD,
+                            cw, &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
+
+                    connect(this, &Main_app::sig_VISCA_CMD,
+                            cw, &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
+
+                    connect(this, &Main_app::sig_VISCA_CONNECT,
+                            cw, &Camera_EV9500M_Worker::proc_VISCA_CONNECT, Qt::QueuedConnection);
+
+                    connect(this, &Main_app::sig_VISCA_DISCONNECT,
+                            cw, &Camera_EV9500M_Worker::proc_VISCA_DISCONNECT, Qt::QueuedConnection);
+
+                    connect(cw, &Camera_EV9500M_Worker::sendStatus,
+                            net_conn, &Network::procVICAPstatus, Qt::QueuedConnection);
+
                     cw->cameraInit();
-            }
-         });
+            }//END if(sm->settings_store.tv_cam_en)
+        });//END QTimer::singleShot(1000, this, [&]()
 
     if(sm->settings_store.tv_cam_en)
-        QTimer::singleShot(5000, this, [&](){
+    {
+        QTimer::singleShot(5000, this, [&]()
+       {
           emit sig_VISCA_CONNECT(sm->settings_store.tv_cam_uart_port, sm->settings_store.tv_cam_uart_baudrate);
        });
-
+    }
 
 #ifdef GYRO_PLATFORM_HOST
     qDebug() << "GSP: Init";
     m_pGyroPlatform = new Goen220GyroPlatformHost();
     m_pGyroPlatformHandler = new GyroPlatformHandler( m_pGyroPlatform);
     initGyroPlatform();
-
 #endif
-
-}
+}//END Main_app::Main_app(QCoreApplication *app, QObject *parent)
 
 void Main_app::proc_GST_InitReady()
 {
