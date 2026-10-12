@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorSession>
-<!-- Written by QtCreator 21.0.82, 2026-10-12T16:02:55. -->
+<!-- Written by QtCreator 21.0.82, 2026-10-12T16:07:56. -->
 <qtcreator>
  <data>
   <variable>AutoTest.MessageFilter</variable>
@@ -54,16 +54,16 @@
  <data>
   <variable>ProjectList</variable>
   <valuelist type="QVariantList">
-   <value type="QString">/media/user/WORK/Github/220/220_cross/src/CMakeLists.txt</value>
+   <value type="QString">/media/user/WORK/Github/220/test_ldc20/src/CMakeLists.txt</value>
   </valuelist>
  </data>
  <data>
   <variable>Single Project/ProjectPath</variable>
-  <value type="QString">/media/user/WORK/Github/220/220_cross/src/CMakeLists.txt</value>
+  <value type="QString">/media/user/WORK/Github/220/test_ldc20/src/CMakeLists.txt</value>
  </data>
  <data>
   <variable>StartupProject</variable>
-  <value type="QString">/media/user/WORK/Github/220/220_cross/src/CMakeLists.txt</value>
+  <value type="QString">/media/user/WORK/Github/220/test_ldc20/src/CMakeLists.txt</value>
  </data>
  <data>
   <variable>value-ActiveMode</variable>
