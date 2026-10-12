@@ -77,17 +77,8 @@ private:
 
 
 private slots:
-    void proc_video_init_timeout();
-    //void ir_video_timeout();
 
 public slots:
-   // void video_reset_wd();
-    //void ir_video_reset_wd();
-    void proc_Switch_Channel(quint32 channel, quint8 en);
-    void proc_MINI640_InitReady();
-    void proc_GST_InitReady();
-    void proc_deinitGyroPlatform();
-    void proc_GST_RDY();
 
 signals:
     void sig_VISCA_CONNECT(QString portName, quint32 baudrate);
