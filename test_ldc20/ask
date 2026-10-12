@@ -1,0 +1,23 @@
+Создать bash скрипт для кросскомпиляции и arm64_toolchain.cmake
+Проект С++ Qt, CMake  
+host: x86 ubuntu 22  
+target: arm64 
+folder sysroot: /home/user/sysroot_arm64  
+Qt host : /home/user/Qt/6.11.3/gcc_64
+Qt for arm64 : /home/user/Qt/6.11.3_arm/gcc_arm64
+
+
+Настроить   SSH  связь без запроса пароля khadas@192.168.1.108
+ключи 
+/home/user/.ssh/qtc_id
+/home/user/.ssh/qtc_id.pub
+
+
+
+
+
+
+qtcreator  создать kit  для кросскомпиляции x86 - arm64
+sysroot: /home/user/sysroot_arm64 
+Qt host : /home/user/Qt/6.11.3/gcc_64
+Qt for arm64 : /home/user/Qt/6.11.3_arm/gcc_arm64

@@ -1,0 +1,26 @@
+docker build --progress=plain \
+  -t qt6-arm64-build_qt_6_7:latest \
+  -f /home/user/Qt_arm64/in_Docker/Dockerfile_Qt_6_7 \
+  /home/user/Qt_arm64/in_Docker
+
+docker build --no-cache --progress=plain -t qt6-arm64-build:latest .
+
+docker build --progress=plain \
+  -t qt6-arm64-build_qt_6_10:latest \
+  -f /home/user/Qt_arm64/in_Docker/Dockerfile_Qt_6_10 \
+  /home/user/Qt_arm64/in_Docker
+
+Проверить, что образ создан`
+docker image ls qt6-arm64-build
+
+Создать контейнер и скопировать готовый Qt на хост:
+docker create --name qt6-copy qt6-arm64-build:latest
+mkdir -p "$HOME/qt6-arm64"
+docker cp qt6-copy:/opt/qt6-arm64/. "$HOME/qt6-arm64/"
+docker rm qt6-copy
+
+Проверка:
+
+file "$HOME/qt6-arm64/bin/qmake"
+Ожидаемый результат должен содержать примерно`
+ARM aarch64
