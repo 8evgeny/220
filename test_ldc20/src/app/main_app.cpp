@@ -157,7 +157,7 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
 
     QTimer::singleShot(1000, this, [&]()
         {
-            qDebug()<<"GST PIPE STARTED";
+            qDebug()<<"ldc_worker->proc_CtrlInitConnection()";
             ldc_worker->proc_CtrlInitConnection();
         });//END QTimer::singleShot(1000, this, [&]()
 

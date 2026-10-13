@@ -60,7 +60,6 @@ qint32 LDC20I_QSerial::initConnection()
     emit deviceConnected();
 
     return !serialPort->isOpen();
-
 }
 
 qint32 LDC20I_QSerial::closeConnection()
