@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QtCreatorSession>
+<!-- Written by QtCreator 21.0.82, 2026-10-14T15:35:20. -->
+<qtcreator>
+ <data>
+  <variable>AutoTest.MessageFilter</variable>
+  <valuelist type="QVariantList">
+   <value type="int">9</value>
+   <value type="int">4</value>
+   <value type="int">21</value>
+   <value type="int">3</value>
+   <value type="int">20</value>
+   <value type="int">15</value>
+   <value type="int">11</value>
+   <value type="int">8</value>
+   <value type="int">16</value>
+   <value type="int">13</value>
+   <value type="int">7</value>
+   <value type="int">5</value>
+   <value type="int">14</value>
+   <value type="int">0</value>
+   <value type="int">10</value>
+   <value type="int">12</value>
+   <value type="int">1</value>
+   <value type="int">6</value>
+   <value type="int">22</value>
+   <value type="int">2</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>AutoTest.ShowDurations</variable>
+  <value type="bool">true</value>
+ </data>
+ <data>
+  <variable>CascadeSetActive</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>Color</variable>
+  <value type="QString">#666666</value>
+ </data>
+ <data>
+  <variable>DeployProjectDependencies</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>EditorSettings</variable>
+  <value type="QByteArray">AAAAD0VkaXRvck1hbmFnZXJWNwAAAAIAAABwAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AMgAyADAAXwBjAHIAbwBzAHMALwBzAHIAYwAvAEMATQBhAGsAZQBMAGkAcwB0AHMALgB0AHgAdAAAAAwAAAAAIAAAAAIAAAGCAAAAAAAAAAEAAAAAAAAAAAAAABAAAAA1AAAAAAAljpAAAAB4AC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AMgAyADAAXwBjAHIAbwBzAHMALwBzAHIAYwAvAGEAcABwAC8AQwBNAGEAawBlAEwAaQBzAHQAcwAuAHQAeAB0AAAADAAAAAAgAAAAAgAAC+gAAAAAAAAA6wAAAAEAAAAAAAAAfwAAAI8AAAAAACWOkAAAAAIAAABwAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AMgAyADAAXwBjAHIAbwBzAHMALwBzAHIAYwAvAEMATQBhAGsAZQBMAGkAcwB0AHMALgB0AHgAdAAAABwAQwBNAGEAawBlAEwAaQBzAHQAcwAuAHQAeAB0AAAAGENNYWtlUHJvamVjdC5DTWFrZUVkaXRvcgAAAAB4AC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AMgAyADAAXwBjAHIAbwBzAHMALwBzAHIAYwAvAGEAcABwAC8AQwBNAGEAawBlAEwAaQBzAHQAcwAuAHQAeAB0AAAAHABDAE0AYQBrAGUATABpAHMAdABzAC4AdAB4AHQAAAAYQ01ha2VQcm9qZWN0LkNNYWtlRWRpdG9yAAAAA00AAAANY3VycmVudGVkaXRvcgAAAHAALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwAyADIAMABfAGMAcgBvAHMAcwAvAHMAcgBjAC8AQwBNAGEAawBlAEwAaQBzAHQAcwAuAHQAeAB0AAAAMABDAE0AYQBrAGUAUAByAG8AagBlAGMAdAAuAEMATQBhAGsAZQBFAGQAaQB0AG8AcgAAACAAAAACAAABggAAAAAAAAABAAAAAAAAAAAAAAAQAAAANQAAAAIAAAC0AAAAcAAvAG0AZQBkAGkAYQAvAHUAcwBlAHIALwBXAE8AUgBLAC8ARwBpAHQAaAB1AGIALwAyADIAMAAvADIAMgAwAF8AYwByAG8AcwBzAC8AcwByAGMALwBDAE0AYQBrAGUATABpAHMAdABzAC4AdAB4AHQAAAAYQ01ha2VQcm9qZWN0LkNNYWtlRWRpdG9yAAAAIAAAAAIAAAGCAAAAAAAAAAEAAAAAAAAAAAAAABAAAAAhAAAAvAAAAHgALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwAyADIAMABfAGMAcgBvAHMAcwAvAHMAcgBjAC8AYQBwAHAALwBDAE0AYQBrAGUATABpAHMAdABzAC4AdAB4AHQAAAAYQ01ha2VQcm9qZWN0LkNNYWtlRWRpdG9yAAAAIAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAlAAAAAgAAAHAALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwAyADIAMABfAGMAcgBvAHMAcwAvAHMAcgBjAC8AQwBNAGEAawBlAEwAaQBzAHQAcwAuAHQAeAB0AAAAeAAvAG0AZQBkAGkAYQAvAHUAcwBlAHIALwBXAE8AUgBLAC8ARwBpAHQAaAB1AGIALwAyADIAMAAvADIAMgAwAF8AYwByAG8AcwBzAC8AcwByAGMALwBhAHAAcAAvAEMATQBhAGsAZQBMAGkAcwB0AHMALgB0AHgAdAAAAAAAAAAA</value>
+ </data>
+ <data>
+  <variable>ProjectDependencies</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>ProjectList</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">/media/user/WORK/Github/220/220_cross/src/CMakeLists.txt</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>Single Project/ProjectPath</variable>
+  <value type="QString">/media/user/WORK/Github/220/220_cross/src/CMakeLists.txt</value>
+ </data>
+ <data>
+  <variable>StartupProject</variable>
+  <value type="QString">/media/user/WORK/Github/220/220_cross/src/CMakeLists.txt</value>
+ </data>
+ <data>
+  <variable>value-ActiveMode</variable>
+  <value type="QString">Edit</value>
+ </data>
+ <data>
+  <variable>value-Bookmarks</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:128	1 </value>
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:152	2 --</value>
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:207	3</value>
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:209	4</value>
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:232	5</value>
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:258	6   Запуск IR  камеры</value>
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:278	7  Управление обьективом IR камеры</value>
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:316	8   Camera EV9500M</value>
+   <value type="QString">:/media/user/WORK/Github/220/220_cross/src/app/main_app.cpp:346	9</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>value-Breakpoints</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>value-DefaultFormats</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>value-Find</variable>
+  <valuemap type="QVariantMap">
+   <valuemap type="QVariantMap" key="AdvancedSearch">
+    <value type="QString" key="CurrentFilter">Files on Disk</value>
+    <valuemap type="QVariantMap" key="Files on Disk">
+     <value type="bool" key="GitGrepRecurse">false</value>
+    </valuemap>
+   </valuemap>
+   <valuemap type="QVariantMap" key="FindCompletions">
+    <valuelist type="QVariantList" key="Flags">
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">0</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">0</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+    </valuelist>
+    <valuelist type="QVariantList" key="Text">
+     <value type="QString">arm64_toolchain.cmake</value>
+     <value type="QString">LFR_POWER_ON_PL</value>
+     <value type="QString">[Главный поток] Лог обновляется в фоне. Найдено целе</value>
+     <value type="QString">sig_LDC_CMD</value>
+     <value type="QString">send_LDC_State</value>
+     <value type="QString">ldc_worker</value>
+     <value type="QString">LDC20I.UART_Device</value>
+     <value type="QString">ldc_uart_port</value>
+     <value type="QString">trac_tmml</value>
+     <value type="QString">trak_tmml</value>
+     <value type="QString">prebuild</value>
+     <value type="QString">tmml</value>
+     <value type="QString">/media/user/WORK/Github/220/test_ldc20/src</value>
+     <value type="QString">qgst-goen220</value>
+     <value type="QString">qgst-goen220-daemon</value>
+     <value type="QString">LDC20I_QSerial</value>
+     <value type="QString">rxRawDataSerialPortText</value>
+     <value type="QString">Goen220GyroPlatformHost</value>
+     <value type="QString">sig_VISCA_CONNECT</value>
+     <value type="QString">comInitConnection</value>
+     <value type="QString">encoder</value>
+     <value type="QString">player</value>
+     <value type="QString">Goen220Vdb</value>
+     <value type="QString">CMD_Parser::CMD_Parser()</value>
+    </valuelist>
+   </valuemap>
+  </valuemap>
+ </data>
+ <data>
+  <variable>value-IndividualFormatTypes</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>value-IndividualFormats</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>value-ProjectTree.ExpandData</variable>
+  <valuelist type="QVariantList">
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/220_cross/src</value>
+    <value type="int">-6</value>
+    <value type="QString">&lt;File System&gt;</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/220_cross/src/app</value>
+    <value type="int">400000</value>
+    <value type="QString">app</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/220_cross/src</value>
+    <value type="int">200000</value>
+    <value type="QString">qgst-goen220-daemon</value>
+   </valuelist>
+  </valuelist>
+ </data>
+ <data>
+  <variable>value-TaskWindow.Categories</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">Task.Category.QmlAnalysis</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>value-TaskWindow.IncludeWarnings</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>value-Watchers</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>valueKeys</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">ActiveMode</value>
+   <value type="QString">Bookmarks</value>
+   <value type="QString">Breakpoints</value>
+   <value type="QString">DefaultFormats</value>
+   <value type="QString">Find</value>
+   <value type="QString">IndividualFormatTypes</value>
+   <value type="QString">IndividualFormats</value>
+   <value type="QString">ProjectTree.ExpandData</value>
+   <value type="QString">TaskWindow.Categories</value>
+   <value type="QString">TaskWindow.IncludeWarnings</value>
+   <value type="QString">Watchers</value>
+  </valuelist>
+ </data>
+</qtcreator>

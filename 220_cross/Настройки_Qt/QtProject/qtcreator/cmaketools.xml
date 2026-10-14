@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QtCreatorCMakeTools>
+<!-- Written by QtCreator 21.0.82, 2026-10-12T11:52:48. -->
+<qtcreator>
+ <data>
+  <variable>CMakeTools.0</variable>
+  <valuemap type="QVariantMap">
+   <value type="bool" key="AutoCreateBuildDirectory">false</value>
+   <value type="bool" key="AutoDetected">true</value>
+   <value type="QString" key="Binary">/usr/bin/cmake</value>
+   <value type="QString" key="DetectionSource"></value>
+   <value type="QString" key="DisplayName">System CMake at /usr/bin/cmake</value>
+   <value type="QString" key="Id">{1bc4c97e-356b-4c96-ba1c-e5ace97448ee}</value>
+   <value type="QString" key="QchFile"></value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>CMakeTools.1</variable>
+  <valuemap type="QVariantMap">
+   <value type="bool" key="AutoCreateBuildDirectory">false</value>
+   <value type="bool" key="AutoDetected">false</value>
+   <value type="QString" key="Binary">ssh://khadas@192.168.1.108/usr/bin/cmake</value>
+   <value type="QString" key="DetectionSource">{1144a9cc-e911-4528-9d00-4fa369386980}</value>
+   <value type="QString" key="DisplayName">System CMake at ssh://khadas@192.168.1.108/usr/bin/cmake</value>
+   <value type="QString" key="Id">{db0b3dd3-4833-4654-b1dc-8a04e9d4753c}</value>
+   <value type="QString" key="QchFile"></value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>CMakeTools.Count</variable>
+  <value type="int">2</value>
+ </data>
+ <data>
+  <variable>CMakeTools.Default</variable>
+  <value type="QString">{1bc4c97e-356b-4c96-ba1c-e5ace97448ee}</value>
+ </data>
+ <data>
+  <variable>Version</variable>
+  <value type="int">1</value>
+ </data>
+</qtcreator>

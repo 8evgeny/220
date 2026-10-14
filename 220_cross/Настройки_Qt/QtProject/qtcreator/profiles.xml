@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QtCreatorProfiles>
+<!-- Written by QtCreator 21.0.82, 2026-10-14T15:26:28. -->
+<qtcreator>
+ <data>
+  <variable>Kit.IrrelevantAspects</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">Python.Interpreter</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>Profile.0</variable>
+  <valuemap type="QVariantMap">
+   <value type="bool" key="PE.Profile.AutoDetected">false</value>
+   <value type="QString" key="PE.Profile.AutoDetectionSource"></value>
+   <valuemap type="QVariantMap" key="PE.Profile.Data">
+    <valuelist type="QVariantList" key="CMake.ConfigurationKitInformation">
+     <value type="QString">CMAKE_CXX_COMPILER:FILEPATH=%{Compiler:Executable:Cxx}</value>
+     <value type="QString">CMAKE_C_COMPILER:FILEPATH=%{Compiler:Executable:C}</value>
+     <value type="QString">CMAKE_PREFIX_PATH:PATH=%{Qt:QT_INSTALL_PREFIX}</value>
+     <value type="QString">QT_QMAKE_EXECUTABLE:FILEPATH=%{Qt:qmakeExecutable}</value>
+    </valuelist>
+    <valuemap type="QVariantMap" key="CMake.GeneratorKitInformation">
+     <value type="QString" key="ExtraGenerator"></value>
+     <value type="QString" key="Generator">Unix Makefiles</value>
+     <value type="QString" key="Platform"></value>
+     <value type="QString" key="Toolset"></value>
+    </valuemap>
+    <value type="QString" key="CMakeProjectManager.CMakeKitInformation">{1bc4c97e-356b-4c96-ba1c-e5ace97448ee}</value>
+    <value type="QString" key="Debugger.Information">{fb5276cc-9d87-4455-8dc6-301b09d903f5}</value>
+    <value type="QByteArray" key="PE.Profile.BuildDeviceType">Desktop</value>
+    <value type="QString" key="PE.Profile.DeviceType">Desktop</value>
+    <valuemap type="QVariantMap" key="PE.Profile.ToolChainsV3">
+     <value type="QString" key="C">{5ce15135-ccdd-4565-a47b-c5b281544568}</value>
+     <value type="QString" key="Cxx">{6070f86d-23bd-495a-9f48-616152b12cb0}</value>
+    </valuemap>
+    <value type="int" key="QtSupport.QtInformation">1</value>
+   </valuemap>
+   <value type="UnknownType" key="PE.Profile.DeviceTypeForIcon"></value>
+   <value type="QString" key="PE.Profile.Icon"></value>
+   <value type="QString" key="PE.Profile.Id">{65949ffe-8017-462e-b6f8-de3a8c2f2aa4}</value>
+   <valuelist type="QVariantList" key="PE.Profile.MutableInfo"/>
+   <value type="QString" key="PE.Profile.Name">Desktop</value>
+   <value type="bool" key="PE.Profile.SDK">false</value>
+   <valuelist type="QVariantList" key="PE.Profile.StickyInfo"/>
+  </valuemap>
+ </data>
+ <data>
+  <variable>Profile.1</variable>
+  <valuemap type="QVariantMap">
+   <value type="bool" key="PE.Profile.AutoDetected">false</value>
+   <value type="QString" key="PE.Profile.AutoDetectionSource"></value>
+   <valuemap type="QVariantMap" key="PE.Profile.Data">
+    <value type="QString" key="CMake.AdditionalConfigurationParameters">'' ''</value>
+    <valuelist type="QVariantList" key="CMake.ConfigurationKitInformation">
+     <value type="QString">CMAKE_CXX_COMPILER:FILEPATH=%{Compiler:Executable:Cxx}</value>
+     <value type="QString">CMAKE_C_COMPILER:FILEPATH=%{Compiler:Executable:C}</value>
+     <value type="QString">CMAKE_TOOLCHAIN_FILE:FILEPATH=/media/user/WORK/Github/220/220_cross/arm64_toolchain_Qt_6_11.cmake</value>
+     <value type="QString">QT_HOST_PATH:UNINITIALIZED=/home/user/Qt/6.11.3/gcc_64</value>
+     <value type="QString">Qt6CoreTools_DIR:PATH=/home/user/Qt/6.11.3/gcc_64/lib/cmake/Qt6CoreTools</value>
+    </valuelist>
+    <valuemap type="QVariantMap" key="CMake.GeneratorKitInformation">
+     <value type="QString" key="ExtraGenerator"></value>
+     <value type="QString" key="Generator">Unix Makefiles</value>
+     <value type="QString" key="Platform"></value>
+     <value type="QString" key="Toolset"></value>
+    </valuemap>
+    <value type="QString" key="CMakeProjectManager.CMakeKitInformation">{1bc4c97e-356b-4c96-ba1c-e5ace97448ee}</value>
+    <value type="QString" key="Debugger.Information">{4db19a9b-70b8-4fd1-abde-a2c43088e52e}</value>
+    <value type="QString" key="PE.Profile.BuildDevice"></value>
+    <value type="QString" key="PE.Profile.BuildDeviceType">Desktop</value>
+    <value type="QString" key="PE.Profile.DeviceType">GenericLinuxOsType</value>
+    <value type="QString" key="PE.Profile.SysRoot">/home/user/sysroot_arm64_firefly</value>
+    <valuemap type="QVariantMap" key="PE.Profile.ToolChainsV3">
+     <value type="QString" key="C">{5e33e84f-cb36-4985-9f1c-eed8351d4ba2}</value>
+     <value type="QString" key="Cxx">{03d8992b-6cb5-4058-8bae-2fb88f35e75c}</value>
+    </valuemap>
+    <value type="int" key="QtSupport.QtInformation">-1</value>
+   </valuemap>
+   <value type="UnknownType" key="PE.Profile.DeviceTypeForIcon"></value>
+   <value type="QString" key="PE.Profile.Icon"></value>
+   <value type="QString" key="PE.Profile.Id">{4f8c572f-649a-4e44-b5b4-e9fed2702965}</value>
+   <valuelist type="QVariantList" key="PE.Profile.MutableInfo">
+    <value type="QString">PE.Profile.Device</value>
+   </valuelist>
+   <value type="QString" key="PE.Profile.Name">arm64_for_goen_220_qt_6_11</value>
+   <value type="bool" key="PE.Profile.SDK">false</value>
+   <valuelist type="QVariantList" key="PE.Profile.StickyInfo"/>
+  </valuemap>
+ </data>
+ <data>
+  <variable>Profile.2</variable>
+  <valuemap type="QVariantMap">
+   <valuelist type="QVariantList" key="PE.Kit.RelevantAspects">
+    <value type="QString">Python.Interpreter</value>
+    <value type="QString">Debugger.Information</value>
+    <value type="QString">PE.Profile.Environment</value>
+   </valuelist>
+   <value type="bool" key="PE.Profile.AutoDetected">true</value>
+   <value type="QString" key="PE.Profile.AutoDetectionSource">Python</value>
+   <valuemap type="QVariantMap" key="PE.Profile.Data">
+    <value type="QString" key="Debugger.Information">{fb5276cc-9d87-4455-8dc6-301b09d903f5}</value>
+    <value type="QString" key="Python.Interpreter">{ab2f50f5-4a5e-4138-bc35-a7c2fc616f50}</value>
+   </valuemap>
+   <value type="UnknownType" key="PE.Profile.DeviceTypeForIcon"></value>
+   <value type="QString" key="PE.Profile.Icon"></value>
+   <value type="QString" key="PE.Profile.Id">{ab2f50f5-4a5e-4138-bc35-a7c2fc616f50}</value>
+   <valuelist type="QVariantList" key="PE.Profile.MutableInfo"/>
+   <value type="QString" key="PE.Profile.Name">%{Python:Name}</value>
+   <value type="bool" key="PE.Profile.SDK">false</value>
+   <valuelist type="QVariantList" key="PE.Profile.StickyInfo">
+    <value type="QString">Python.Interpreter</value>
+   </valuelist>
+  </valuemap>
+ </data>
+ <data>
+  <variable>Profile.3</variable>
+  <valuemap type="QVariantMap">
+   <value type="bool" key="PE.Profile.AutoDetected">false</value>
+   <value type="QString" key="PE.Profile.AutoDetectionSource"></value>
+   <valuemap type="QVariantMap" key="PE.Profile.Data">
+    <value type="QString" key="CMake.AdditionalConfigurationParameters">'' ''</value>
+    <valuelist type="QVariantList" key="CMake.ConfigurationKitInformation">
+     <value type="QString">CMAKE_CXX_COMPILER:FILEPATH=%{Compiler:Executable:Cxx}</value>
+     <value type="QString">CMAKE_C_COMPILER:FILEPATH=%{Compiler:Executable:C}</value>
+     <value type="QString">CMAKE_TOOLCHAIN_FILE:FILEPATH=/media/user/WORK/Github/220/220_cross/arm64_toolchain.cmake</value>
+     <value type="QString">QT_HOST_PATH:UNINITIALIZED=/home/user/Qt/6.11.3/gcc_64</value>
+     <value type="QString">Qt6CoreTools_DIR:PATH=/home/user/Qt/6.11.3/gcc_64/lib/cmake/Qt6CoreTools</value>
+    </valuelist>
+    <valuemap type="QVariantMap" key="CMake.GeneratorKitInformation">
+     <value type="QString" key="ExtraGenerator"></value>
+     <value type="QString" key="Generator">Unix Makefiles</value>
+     <value type="QString" key="Platform"></value>
+     <value type="QString" key="Toolset"></value>
+    </valuemap>
+    <value type="QString" key="CMakeProjectManager.CMakeKitInformation">{1bc4c97e-356b-4c96-ba1c-e5ace97448ee}</value>
+    <value type="QString" key="Debugger.Information">{4db19a9b-70b8-4fd1-abde-a2c43088e52e}</value>
+    <value type="QString" key="PE.Profile.BuildDevice"></value>
+    <value type="QString" key="PE.Profile.BuildDeviceType">Desktop</value>
+    <value type="QString" key="PE.Profile.DeviceType">GenericLinuxOsType</value>
+    <value type="QString" key="PE.Profile.SysRoot">/home/user/sysroot_arm64_firefly</value>
+    <valuemap type="QVariantMap" key="PE.Profile.ToolChainsV3">
+     <value type="QString" key="C">{5e33e84f-cb36-4985-9f1c-eed8351d4ba2}</value>
+     <value type="QString" key="Cxx">{03d8992b-6cb5-4058-8bae-2fb88f35e75c}</value>
+    </valuemap>
+    <value type="int" key="QtSupport.QtInformation">-1</value>
+   </valuemap>
+   <value type="UnknownType" key="PE.Profile.DeviceTypeForIcon"></value>
+   <value type="QString" key="PE.Profile.Icon"></value>
+   <value type="QString" key="PE.Profile.Id">{96fc6117-c802-49fe-ac2b-8c3fb6ea8447}</value>
+   <valuelist type="QVariantList" key="PE.Profile.MutableInfo">
+    <value type="QString">PE.Profile.Device</value>
+   </valuelist>
+   <value type="QString" key="PE.Profile.Name">arm64_for_test_ldc_on_khadas</value>
+   <value type="bool" key="PE.Profile.SDK">false</value>
+   <valuelist type="QVariantList" key="PE.Profile.StickyInfo"/>
+  </valuemap>
+ </data>
+ <data>
+  <variable>Profile.4</variable>
+  <valuemap type="QVariantMap">
+   <value type="bool" key="PE.Profile.AutoDetected">false</value>
+   <value type="QString" key="PE.Profile.AutoDetectionSource"></value>
+   <valuemap type="QVariantMap" key="PE.Profile.Data">
+    <value type="QString" key="CMake.AdditionalConfigurationParameters">'' ''</value>
+    <valuelist type="QVariantList" key="CMake.ConfigurationKitInformation">
+     <value type="QString">CMAKE_CXX_COMPILER:FILEPATH=%{Compiler:Executable:Cxx}</value>
+     <value type="QString">CMAKE_C_COMPILER:FILEPATH=%{Compiler:Executable:C}</value>
+     <value type="QString">CMAKE_TOOLCHAIN_FILE:FILEPATH=/media/user/WORK/Github/220/220_cross/arm64_toolchain_Qt_6_7.cmake</value>
+     <value type="QString">QT_HOST_PATH:UNINITIALIZED=/home/user/Qt/6.7.3/gcc_64</value>
+     <value type="QString">Qt6CoreTools_DIR:PATH=/home/user/Qt/6.7.3/gcc_64/lib/cmake/Qt6CoreTools</value>
+    </valuelist>
+    <valuemap type="QVariantMap" key="CMake.GeneratorKitInformation">
+     <value type="QString" key="ExtraGenerator"></value>
+     <value type="QString" key="Generator">Unix Makefiles</value>
+     <value type="QString" key="Platform"></value>
+     <value type="QString" key="Toolset"></value>
+    </valuemap>
+    <value type="QString" key="CMakeProjectManager.CMakeKitInformation">{1bc4c97e-356b-4c96-ba1c-e5ace97448ee}</value>
+    <value type="QString" key="Debugger.Information">{4db19a9b-70b8-4fd1-abde-a2c43088e52e}</value>
+    <value type="QString" key="PE.Profile.BuildDevice"></value>
+    <value type="QString" key="PE.Profile.BuildDeviceType">Desktop</value>
+    <value type="QString" key="PE.Profile.DeviceType">GenericLinuxOsType</value>
+    <value type="QString" key="PE.Profile.SysRoot">/home/user/sysroot_arm64_firefly</value>
+    <valuemap type="QVariantMap" key="PE.Profile.ToolChainsV3">
+     <value type="QString" key="C">{5e33e84f-cb36-4985-9f1c-eed8351d4ba2}</value>
+     <value type="QString" key="Cxx">{03d8992b-6cb5-4058-8bae-2fb88f35e75c}</value>
+    </valuemap>
+    <value type="int" key="QtSupport.QtInformation">-1</value>
+   </valuemap>
+   <value type="UnknownType" key="PE.Profile.DeviceTypeForIcon"></value>
+   <value type="QString" key="PE.Profile.Icon"></value>
+   <value type="QString" key="PE.Profile.Id">{edf414b0-7627-4fb1-966e-37d3371c8267}</value>
+   <valuelist type="QVariantList" key="PE.Profile.MutableInfo">
+    <value type="QString">PE.Profile.Device</value>
+   </valuelist>
+   <value type="QString" key="PE.Profile.Name">arm64_for_goen_220_qt_6_7</value>
+   <value type="bool" key="PE.Profile.SDK">false</value>
+   <valuelist type="QVariantList" key="PE.Profile.StickyInfo"/>
+  </valuemap>
+ </data>
+ <data>
+  <variable>Profile.Count</variable>
+  <value type="int">5</value>
+ </data>
+ <data>
+  <variable>Profile.Default</variable>
+  <value type="QString">{65949ffe-8017-462e-b6f8-de3a8c2f2aa4}</value>
+ </data>
+ <data>
+  <variable>Version</variable>
+  <value type="int">1</value>
+ </data>
+</qtcreator>
