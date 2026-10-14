@@ -1,0 +1,40 @@
+user@debian:/media/user/WORK/Github/220/220_cross/build$ size -A ./qgst-goen220 
+./qgst-goen220  :
+section                  size     addr
+.note.gnu.build-id         36      624
+.interp                    27      660
+.gnu.hash                 180      688
+.dynsym                  8568      872
+.dynstr                 11258     9440
+.gnu.version              714    20698
+.gnu.version_r            400    21416
+.rela.dyn               61008    21816
+.rela.plt                6984    82824
+.init                      28    89808
+.plt                     4688    89840
+.text                  523900    94528
+.fini                      24   618428
+.rodata                 93971   618464
+.eh_frame_hdr           32492   712436
+.eh_frame              129360   744928
+.gcc_except_table       10644   874288
+.note.ABI-tag              32   884932
+.note.package             116   884964
+.init_array                40   962384
+.fini_array                 8   962424
+.data.rel.ro            17552   962432
+.dynamic                  688   979984
+.got                     2344   980672
+.got.plt                 2352   983016
+.data                    5784   985368
+.qtversion                 16   991152
+.bss                      768   991168
+.comment                   31        0
+.debug_aranges          87664        0
+.debug_info          10580027        0
+.debug_abbrev          306266        0
+.debug_line            402754        0
+.debug_str            1105599        0
+.debug_line_str         17551        0
+.debug_rnglists         56998        0
+Total                13470872
