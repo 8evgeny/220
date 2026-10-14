@@ -4,8 +4,8 @@ set -e
 
 PROJECT_ROOT=$(pwd)
 BUILD_DIR="$PROJECT_ROOT/build"
-TOOLCHAIN_FILE="$PROJECT_ROOT/arm64_toolchain.cmake"
-QT_HOST_PATH="/home/user/Qt/6.11.3/gcc_64"
+TOOLCHAIN_FILE="$PROJECT_ROOT/arm64_toolchain_Qt_6_7.cmake"
+QT_HOST_PATH="/home/user/Qt/6.7.3/gcc_64"
 
 echo "Cleaning previous build..."
 # Полное удаление папки сборки обязательно!
