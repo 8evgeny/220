@@ -1,0 +1,27 @@
+sudo ip route replace 169.254.0.51/32 dev eno1 src 169.254.0.108
+ping -I eno1 -c 3 169.254.0.51
+ip neigh show 169.254.0.51 dev eno1
+
+
+#  sudo ip route replace 169.254.0.2/32 dev vmnet2 src 169.254.0.1
+sudo ip route replace 169.254.0.2/32 dev eno1 src 169.254.0.1
+ip route get 169.254.0.2
+ping -c 3 169.254.0.2
+
+
+sudo ip a a 169.254.0.108/24 dev eno1 && \
+sudo ip route replace 169.254.0.51/32 dev eno1 src 169.254.0.108 && \
+sudo ip route replace 169.254.0.2/32 dev eno1 src 169.254.0.1
+
+
+rsync -av /media/user/WORK/Github/220/220_cross/build/qgst-goen220 khadas@192.168.1.96:/home/khadas/qt_projects/qgst-goen220/qgst-goen220
+rsync -av /media/user/WORK/Github/220/220_cross/build/qgst-goen220 ff2:/home/khadas/qt_projects/qgst-goen220/qgst-goen220
+
+
+ssh ff2
+sudo journalctl -u qgst-goen220.service -f -b 
+
+• По умолчанию journalctl открывает вывод через утилиту less. Нажмите клавишу q, чтобы выйти из режима просмотра.
+• -f (follow): включает режим «следования» (как tail -f). Вы будете видеть новые строки вывода по мере их появления.
+• -n 50: показывает последние 50 строк лога перед тем, как начать выводить новые в реальном времени (количество строк можно менять).
+• -b: показывает логи только с момента текущей загрузки системы, отсекая старые записи.

@@ -30,6 +30,6 @@ cmake ../src \
 echo "Building..."
 cmake --build . --parallel $(nproc)
 
-rsync -av /media/user/WORK/Github/220/220_cross/build/qgst-goen220  khadas@192.168.1.96:/home/khadas/qt_projects/qgst-goen220/qgst-goen220_cross
+#rsync -av /media/user/WORK/Github/220/220_cross/build/qgst-goen220  khadas@192.168.1.96:/home/khadas/qt_projects/qgst-goen220/qgst-goen220
 
 echo "Done."

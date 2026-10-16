@@ -1,9 +1,0 @@
-sudo ip route replace 169.254.0.51/32 dev eno1 src 169.254.0.108
-ping -I eno1 -c 3 169.254.0.51
-ip neigh show 169.254.0.51 dev eno1
-
-
-#  sudo ip route replace 169.254.0.2/32 dev vmnet2 src 169.254.0.1
-sudo ip route replace 169.254.0.2/32 dev eno1 src 169.254.0.1
-ip route get 169.254.0.2
-ping -c 3 169.254.0.2
