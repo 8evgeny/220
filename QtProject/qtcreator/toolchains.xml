@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorToolChains>
-<!-- Written by QtCreator 21.0.82, 2026-10-12T16:14:01. -->
+<!-- Written by QtCreator 21.0.82, 2026-10-16T12:14:03. -->
 <qtcreator>
  <data>
   <variable>ToolChain.0</variable>
@@ -349,6 +349,50 @@
   </valuemap>
  </data>
  <data>
+  <variable>ToolChain.22</variable>
+  <valuemap type="QVariantMap">
+   <value type="QString" key="ExplicitCodeModelTargetTriple"></value>
+   <value type="bool" key="ManuallyProvidedCxxPath">false</value>
+   <value type="QString" key="ProjectExplorer.GccToolChain.OriginalTargetTriple">aarch64-linux-gnu</value>
+   <value type="QString" key="ProjectExplorer.GccToolChain.Path">ssh://khadas@192.168.1.96/bin/aarch64-linux-gnu-g++</value>
+   <valuelist type="QVariantList" key="ProjectExplorer.GccToolChain.PlatformCodeGenFlags"/>
+   <valuelist type="QVariantList" key="ProjectExplorer.GccToolChain.PlatformLinkerFlags"/>
+   <valuelist type="QVariantList" key="ProjectExplorer.GccToolChain.SupportedAbis">
+    <value type="QString">arm-linux-generic-elf-64bit</value>
+   </valuelist>
+   <value type="QString" key="ProjectExplorer.GccToolChain.TargetAbi">arm-linux-generic-elf-64bit</value>
+   <value type="bool" key="ProjectExplorer.ToolChain.Autodetect">false</value>
+   <value type="UnknownType" key="ProjectExplorer.ToolChain.BundleId"></value>
+   <value type="QString" key="ProjectExplorer.ToolChain.DetectionSource">{1144a9cc-e911-4528-9d00-4fa369386980}</value>
+   <value type="QString" key="ProjectExplorer.ToolChain.DisplayName">GCC (arm 64bit at &quot;ssh://khadas@192.168.1.96/bin/aarch64-linux-gnu-g++&quot;)</value>
+   <value type="QString" key="ProjectExplorer.ToolChain.Id">ProjectExplorer.ToolChain.Gcc:{371f9089-b785-4a3c-bcd8-5c47204e91e0}</value>
+   <value type="int" key="ProjectExplorer.ToolChain.Language">2</value>
+   <value type="QString" key="ProjectExplorer.ToolChain.LanguageV2">Cxx</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>ToolChain.23</variable>
+  <valuemap type="QVariantMap">
+   <value type="QString" key="ExplicitCodeModelTargetTriple"></value>
+   <value type="bool" key="ManuallyProvidedCxxPath">false</value>
+   <value type="QString" key="ProjectExplorer.GccToolChain.OriginalTargetTriple">aarch64-linux-gnu</value>
+   <value type="QString" key="ProjectExplorer.GccToolChain.Path">ssh://khadas@192.168.1.96/bin/aarch64-linux-gnu-gcc</value>
+   <valuelist type="QVariantList" key="ProjectExplorer.GccToolChain.PlatformCodeGenFlags"/>
+   <valuelist type="QVariantList" key="ProjectExplorer.GccToolChain.PlatformLinkerFlags"/>
+   <valuelist type="QVariantList" key="ProjectExplorer.GccToolChain.SupportedAbis">
+    <value type="QString">arm-linux-generic-elf-64bit</value>
+   </valuelist>
+   <value type="QString" key="ProjectExplorer.GccToolChain.TargetAbi">arm-linux-generic-elf-64bit</value>
+   <value type="bool" key="ProjectExplorer.ToolChain.Autodetect">false</value>
+   <value type="UnknownType" key="ProjectExplorer.ToolChain.BundleId"></value>
+   <value type="QString" key="ProjectExplorer.ToolChain.DetectionSource">{1144a9cc-e911-4528-9d00-4fa369386980}</value>
+   <value type="QString" key="ProjectExplorer.ToolChain.DisplayName">GCC (arm 64bit at &quot;ssh://khadas@192.168.1.96/bin/aarch64-linux-gnu-gcc&quot;)</value>
+   <value type="QString" key="ProjectExplorer.ToolChain.Id">ProjectExplorer.ToolChain.Gcc:{e0530030-6d0d-43b4-975d-e03a8e422095}</value>
+   <value type="int" key="ProjectExplorer.ToolChain.Language">1</value>
+   <value type="QString" key="ProjectExplorer.ToolChain.LanguageV2">C</value>
+  </valuemap>
+ </data>
+ <data>
   <variable>ToolChain.3</variable>
   <valuemap type="QVariantMap">
    <value type="QString" key="ExplicitCodeModelTargetTriple"></value>
@@ -516,7 +560,7 @@
  </data>
  <data>
   <variable>ToolChain.Count</variable>
-  <value type="int">22</value>
+  <value type="int">24</value>
  </data>
  <data>
   <variable>Version</variable>
