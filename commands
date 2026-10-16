@@ -18,8 +18,7 @@ rsync -av /media/user/WORK/Github/220/220_cross/build/qgst-goen220 khadas@192.16
 rsync -av /media/user/WORK/Github/220/220_cross/build/qgst-goen220 ff2:/home/khadas/qt_projects/qgst-goen220/qgst-goen220
 
 
-ssh ff2
-sudo journalctl -u qgst-goen220.service -f -b 
+ssh ff2 && sudo journalctl -u qgst-goen220.service -f -b 
 
 • По умолчанию journalctl открывает вывод через утилиту less. Нажмите клавишу q, чтобы выйти из режима просмотра.
 • -f (follow): включает режим «следования» (как tail -f). Вы будете видеть новые строки вывода по мере их появления.
