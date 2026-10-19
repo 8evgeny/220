@@ -19,9 +19,6 @@ public:
     /**
      * @brief Прямоугольник (пиксели)
      */
-    void reset();
-    bool isValid() const;   // ← добавить
-
     struct Rect {
         unsigned short cx; ///< Центр X (пикс.)
         unsigned short cy; ///< Центр Y (пикс.)
@@ -152,7 +149,6 @@ public:
      * @note для отладочных целей.
      */
     void* tctl();
-
 
 
 private:

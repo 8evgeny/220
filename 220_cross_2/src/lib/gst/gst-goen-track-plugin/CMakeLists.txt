@@ -166,7 +166,7 @@ if(${USE_GPU} EQUAL 1)
 endif() # END if(${USE_GPU} EQUAL 1)
 
 if(${USE_GPU} EQUAL 2)
-    include_directories({$CMAKE_SOURCE_DIR})
+    include_directories($CMAKE_SOURCE_DIR})
     find_package(OpenCL REQUIRED)
     include_directories (${OpenCL_INCLUDE_DIRS})
     set(GPU_LIB ${OpenCL_LIBRARY})
@@ -240,8 +240,8 @@ endif()
 
 add_library(${PROJECT_NAME} MODULE
 
-
-
+ tracshats/trac_api.hpp
+ tracshats/trac_struct.hpp
 
     main_app.h main_app.cpp
     trsh_wrapper.cpp trsh_wrapper.h
@@ -272,7 +272,7 @@ target_link_libraries(${PROJECT_NAME}
     ${LIBGIO_LIBRARY}
     ${LIBDBUS_LIBRARY}
 
-   -L"${CMAKE_BINARY_DIR}/../../build/gst/"  ${trac_lib_name}
+   -L"${CMAKE_BINARY_DIR}/../prebuild/gst"  ${trac_lib_name}
 
 
 )
@@ -283,7 +283,7 @@ message(" OCV " ${OpenCV_INCLUDE_DIRS} " LIB:"    ${OpenCV_LIBS})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../build/gst
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../build/gst
 )
 
 

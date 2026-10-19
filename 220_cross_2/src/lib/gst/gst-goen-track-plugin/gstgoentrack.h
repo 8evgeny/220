@@ -15,6 +15,7 @@ typedef void (*FpsCallback)(gdouble fps, gboolean stream_active, gpointer user_d
 struct _GstGoenTrack {
     GstElement element;
 
+    /* Properties */
     FpsCallback callback;
     gpointer user_data;
     guint interval;
@@ -22,23 +23,19 @@ struct _GstGoenTrack {
 
     float roiExt;
     bool bTrackIsLockedOn = false;
-    bool bTrackIsActive   = false;
-    bool bIsNewTargetObj  = false;
-    bool bIsStopTracking  = true;
-
-    char sConfigFile[512] = "tracking.ini";   // был [20] -> UB
-
-    // детект смены разрешения (переключение канала через selector)
-    int  lastFrameWidth  = -1;
-    int  lastFrameHeight = -1;
-    guint framesSinceReinit   = 0;
-    guint reinitFrameInterval = 0;   // 0 = по счётчику выключено
-    bool bForceReinit = false;   // ← форс пересоздания трекера по команде
-
+    bool bTrackIsActive = false;
+    bool bIsNewTargetObj = false;
+    bool bIsStopTracking = true;
+    char sConfigFile[20] = "tracking.ini";
+    /* State */
     GstClockTime last_time;
     guint frame_count;
+    guint timer_id;
     GMutex lock;
     gboolean stream_active;
+
+
+
 
 
 };
@@ -49,7 +46,6 @@ void handle_get_out_object(GstElement *element, ushort &cx, ushort &cy, ushort &
 void handle_set_stop_tracking(GstElement *element);
 void handle_set_roi_ext(GstElement *element, gdouble new_roi_ext);
 void handle_set_target_object( GstElement *element, ushort cx, ushort cy, ushort w, ushort h);
-void handle_set_cfg_filename(GstElement *element, const char *sFileName);
-void handle_force_reinit(GstElement *element);
+void handle_set_cfg_filename( GstElement *element, char sFileName[20]);
 
 G_END_DECLS

@@ -19,7 +19,7 @@ TrShWrapper::Rect rectObject;
 TrShWrapper::Rect rectTargetObject;
 TrShWrapper::Rect rectROI;
 
-static char sSavedIniPath[256] = "tracking.ini";
+
 
 
 /* Plugin registration */
@@ -79,51 +79,48 @@ static void gst_goen_track_class_init(GstGoenTrackClass *klass) {
 
 }
 
-// ─── Таймер: пересоздание трекера каждые N секунд (тест) ────────────
-
-
-
-
-static void gst_goen_track_finalize(GObject *object) {
-    GstGoenTrack *self = GST_GOEN_TRACK(object);
-
-    std::cerr << "freeing track_wrapper..." << std::endl;
-    if (track_wrapper) { delete track_wrapper; track_wrapper = nullptr; }
-    std::cerr << "freeing track_wrapper completed" << std::endl;
-
-    g_mutex_clear(&self->lock);
-    G_OBJECT_CLASS(gst_goen_track_parent_class)->finalize(object);
-}
-
-
-
 static void gst_goen_track_init(GstGoenTrack *self) {
     GstPad *sinkpad = gst_pad_new_from_static_template(&sink_template, "sink");
-    GstPad *srcpad  = gst_pad_new_from_static_template(&src_template, "src");
+    GstPad *srcpad = gst_pad_new_from_static_template(&src_template, "src");
 
     gst_pad_set_chain_function(sinkpad, gst_goen_track_chain);
     gst_pad_set_event_function(sinkpad, gst_goen_track_sink_event);
 
     gst_element_add_pad(GST_ELEMENT(self), sinkpad);
     gst_element_add_pad(GST_ELEMENT(self), srcpad);
+   // std::cout<<"TrackerConfigFile"<<std::endl;
+    //track_wrapper.setIniFileNamePath(self->sConfigFile);
 
     track_wrapper = new TrShWrapper();
 
-    self->interval  = 1000;
-    self->callback  = NULL;
+    self->interval = 1000; // 1 second updates
+    self->callback = NULL;
     self->user_data = NULL;
     self->last_time = 0;
     self->frame_count = 0;
     self->stream_active = FALSE;
-
-    self->lastFrameWidth  = -1;     // ещё не было кадров
-    self->lastFrameHeight = -1;
-    self->framesSinceReinit   = 0;
-    self->reinitFrameInterval = 0;  // переключение — по смене caps, не счётчиком
-
+   // self->timer_id = g_timeout_add(self->interval, on_interval_timeout, self);
     g_mutex_init(&self->lock);
+
+
 }
 
+
+static void gst_goen_track_finalize(GObject *object) {
+    GstGoenTrack *self = GST_GOEN_TRACK(object);
+
+    std::cerr << "freeing track_wrapper...\r\n";
+
+    delete(track_wrapper);
+    std::cerr << "freeing track_wrapper completed\r\n";
+    if (self->timer_id) {
+        g_source_remove(self->timer_id);
+        self->timer_id = 0;
+    }
+
+    g_mutex_clear(&self->lock);
+    G_OBJECT_CLASS(gst_goen_track_parent_class)->finalize(object);
+}
 
 // static gboolean on_interval_timeout(gpointer user_data) {
 //     GstGoenTrack *self = GST_GOEN_TRACK(user_data);
@@ -185,8 +182,6 @@ static gboolean gst_goen_track_sink_event(GstPad *pad, GstObject *parent, GstEve
     gst_object_unref(srcpad);
     return ret;
 }
-
-
 
 void handle_set_roi_ext(GstElement *element, gdouble new_roi_ext)
 {
@@ -268,23 +263,21 @@ void handle_get_active_lock(GstElement *element, bool &bActive, bool &bLock) {
 
 
 // D-Bus method handler for SetRect
-void handle_set_cfg_filename(GstElement *element, const char *sFileName)
+void handle_set_cfg_filename( GstElement *element, char sFileName[20])
 {
     g_return_if_fail(GST_IS_GOEN_TRACK(element));
-    GstGoenTrack *self = GST_GOEN_TRACK(element);
 
+    GstGoenTrack *self = GST_GOEN_TRACK(element);
     g_mutex_lock(&self->lock);
 
-    // Безопасное копирование с гарантированным завершением
-    strncpy(self->sConfigFile, sFileName, sizeof(self->sConfigFile) - 1);
-    self->sConfigFile[sizeof(self->sConfigFile) - 1] = '\0';
-
+    strcpy(self->sConfigFile, sFileName);
     track_wrapper->setIniFileNamePath(self->sConfigFile);
-
-    std::cerr << "handle_set_cfg_filename '" << self->sConfigFile << "'"
-              << std::endl;
+    std::cout<<"handle_set_cfg_filename "<<self->sConfigFile<<std::endl;
 
     g_mutex_unlock(&self->lock);
+
+    GST_INFO("Updated ConfigFileName: filename=%s", sFileName);
+
 }
 
 
@@ -314,82 +307,66 @@ void handle_set_target_object(GstElement *element,  ushort cx, ushort cy, ushort
 
 }
 
-void handle_force_reinit(GstElement *element)
-{
-    g_return_if_fail(GST_IS_GOEN_TRACK(element));
-    GstGoenTrack *self = GST_GOEN_TRACK(element);
 
-    g_mutex_lock(&self->lock);
-    self->bForceReinit = true;     // chain пересоздаст трекер на следующем кадре
-    self->lastFrameWidth  = -1;    // сбрасываем «якорь» разрешения
-    self->lastFrameHeight = -1;
-    g_mutex_unlock(&self->lock);
 
-    GST_INFO("Forced tracker reinit requested");
-}
 static GstFlowReturn gst_goen_track_chain(GstPad *pad, GstObject *parent, GstBuffer *buf) {
     GstGoenTrack *self = GST_GOEN_TRACK(parent);
+    GstClockTime timestamp = GST_BUFFER_PTS(buf);
     GstPad *srcpad = gst_element_get_static_pad(GST_ELEMENT(self), "src");
     GstFlowReturn ret;
 
     g_mutex_lock(&self->lock);
+    // if (GST_CLOCK_TIME_IS_VALID(timestamp)) {
+    //     if (self->last_time == 0) {
+    //         self->last_time = timestamp;
+    //     }
+    //     self->frame_count++;
+    // }
+
+
+
 
     GstMapInfo in_map;
-    if (!gst_buffer_map(buf, &in_map, GST_MAP_READ)) {
-        g_mutex_unlock(&self->lock);
-        gst_object_unref(srcpad);
+    if (!gst_buffer_map(buf, &in_map, GST_MAP_READ))
+    {
+        GST_ERROR_OBJECT(self, "Failed to map buffers");
         return GST_FLOW_ERROR;
     }
-
     GstVideoInfo in_info;
-    gst_video_info_from_caps(&in_info, gst_pad_get_current_caps(pad));
-    int width  = GST_VIDEO_INFO_WIDTH(&in_info);
+    gst_video_info_from_caps(&in_info, gst_pad_get_current_caps(srcpad));
+    int width = GST_VIDEO_INFO_WIDTH(&in_info);
     int height = GST_VIDEO_INFO_HEIGHT(&in_info);
-
-    // ─── Принудительный reinit (по команде переключения канала) ──────
-    bool resChanged = (self->lastFrameWidth > 0 &&
-                       (width != self->lastFrameWidth || height != self->lastFrameHeight));
-
-    if (self->bForceReinit || resChanged) {
-        std::cerr << "[goentrack] Reinit ("
-                  << (self->bForceReinit ? "forced" : "resolution")
-                  << ") -> " << width << "x" << height << std::endl;
-
-        track_wrapper->stopTracking();
-        delete track_wrapper;
-        track_wrapper = new TrShWrapper();
-        track_wrapper->setIniFileNamePath(self->sConfigFile);
-
-        self->bForceReinit = false;   // ← сбрасываем флаг после пересоздания
-    }
-    self->lastFrameWidth  = width;
-    self->lastFrameHeight = height;
-
-    // ─── Команды извне (target/stop) ─────────────────────────────────
-    if (self->bIsNewTargetObj) track_wrapper->setTargetObject(rectTargetObject);
-    if (self->bIsStopTracking) track_wrapper->stopTracking();
-    self->bIsStopTracking = false;
-    self->bIsNewTargetObj = false;
-
-    // ─── Трекинг кадра ───────────────────────────────────────────────
+    GST_VIDEO_INFO_IS_RGB(&in_info);
     cv::Mat rgb_in(height, width, CV_8UC3, in_map.data);
     cv::Mat greyMat;
     cv::cvtColor(rgb_in, greyMat, cv::COLOR_RGBA2GRAY);
+    if(self->bIsNewTargetObj)
+    {
+        track_wrapper->setTargetObject(rectTargetObject);
+    }
+
+    if(self->bIsStopTracking)
+    {
+        track_wrapper->stopTracking();
+    }
+    self->bIsStopTracking =false;
+    self->bIsNewTargetObj = false;
 
     track_wrapper->trackFrame(greyMat);
 
-    rectObject             = track_wrapper->objectRect();
-    rectROI                = track_wrapper->roiRect();
-    self->bTrackIsActive   = track_wrapper->active();
+
+    rectObject= track_wrapper->objectRect();
+    rectROI = track_wrapper->roiRect();
+    self->bTrackIsActive = track_wrapper->active();
     self->bTrackIsLockedOn = track_wrapper->lockedOn();
 
+
+
     g_mutex_unlock(&self->lock);
+
     gst_buffer_unmap(buf, &in_map);
 
     ret = gst_pad_push(srcpad, buf);
     gst_object_unref(srcpad);
     return ret;
 }
-
-
-

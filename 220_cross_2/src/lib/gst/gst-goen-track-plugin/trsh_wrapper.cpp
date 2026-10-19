@@ -8,8 +8,6 @@ class TrShWrapperPrivate {
 
 public:
 
-
-
     void createTracker(const cv::Mat &f)
     {
         if (m_t != nullptr)
@@ -50,10 +48,6 @@ public:
 
     bool track(cv::Mat &f)
     {
-        if (!m_t)          // ← трекер не создан (INI не найден) — выходим
-            return false;
-
-
         m_t_ctl.work_number = m_f_cnt;
         m_t_ctl.img_orig_data = f.data;
 
@@ -171,20 +165,6 @@ float TrShWrapper::roiExt() const
 void TrShWrapper::setRoiExt(float ext)
 {
     m_d->m_ext_wh = ext;
-}
-
-void TrShWrapper::reset()
-{
-    m_d->m_t.reset();
-    m_d->m_f_cnt = 0;
-    m_d->m_reinit_frm = -1;
-    m_d->m_obj = {};
-    m_d->m_roi = {};
-    std::cerr << "[TrShWrapper] reset() — tracker destroyed" << std::endl;
-}
-
-bool TrShWrapper::isValid() const {
-    return m_d->m_t != nullptr;
 }
 
 void TrShWrapper::setTargetObject(const Rect &objectRect)

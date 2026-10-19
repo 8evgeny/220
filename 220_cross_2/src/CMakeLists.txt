@@ -35,12 +35,12 @@ endif()
 
  add_subdirectory( app)
 
- # add_subdirectory( lib/gst/gst-goen-fps-mon-plugin)
+ add_subdirectory( lib/gst/gst-goen-fps-mon-plugin)
 
 
- # add_subdirectory( lib/gst/gst-goen-ircam-plugin)
+ add_subdirectory( lib/gst/gst-goen-ircam-plugin)
 
- # add_subdirectory( lib/gst/gst-goen-track-plugin)
+ add_subdirectory( lib/gst/gst-goen-track-plugin)
 
 
 # add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Data)
