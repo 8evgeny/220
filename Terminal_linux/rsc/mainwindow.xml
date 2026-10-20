@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mainwindow>
+    <INVERTED_POSITION>true</INVERTED_POSITION>
+    <MEDIA_PATH>media</MEDIA_PATH>
+    <PANEL_COM_PORT_NAME>COM4</PANEL_COM_PORT_NAME>
+    <WINDOW_TITLE>Терминал ОЭЦН/ГОЭН-220.  (сборка: 143)</WINDOW_TITLE>
+</mainwindow>

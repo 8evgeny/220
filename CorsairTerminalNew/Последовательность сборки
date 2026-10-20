@@ -1,0 +1,15 @@
+Запускаем Docker контейнер   Docker/start.sh
+
+внутри контейнера mkdir build && cd build
+qmake ..
+
+После этого в папке build создан Makefile
+make -j12
+
+далее копируем библиотеки необходимые для работы 
+docker cp -L buildCorsair:/lib ./lib_for_start
+
+Удаляем несовместимую версию libc
+rm -rf lib_for_start/lib/x86_64-linux-gnu/libc.so.6
+
+Работает но падает - оставляю вариант Docker

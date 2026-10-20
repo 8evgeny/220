@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gspcontroller>
+    <X_ANGLE_MAX>179</X_ANGLE_MAX>
+    <X_ANGLE_MIN>-179</X_ANGLE_MIN>
+    <X_SPEED_MAX>45000</X_SPEED_MAX>
+    <Z_ANGLE_MAX>179</Z_ANGLE_MAX>
+    <Z_ANGLE_MIN>-179</Z_ANGLE_MIN>
+    <Z_ANGLE_SHIFT>0</Z_ANGLE_SHIFT>
+    <Z_SPEED_MAX>45000</Z_SPEED_MAX>
+</gspcontroller>

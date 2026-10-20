@@ -1,0 +1,3 @@
+docker load < build_corsair.tar
+
+проверка образа в системе:  docker images
