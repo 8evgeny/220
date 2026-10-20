@@ -13,6 +13,8 @@ sudo ip a a 169.254.0.108/24 dev eno1 && \
 sudo ip route replace 169.254.0.51/32 dev eno1 src 169.254.0.108 && \
 sudo ip route replace 169.254.0.2/32 dev eno1 src 169.254.0.1
 
+sudo ip a a 169.254.0.2/24 dev eno1 && \
+sudo ip route replace 169.254.0.51/32 dev eno1 src 169.254.0.2
 
 rsync -av /media/user/WORK/Github/220/220_cross/build/qgst-goen220 khadas@192.168.1.96:/home/khadas/qt_projects/qgst-goen220/qgst-goen220
 rsync -av /media/user/WORK/Github/220/220_cross/build/qgst-goen220 ff2:/home/khadas/qt_projects/qgst-goen220/qgst-goen220
