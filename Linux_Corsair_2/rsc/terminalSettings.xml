@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terminalSettings>
+    <enable_click_control>false</enable_click_control>
+    <enable_infographics_on_picture>true</enable_infographics_on_picture>
+    <enable_infographics_on_record>true</enable_infographics_on_record>
+    <enable_infographics_on_screen>true</enable_infographics_on_screen>
+    <enable_joystick>true</enable_joystick>
+    <enable_panel>false</enable_panel>
+    <enable_tracker_deviation>false</enable_tracker_deviation>
+    <infographics_angleInversionX>false</infographics_angleInversionX>
+    <infographics_angleInversionZ>false</infographics_angleInversionZ>
+    <joystick_x_inv>false</joystick_x_inv>
+    <joystick_z_inv>false</joystick_z_inv>
+    <keyboard_x_inv>false</keyboard_x_inv>
+    <keyboard_z_inv>false</keyboard_z_inv>
+    <last_path>rsc/</last_path>
+    <version>1.0.0.0</version>
+</terminalSettings>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fusionCtrlModel>
+    <enable>false</enable>
+    <last_path>rsc/</last_path>
+    <method>0</method>
+    <method_agc_en>false</method_agc_en>
+    <method_c>2</method_c>
+    <offset_x>0</offset_x>
+    <offset_y>0</offset_y>
+    <version>1.0.0.0</version>
+</fusionCtrlModel>

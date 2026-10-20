@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tvCtrlModel>
+    <autofocus_host_en>false</autofocus_host_en>
+    <autofocus_lens_en>true</autofocus_lens_en>
+    <exp>1</exp>
+    <field_grad>58.099998474121094</field_grad>
+    <focus>0</focus>
+    <focus_drive>0</focus_drive>
+    <focus_mm>546133.3125</focus_mm>
+    <fps>0</fps>
+    <hres>1920</hres>
+    <last_path>rsc/</last_path>
+    <lens_status>0</lens_status>
+    <lens_temp>72</lens_temp>
+    <sensor_status>0</sensor_status>
+    <version>1.0.0.0</version>
+    <vres>1080</vres>
+    <zoom>0</zoom>
+    <zoom_drive>0</zoom_drive>
+</tvCtrlModel>
