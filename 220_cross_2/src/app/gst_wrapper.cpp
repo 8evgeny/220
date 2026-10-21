@@ -662,6 +662,28 @@ void GST_Wrapper::proc_Thread_Finished()
 //  When SRT connects:
 //    srtsink starts accepting → mux unblocks → TS flows normally
 // ═══════════════════════════════════════════════════════════════════
+
+std::string getPipelineString(GstElement *pipeline)
+{
+    std::stringstream ss;
+    GstIterator *iter = gst_bin_iterate_elements(GST_BIN(pipeline));
+    GValue item = G_VALUE_INIT;
+    bool first = true;
+
+    while (gst_iterator_next(iter, &item) == GST_ITERATOR_OK) {
+        GstElement *element = GST_ELEMENT(g_value_get_object(&item));
+
+        if (!first) ss << " ! ";
+        ss << GST_ELEMENT_NAME(element);
+        first = false;
+
+        g_value_unset(&item);
+    }
+
+    gst_iterator_free(iter);
+    return ss.str();
+}
+
 GstElement* GST_Wrapper::run_GST_StreamMPEG_TS(
     QString tvDevice, QString irDevice, QString clientIP, qint32 portUDP)
 {
@@ -946,7 +968,7 @@ GstElement* GST_Wrapper::run_GST_StreamMPEG_TS(
         }
         m_mpegTsWatchdog->start();
     }
-
+std::cout << "##################################    Pipeline1: " << getPipelineString(pipeline) << std::endl;
     return pipeline;
 }
 
@@ -989,28 +1011,6 @@ void GST_Wrapper::proc_MPEG_TS_Telemetry(QByteArray datagram)
 {
     if (datagram.isEmpty() || !m_IsActive_MPEG_TS) return;
     pushTelemetry(datagram.constData(), static_cast<gsize>(datagram.size()), GST_CLOCK_TIME_NONE);
-}
-
-
-std::string getPipelineString(GstElement *pipeline)
-{
-    std::stringstream ss;
-    GstIterator *iter = gst_bin_iterate_elements(GST_BIN(pipeline));
-    GValue item = G_VALUE_INIT;
-    bool first = true;
-
-    while (gst_iterator_next(iter, &item) == GST_ITERATOR_OK) {
-        GstElement *element = GST_ELEMENT(g_value_get_object(&item));
-
-        if (!first) ss << " ! ";
-        ss << GST_ELEMENT_NAME(element);
-        first = false;
-
-        g_value_unset(&item);
-    }
-
-    gst_iterator_free(iter);
-    return ss.str();
 }
 
 
@@ -1081,7 +1081,7 @@ GstElement *GST_Wrapper::run_GST_TVStream(QString videoDevice, QString clientIP,
     TrackerCmd tc; tc.type = TrackerCmd::REINIT; tc.iniPath = m_iniPath; m_trackerThread->submitCmd(tc);
     m_activeTrackerChannel = TV_CH; m_trackerThread->setActiveChannel(TV_CH);
 
-    std::cout << "Pipeline: " << getPipelineString(pipeline) << std::endl;
+    std::cout << "##################################    Pipeline2: " << getPipelineString(pipeline) << std::endl;
 
     return pipeline;
 }
@@ -1157,6 +1157,8 @@ GstElement *GST_Wrapper::run_GST_IRStreamISP(QString videoDevice, QString client
 
     GstPad *qp = gst_element_get_static_pad(queue,"src");
     if (qp) { gst_pad_add_probe(qp,GST_PAD_PROBE_TYPE_BUFFER,&irFrameProbe,this,nullptr); gst_object_unref(qp); }
+
+    std::cout << "##################################    Pipeline3: " << getPipelineString(pipeline) << std::endl;
 
     return pipeline;
 }
