@@ -5,7 +5,7 @@ gst-launch-1.0 videotestsrc ! video/x-raw,format=BGR,width=1920,height=1080 ! qu
 
 gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
 
-
+gst-launch-1.0 videotestsrc pattern=0 ! video/x-raw,format=BGR,width=1920,height=1080 ! videoconvert ! ximagesink
 
 
 
