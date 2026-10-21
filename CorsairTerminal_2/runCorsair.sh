@@ -2,6 +2,7 @@
 PROJECT_ROOT=$(pwd)/build
 xhost +
 
+sudo ip a a 192.168.1.108/24 dev eno1 && \
 sudo ip a a 169.254.0.2/24 dev eno1 && \
 sudo ip route replace 169.254.0.51/32 dev eno1 src 169.254.0.2
 
