@@ -31,3 +31,8 @@ ssh ff2 && sudo journalctl -u qgst-goen220.service -f -b
 • -f (follow): включает режим «следования» (как tail -f). Вы будете видеть новые строки вывода по мере их появления.
 • -n 50: показывает последние 50 строк лога перед тем, как начать выводить новые в реальном времени (количество строк можно менять).
 • -b: показывает логи только с момента текущей загрузки системы, отсекая старые записи.
+
+gst-launch-1.0 v4l2src device=/dev/video60 ! queue ! jpegdec ! queue ! videoconvert ! autovideosink
+gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
+gst-launch-1.0 videotestsrc ! video/x-raw,width=1280,height=720 ! autovideosink
+
