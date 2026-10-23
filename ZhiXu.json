@@ -1,0 +1,56 @@
+{
+    "joysticks": [
+        {
+            "axes": [
+                {
+                    "axis": 0,
+                    "cmd": "Axis_None",
+                    "deadZone": 50,
+                    "inverted": false,
+                    "sensitivity": 1,
+                    "smoothing": 0.9
+                },
+                {
+                    "axis": 0,
+                    "cmd": "Axis_None",
+                    "deadZone": 50,
+                    "inverted": false,
+                    "sensitivity": 1,
+                    "smoothing": 0.9
+                }
+            ],
+            "buttons": [
+                {
+                    "button": -1,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                    ],
+                    "release": [
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": -1,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                    ],
+                    "release": [
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                }
+            ],
+            "name": "ZhiXu MACHENIKE G6"
+        }
+    ],
+    "version": 1
+}
