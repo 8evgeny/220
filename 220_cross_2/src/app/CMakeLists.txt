@@ -32,7 +32,19 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
-set( CMAKE_SYSROOT "/home/user/sysroot_arm64_firefly" )
+if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|x86|i686")
+    message(STATUS "Архитектура: x86")
+    set( CMAKE_SYSROOT "/home/user/sysroot_arm64_firefly")
+    add_definitions(-DARCH_X86)
+
+elseif(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "aarch64|arm64|ARM64")
+    message(STATUS "Архитектура: ARM64")
+    set( CMAKE_SYSROOT "/")
+    add_definitions(-DARCH_ARM64)
+
+else()
+    message(STATUS "Неизвестная архитектура: ${CMAKE_SYSTEM_PROCESSOR}")
+endif()
 
 # GStreamer configuration
 find_path(GSTREAMER_INCLUDE_DIR gst/gst.h
