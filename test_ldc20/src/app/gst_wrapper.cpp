@@ -9,7 +9,7 @@
 #include <QDBusReply>
 #include <gst/gstmessage.h>
 #include <qdatetime.h>
-#include "fpsmonitor.h"
+// #include "fpsmonitor.h"
 #include "gstgoentrack.h"
 
 #include "QTimer"
@@ -682,16 +682,16 @@ GstElement* GST_Wrapper::run_GST_StreamMPEG_TS(QString tvDevice,
             g_printerr("WARNING: tv_tracker not found\n");
         }
 
-        GstElement *fpsmon = gst_bin_get_by_name(GST_BIN(pipeline), "tv_fpsmon");
-        if (fpsmon) {
-            GstFpsMonitor *monitor = GST_FPS_MONITOR(fpsmon);
-            monitor->callback  = &onFpsUpdateTV;
-            monitor->user_data = this;
-            monitor->interval  = 1000;
-            gst_object_unref(fpsmon);
-        } else {
-            g_printerr("WARNING: tv_fpsmon not found\n");
-        }
+        // GstElement *fpsmon = gst_bin_get_by_name(GST_BIN(pipeline), "tv_fpsmon");
+        // if (fpsmon) {
+        //     GstFpsMonitor *monitor = GST_FPS_MONITOR(fpsmon);
+        //     monitor->callback  = &onFpsUpdateTV;
+        //     monitor->user_data = this;
+        //     monitor->interval  = 1000;
+        //     gst_object_unref(fpsmon);
+        // } else {
+        //     g_printerr("WARNING: tv_fpsmon not found\n");
+        // }
     }
 
     // ===================== Pad probes для watchdog =====================
@@ -1054,10 +1054,10 @@ GstElement *GST_Wrapper::run_GST_TVStream(QString videoDevice, QString clientIP,
         return NULL;
     }
 
-    GstFpsMonitor *monitor = GST_FPS_MONITOR(fpsmon);
-    monitor->callback = &onFpsUpdateTV;
-    monitor->user_data = this;
-    monitor->interval = 1000; // Update every second
+    // GstFpsMonitor *monitor = GST_FPS_MONITOR(fpsmon);
+    // monitor->callback = &onFpsUpdateTV;
+    // monitor->user_data = this;
+    // monitor->interval = 1000; // Update every second
 
     GstGoenTrack *tracker = GST_GOEN_TRACK(track);
     //tracker->
@@ -1208,10 +1208,10 @@ GstElement *GST_Wrapper::run_GST_IRStreamISP(QString videoDevice, QString client
         return nullptr;
     }
 
-    GstFpsMonitor *monitor = GST_FPS_MONITOR(fpsmon);
-    monitor->callback = &onFpsUpdateIR;
-    monitor->user_data = this;
-    monitor->interval = 1000; // Update every second
+    // GstFpsMonitor *monitor = GST_FPS_MONITOR(fpsmon);
+    // monitor->callback = &onFpsUpdateIR;
+    // monitor->user_data = this;
+    // monitor->interval = 1000; // Update every second
 
     g_object_set(queue, "leaky", 2 ,nullptr);
 
@@ -1369,10 +1369,10 @@ GstElement *GST_Wrapper::run_GST_IRStream(QString videoDevice, QString clientIP,
         return nullptr;
     }
 
-    GstFpsMonitor *monitor = GST_FPS_MONITOR(fpsmon);
-    monitor->callback = &onFpsUpdateIR;
-    monitor->user_data = this;
-    monitor->interval = 1000; // Update every second
+    // GstFpsMonitor *monitor = GST_FPS_MONITOR(fpsmon);
+    // monitor->callback = &onFpsUpdateIR;
+    // monitor->user_data = this;
+    // monitor->interval = 1000; // Update every second
 
     g_object_set(queue, "leaky", 2 ,nullptr);
 
