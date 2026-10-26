@@ -38,7 +38,7 @@ endif()
  # add_subdirectory( lib/gst/gst-goen-fps-mon-plugin)
 
 
- add_subdirectory( lib/gst/gst-goen-ircam-plugin)
+ # add_subdirectory( lib/gst/gst-goen-ircam-plugin)
 
  add_subdirectory( lib/gst/gst-goen-track-plugin)
 
