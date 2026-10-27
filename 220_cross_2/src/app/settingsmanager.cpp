@@ -28,7 +28,7 @@ void SettingsManager::loadSettings()
     // ================================================================
     // MPEG-TS SRT (включая FEC — только для SRT)
     // ================================================================
-    settings_store.mpeg_ts_use_srt           = settings.value("MPEG-TS.SRT.Use_SRT", true).toBool();
+    settings_store.mpeg_ts_use_srt           = settings.value("MPEG-TS.SRT.Use_SRT", false).toBool();
     settings_store.mpeg_ts_srt_latency_ms    = settings.value("MPEG-TS.SRT.Latency_MS", 300).toInt();
     settings_store.mpeg_ts_srt_tlpktdrop     = settings.value("MPEG-TS.SRT.TLPKTDROP", true).toBool();
 

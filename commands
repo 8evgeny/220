@@ -14,7 +14,7 @@ sudo ip route replace 169.254.0.51/32 dev eno1 src 169.254.0.108 && \
 sudo ip route replace 169.254.0.2/32 dev eno1 src 169.254.0.1
 
 
-sudo ip a a 169.254.0.2/24 dev eno1 && \
+static 169_254_0_2
 sudo ip route replace 169.254.0.51/32 dev eno1 src 169.254.0.2 
 
 sudo ip a a 169.254.0.108/24 dev eno1 && \
