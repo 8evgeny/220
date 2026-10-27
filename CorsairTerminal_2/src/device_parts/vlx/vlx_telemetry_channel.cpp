@@ -52,8 +52,8 @@ bool VlxTelemetryChannel::getNext(Telemetry &tm)
 
 void VlxTelemetryChannel::init()
 {
-    // m_i->idmx = Vlx::Av::inputDemuxer(Vlx::Av::Transport::RtpMpegTs, VlxSettings::i().rtpMuxPort());
-    m_i->idmx = Vlx::Av::inputDemuxer(Vlx::Av::StreamType::SrtMpegTs, VlxSettings::i().networkPort());
+    m_i->idmx = Vlx::Av::inputDemuxer(Vlx::Av::StreamType::RtpMpegTs, VlxSettings::i().networkPort());
+    // m_i->idmx = Vlx::Av::inputDemuxer(Vlx::Av::StreamType::SrtMpegTs, VlxSettings::i().networkPort());
     auto idmx = m_i->idmx.toStrongRef();
     if (idmx == nullptr) {
         qWarning() << "Unable to get an Vlx::Av::inputDemuxer";
