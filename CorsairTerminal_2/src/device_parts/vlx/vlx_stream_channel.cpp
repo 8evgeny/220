@@ -108,8 +108,8 @@ void VlxStreamChannel::parse_raw_img(cv::Mat_<uint8_t> raw_img)
 
 Vlx::Av::InputDemuxerPtr VlxStreamChannel::demuxer()
 {
-    // return Vlx::Av::inputDemuxer(Vlx::Av::Transport::RtpMpegTs, VlxSettings::i().rtpMuxPort());
-    return Vlx::Av::inputDemuxer(Vlx::Av::StreamType::SrtMpegTs, VlxSettings::i().networkPort());
+    return Vlx::Av::inputDemuxer(Vlx::Av::StreamType::RtpMpegTs, VlxSettings::i().networkPort());
+    // return Vlx::Av::inputDemuxer(Vlx::Av::StreamType::SrtMpegTs, VlxSettings::i().networkPort());
 }
 
 void VlxStreamChannel::initialization()
