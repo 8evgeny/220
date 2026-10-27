@@ -35,7 +35,7 @@ signals:
     void send_LDC_CMD(LDC_CMD_enum cmd, quint32 value);
 
 private:
-    LDC20I_Controller *ldc;
+    LDC20I_Controller *ldc = nullptr;
     QTimer* m_NotificationTimer;
     QTimer* m_TimeoutTimer;
 

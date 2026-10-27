@@ -18,7 +18,7 @@ public:
 private:
     QString port;
     quint32 baudrate;
-    QSerialPort* serialPort;
+    QSerialPort* serialPort = nullptr;
     QByteArray buf;
 public slots:
     qint32 initConnection();
