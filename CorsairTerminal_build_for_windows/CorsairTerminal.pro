@@ -277,19 +277,46 @@ FORMS   += src/tools/video/video.ui
 #----- OpenCV
 #---------------------------------------------------------------------------
 win32 {
-OPENCV_VER = 412
-MSYS64Root = "w:/msys64/mingw64"
-OPENCV_SDK = $${MSYS64Root}/include/opencv4
-INCLUDEPATH += $${OPENCV_SDK}
-INCLUDEPATH += $${MSYS64Root}/include
+    MXE_USR = /home/user/mxe/usr
+    MXE_TRIPLET = x86_64-w64-mingw32.shared
+    MXE_PKG_CONFIG = $$MXE_USR/bin/$${MXE_TRIPLET}-pkg-config
 
-LIBS += -L$$MSYS64Root/bin -lopencv_core-$${OPENCV_VER}
-LIBS += -L$$MSYS64Root/bin -lopencv_imgproc-$${OPENCV_VER}
-LIBS += -L$$MSYS64Root/bin -lopencv_imgcodecs-$${OPENCV_VER}
-LIBS += -L$$MSYS64Root/bin -lopencv_videoio-$${OPENCV_VER}
-# LIBS += -L$$OPENCV_SDK/mingw64/bin -lopencv_videoio_ffmpeg$${OPENCV_VER}_64
-LIBS += -L$${MSYS64Root}/lib -lavformat -lavcodec -lavutil -lswscale
+    OPENCV_CFLAGS = $$system($$MXE_PKG_CONFIG --cflags opencv4)
+    OPENCV_LIBS = $$system($$MXE_PKG_CONFIG --libs opencv4)
+
+    QMAKE_CXXFLAGS += $$OPENCV_CFLAGS
+    LIBS += $$OPENCV_LIBS
 }
+win32 {
+    MXE_PKG_CONFIG = /home/user/mxe/usr/bin/x86_64-w64-mingw32.shared-pkg-config
+
+    FFMPEG_CFLAGS = $$system($$MXE_PKG_CONFIG --cflags libavformat libavcodec libavutil libswscale)
+    FFMPEG_LIBS = $$system($$MXE_PKG_CONFIG --libs libavformat libavcodec libavutil libswscale)
+
+    QMAKE_CXXFLAGS += $$FFMPEG_CFLAGS
+    LIBS += $$FFMPEG_LIBS
+}
+win32 {
+    MXE_PREFIX = /home/user/mxe/usr/x86_64-w64-mingw32.shared
+
+    INCLUDEPATH += $$MXE_PREFIX/include
+    LIBS += -L$$MXE_PREFIX/lib -lSDL2
+}
+
+# win32 {
+# OPENCV_VER = 412
+# MSYS64Root = "w:/msys64/mingw64"
+# OPENCV_SDK = $${MSYS64Root}/include/opencv4
+# INCLUDEPATH += $${OPENCV_SDK}
+# INCLUDEPATH += $${MSYS64Root}/include
+
+# LIBS += -L$$MSYS64Root/bin -lopencv_core-$${OPENCV_VER}
+# LIBS += -L$$MSYS64Root/bin -lopencv_imgproc-$${OPENCV_VER}
+# LIBS += -L$$MSYS64Root/bin -lopencv_imgcodecs-$${OPENCV_VER}
+# LIBS += -L$$MSYS64Root/bin -lopencv_videoio-$${OPENCV_VER}
+# # LIBS += -L$$OPENCV_SDK/mingw64/bin -lopencv_videoio_ffmpeg$${OPENCV_VER}_64
+# LIBS += -L$${MSYS64Root}/lib -lavformat -lavcodec -lavutil -lswscale
+# }
 
 unix {
 
