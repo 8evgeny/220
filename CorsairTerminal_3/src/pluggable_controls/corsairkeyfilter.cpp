@@ -1,0 +1,277 @@
+#include "corsairkeyfilter.h"
+#include <QEvent>
+#include <QKeyEvent>
+
+#include "tools/logger.h"
+Q_LOGGING_CATEGORY(logKeyFilter, "KeyFilter")
+
+CorsairKeyFilter::CorsairKeyFilter(QObject * parent) :
+    QObject(parent),
+    _write_dump{false},
+    _x_inverted_koef{-1.},
+    _z_inverted_koef{-1.}
+{
+}
+
+bool CorsairKeyFilter::eventFilter(QObject *, QEvent * event)
+{
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent * key_event = dynamic_cast<QKeyEvent *>(event);
+        if(key_event->isAutoRepeat()) return false;
+        if(key_event->modifiers() == Qt::AltModifier)
+        {
+            switch(key_event->key())
+            {
+            // Channels
+            case Qt::Key_1:
+                emit tvrgb_on();
+                return true;
+            case Qt::Key_2:
+                emit tvgray_on();
+                return true;
+            case Qt::Key_3:
+                //emit swir_on();
+                return true;
+            case Qt::Key_4:
+                emit mwir_on();
+                return true;
+            case Qt::Key_5:
+                //emit fusion_on();
+                return true;
+            case Qt::Key_6:
+                //emit tvgraymwir_on();
+                return true;
+            case Qt::Key_7:
+                //emit dsp_on();
+                return true;
+            case Qt::Key_8:
+                emit test_on();
+                return true;
+            case Qt::Key_Left:
+                emit prev_channel();
+                return true;
+            case Qt::Key_Right:
+                emit next_channel();
+                return true;
+            }
+        }
+        else
+        {
+            switch(key_event->key())
+            {
+            // Platform
+            case Qt::Key_Up:
+                emit gsp_speed_set(0.5 * _x_inverted_koef, 0.0);
+                return true;
+            case Qt::Key_Down:
+                emit gsp_speed_set(-0.5 * _x_inverted_koef, 0.0);
+                return true;
+            case Qt::Key_Left:
+                emit gsp_speed_set(0.0, -0.5 * _z_inverted_koef);
+                return true;
+            case Qt::Key_Right:
+                emit gsp_speed_set(0.0, 0.5 * _z_inverted_koef);
+                return true;
+            case Qt::Key_Y:
+                //emit gsp_null_position();
+                return true;
+            case Qt::Key_U:
+                //emit gsp_arretir_reset();
+                return true;
+            case Qt::Key_I:
+                emit gsp_stabilization_switch();
+                return true;
+            case Qt::Key_O:
+                //emit gsp_park();
+                return true;
+            case Qt::Key_P:
+//                emit gsp_arretir_set();
+                return true;
+            // Objective
+            case Qt::Key_Q:
+                emit zoom_in();
+                return true;
+            case Qt::Key_W:
+                emit zoom_out();
+                return true;
+            case Qt::Key_A:
+                emit focus_near();
+                return true;
+            case Qt::Key_S:
+                emit focus_far();
+                return true;
+            case Qt::Key_Z:
+                emit iris_close();
+                return true;
+            case Qt::Key_X:
+                emit iris_open();
+                return true;
+            case Qt::Key_G:
+                //emit field_sync();
+                return true;
+            case Qt::Key_H:
+                //emit field_sync_narrow();
+                return true;
+            case Qt::Key_J:
+                emit turnOnImitateJoystick();
+                //emit field_sync_reg_switch();
+                return true;
+            case Qt::Key_F:
+                emit autofocus();
+                return true;
+            // Rangefinder/Highlighter
+            case Qt::Key_L:
+                emit lrf_enable_switch();
+                return true;
+            case Qt::Key_Enter:
+                emit lrf_start();
+                return true;
+            case Qt::Key_K:
+                //emit lrf_mode_switch();
+                return true;
+            // Video
+            case Qt::Key_Tab:
+                emit full_screen();
+                return true;
+            case Qt::Key_E:
+                // emit digital_zoom_in();
+                return true;
+            case Qt::Key_R:
+                // emit digital_zoom_out();
+                return true;
+            case Qt::Key_T:
+                emit pic_in_pic();
+                return true;
+            case Qt::Key_B:
+                //emit swir_gain_switch();
+                return true;
+            case Qt::Key_N:
+                emit agc_switch();
+                return true;
+            case Qt::Key_M:
+                emit inversion();
+                return true;
+            case Qt::Key_F9:
+                emit brightness_down();
+                return true;
+            case Qt::Key_F10:
+                emit brightness_up();
+                return true;
+            case Qt::Key_F11:
+                emit contrast_down();
+                return true;
+            case Qt::Key_F12:
+                emit contrast_up();
+                return true;
+            // Target
+            case Qt::Key_D:
+                emit target_enable_switch();
+                return true;
+            case Qt::Key_Return:
+                emit target_capture();
+                return true;
+            case Qt::Key_Escape:
+                emit target_free();
+                return true;
+            case Qt::Key_Comma:
+                emit target_id_switch();
+                return true;
+            case Qt::Key_Slash:
+                emit target_choose();
+                return true;
+            case Qt::Key_Period:
+                emit target_fast_switch();
+                return true;
+            // Menu
+            case Qt::Key_F1:
+                emit help();
+                return true;
+            case Qt::Key_F2:
+                emit telemetry();
+                return true;
+            case Qt::Key_F3:
+                emit settings();
+                return true;
+            case Qt::Key_F4:
+                emit gspCtrl();
+                return true;
+            case Qt::Key_F5:
+                emit rangeFinderCtrl();
+                return true;
+            case Qt::Key_F6:
+                emit connectionCtrl();
+                return true;
+            case Qt::Key_F7:
+                emit image_save();
+                return true;
+            case Qt::Key_F8:
+                emit video_record_switch();
+                return true;
+            case Qt::Key_C: {
+                _write_dump = !_write_dump;
+                emit write_dump(_write_dump);
+                return true;
+            }
+            case Qt::Key_Space:
+            {
+                emit lrf_start();
+                return true;
+            }
+            default: break;
+            }
+        }
+    }
+    else if(event->type() == QEvent::KeyRelease)
+    {
+        QKeyEvent * key_event = dynamic_cast<QKeyEvent *>(event);
+        if(key_event->isAutoRepeat()) return false;
+        if(key_event->modifiers() == Qt::AltModifier) return false;
+        switch(key_event->key())
+        {
+        // Platform
+        case Qt::Key_Up:
+            emit gsp_speed_set(0.0, 0.0);
+            return true;
+        case Qt::Key_Down:
+            emit gsp_speed_set(0.0, 0.0);
+            return true;
+        case Qt::Key_Left:
+            emit gsp_speed_set(0.0, 0.0);
+            return true;
+        case Qt::Key_Right:
+            emit gsp_speed_set(0.0, 0.0);
+            return true;
+        // Objective
+        case Qt::Key_Q:
+            emit zoom_stop();
+            return true;
+        case Qt::Key_W:
+            emit zoom_stop();
+            return true;
+        case Qt::Key_A:
+            emit focus_stop();
+            return true;
+        case Qt::Key_S:
+            emit focus_stop();
+            return true;
+        case Qt::Key_Z:
+            emit iris_stop();
+            return true;
+        case Qt::Key_X:
+            emit iris_stop();
+            return true;
+        }
+    }
+    return false;
+}
+
+void CorsairKeyFilter::set_inverse_x(bool flag)
+{
+    _x_inverted_koef = flag ? -1. : 1.;
+}
+
+void CorsairKeyFilter::set_inverse_z(bool flag)
+{
+    _z_inverted_koef = flag ? -1. : 1.;
+}
