@@ -4,12 +4,13 @@
 #include "ldc20i_controller.h"
 #include <QObject>
 
-class LDC20I_Worker: public QObject
+class LDC20I_Worker : public QObject
 {
     Q_OBJECT
     QMutex m_lock;
     QThread thread;
-public:
+
+  public:
     explicit LDC20I_Worker(QString port, quint32 baudrate, QObject *parent);
     ~LDC20I_Worker();
     void proc_CtrlInitConnection();
@@ -21,7 +22,7 @@ public:
     void proc_LDCSetPeriod(float emit_period);
     void proc_LDCSetTempReg(uint8_t state);
 
-public slots:
+  public slots:
     void proc_recieved_LDC_DS_ANS(LDC_ANS_enum cmd, LDC_STATE dev_state);
     void proc_COMDeviceConnected();
     void proc_timerUpdate();
@@ -30,20 +31,20 @@ public slots:
     void proc_LDCSendCmd(LDC_CMD_enum cmd, quint32 value);
     void proc_Thread_Finished();
 
-signals:
+  signals:
     void send_LDC_State(LDC_STATE dev_state);
     void send_LDC_CMD(LDC_CMD_enum cmd, quint32 value);
 
-private:
+  private:
     LDC20I_Controller *ldc;
-    QTimer* m_NotificationTimer;
-    QTimer* m_TimeoutTimer;
+    QTimer *m_NotificationTimer;
+    QTimer *m_TimeoutTimer;
 
     LDC_CMD_enum next_cmd;
     LDC_STATE dev_state;
-    QString m_port="";
+    QString m_port = "";
     quint32 m_baudrate = 0;
 
-};
+} /* class LDC20I_Worker */;
 
 #endif // LDC20I_WORKER_H

@@ -5,24 +5,23 @@
 #include <QSerialPort>
 #include <qthread.h>
 
-class GyroPlatformVCD_QSerial: public QObject
+class GyroPlatformVCD_QSerial : public QObject
 {
     Q_OBJECT
 
     QThread thread;
 
-public:
+  public:
     explicit GyroPlatformVCD_QSerial(QString port, quint32 baudrate, QObject *parent = nullptr);
 
-private:
-
+  private:
     QString port = "";
     quint32 baudrate = 0;
 
-    QSerialPort* m_serialPort = nullptr;
+    QSerialPort *m_serialPort = nullptr;
 
     QByteArray buf;
-public slots:
+  public slots:
     qint32 initConnection();
     qint32 closeConnection();
 
@@ -30,11 +29,11 @@ public slots:
     void serialBytesWritten(qint64 bytes);
     void proc_sendData(QByteArray ba);
 
-Q_SIGNALS:
+  Q_SIGNALS:
     void dataParse(QByteArray ba);
     void deviceConnected();
     void sig_READY();
 
-};
+} /* class GyroPlatformVCD_QSerial */;
 
 #endif // GyroPlatformVCD_QSERIAL_H

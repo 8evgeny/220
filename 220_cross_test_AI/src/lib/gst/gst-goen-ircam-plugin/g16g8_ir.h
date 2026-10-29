@@ -6,9 +6,10 @@
 G_BEGIN_DECLS
 
 #define GST_TYPE_FPS_MONITOR (gst_fps_monitor_get_type())
-    G_DECLARE_FINAL_TYPE(GstGray16ToGray8, gst_fps_monitor, GST, FPS_MONITOR, GstElement)
+G_DECLARE_FINAL_TYPE(GstGray16ToGray8, gst_fps_monitor, GST, FPS_MONITOR, GstElement)
 
-struct _GstFpsMonitor {
+struct _GstFpsMonitor
+{
     GstElement element;
 
     /* Properties */
@@ -21,7 +22,7 @@ struct _GstFpsMonitor {
     guint timer_id;
     GMutex lock;
     gboolean stream_active;
-};
+} /* struct _GstFpsMonitor */;
 
 GType gst_fps_monitor_get_type(void);
 

@@ -1,73 +1,76 @@
 #include "lens_j200_worker.h"
 #include <QDebug>
-//#define DEBUG
+// #define DEBUG
 LensJ200Worker::LensJ200Worker(QObject *parent)
-    : QObject{parent},
-    requestCount(0),
-    retryCount(0),
-    m_isProcessed(false),
-    m_error(Lens::Error::NoError)
-{}
+    : QObject{parent}, requestCount(0), retryCount(0), m_isProcessed(false),
+      m_error(Lens::Error::NoError)
+{
+} /* LensJ200Worker::LensJ200Worker */
 
 LensJ200Worker::~LensJ200Worker()
 {
     qDebug() << Q_FUNC_INFO;
-    qDebug()<<Q_FUNC_INFO << "Lens thread exit";
+    qDebug() << Q_FUNC_INFO << "Lens thread exit";
     // timer->stop();
     // delete timer;
     // delete lens;
     thread.exit();
     thread.wait();
-}
+} /* LensJ200Worker::~LensJ200Worker */
 
 void LensJ200Worker::proc_Thread_Finished()
 {
     qDebug() << Q_FUNC_INFO;
 
-}
-
+} /* LensJ200Worker::proc_Thread_Finished */
 
 void LensJ200Worker::init()
 {
-    qDebug()<<Q_FUNC_INFO<<"Main thread id:"<<QThread::currentThreadId();
+    qDebug() << Q_FUNC_INFO << "Main thread id:" << QThread::currentThreadId();
     moveToThread(&thread);
-    connect(&thread, &QThread::started, this, [this]{
-        qDebug() << Q_FUNC_INFO << "Lens thread started with id:" << QThread::currentThreadId();
-        lens = new LensJ200;
-        timer = new QTimer;
-        timer->setSingleShot(true);
-        QObject::connect(lens, &LensJ200::sendResponse, this, &LensJ200Worker::onReceivedAck);
-        QObject::connect(timer, &QTimer::timeout, this, &LensJ200Worker::onTimerTimeout);
-    });
+
+    connect(&thread, &QThread::started, this, [this]
+            {
+                qDebug() << Q_FUNC_INFO << "Lens thread started with id:" << QThread::currentThreadId();
+                lens = new LensJ200;
+                timer = new QTimer;
+                timer->setSingleShot(true);
+
+                QObject::connect(lens, &LensJ200::sendResponse, this, &LensJ200Worker::onReceivedAck);
+
+                QObject::connect(timer, &QTimer::timeout, this, &LensJ200Worker::onTimerTimeout);
+
+            } /* lambda */);
 
     QObject::connect(&thread, &QThread::finished, this, &LensJ200Worker::proc_Thread_Finished);
 
     thread.start();
-}
+} /* LensJ200Worker::init */
 
 void LensJ200Worker::onConnect(bool isConnect, QString portName)
 {
     // Disconnect
-    if ( !isConnect ) {
+    if (!isConnect)
+    {
         timer->stop();
         lens->close();
         emit connected(false);
         return;
-    }
+    } /* if */
     // Connect
-    if ( !lens->open(portName) ) {
-        qDebug()<<"Error opening serial port:"<<portName;
+    if (!lens->open(portName))
+    {
+        qDebug() << "Error opening serial port:" << portName;
         emit connected(false);
         timer->start();
         return;
-    }
+    } /* if */
 
     m_error = Lens::Error::NoError;
     requestQueue.clear();
     m_isProcessed = false;
     emit connected(true);
-}
-
+} /* LensJ200Worker::onConnect */
 
 void LensJ200Worker::onCloseConnection()
 {
@@ -75,11 +78,9 @@ void LensJ200Worker::onCloseConnection()
     lens->close();
     timer->stop();
     emit connected(false);
-}
+} /* LensJ200Worker::onCloseConnection */
 
-
-
-void LensJ200Worker::onSendRequest(Lens::Command commandID, const QByteArray& data)
+void LensJ200Worker::onSendRequest(Lens::Command commandID, const QByteArray &data)
 {
     QByteArray request;
     request.append((quint8)commandID);
@@ -89,13 +90,14 @@ void LensJ200Worker::onSendRequest(Lens::Command commandID, const QByteArray& da
     //  qDebug()<<Q_FUNC_INFO<<request.toHex(' ');
 
     requestQueue.enqueue(request);
-    if ( !m_isProcessed ) {
+    if (!m_isProcessed)
+    {
         sendRequest();
         return;
-    }
+    } /* if */
 
     //    lens->send(request);
-}
+} /* LensJ200Worker::onSendRequest */
 
 void LensJ200Worker::sendRequest()
 {
@@ -104,7 +106,7 @@ void LensJ200Worker::sendRequest()
     lens->send(m_request);
     requestCount++;
     timer->start(100);
-}
+} /* LensJ200Worker::sendRequest */
 
 void LensJ200Worker::onReceivedAck(bool ack)
 {
@@ -112,34 +114,37 @@ void LensJ200Worker::onReceivedAck(bool ack)
 
     timer->stop();
 
-    //There was a transmission error, repeat the request
-    if ( !ack ) {
-        if (retryCount++ >= maxRetryCount-1) {
-            //emit error(Lens::Error::BadResponse);
+    // There was a transmission error, repeat the request
+    if (!ack)
+    {
+        if (retryCount++ >= maxRetryCount - 1)
+        {
+            // emit error(Lens::Error::BadResponse);
             m_error = Lens::Error::BadResponse;
             requestQueue.clear();
             retryCount = 0;
             return;
-        }
+        } /* if */
         lens->send(m_request);
         timer->start(100);
         return;
-    }
+    } /* if */
 
     retryCount = 0;
 
-    if ( requestQueue.isEmpty() ) {
+    if (requestQueue.isEmpty())
+    {
         timer->stop();
         m_isProcessed = false;
         return;
-    }
+    } /* if */
     sendRequest();
-}
+} /* LensJ200Worker::onReceivedAck */
 
 void LensJ200Worker::onTimerTimeout()
 {
-  //  qDebug()<<Q_FUNC_INFO<<"timeout error occured";
-    //emit error(Lens::Error::Timeout);
+    //  qDebug()<<Q_FUNC_INFO<<"timeout error occured";
+    // emit error(Lens::Error::Timeout);
     m_error = Lens::Error::Timeout;
     this->errorReset();
-}
+} /* LensJ200Worker::onTimerTimeout */

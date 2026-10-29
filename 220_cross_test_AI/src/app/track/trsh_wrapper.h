@@ -5,24 +5,23 @@
 
 class TrShWrapperPrivate;
 
-
 /**
  * @brief Оболочка для трекера Шатского в openCL версии
  */
 class TrShWrapper
 {
 
-public:
-
+  public:
     //---------------------------------------------------------------
 
     /**
      * @brief Прямоугольник (пиксели)
      */
     void reset();
-    bool isValid() const;   // ← добавить
+    bool isValid() const; // ← добавить
 
-    struct Rect {
+    struct Rect
+    {
         unsigned short cx; ///< Центр X (пикс.)
         unsigned short cy; ///< Центр Y (пикс.)
         unsigned short w; ///< Ширина (пикс.)
@@ -31,40 +30,50 @@ public:
         /**
          * @brief Возвращает true если ширина и высота больше 1 пикс
          */
-        bool valid() const { return w > 1 && h > 1; }
+        bool valid() const
+        {
+            return w > 1 && h > 1;
+        } /* valid */
 
         /**
          * @brief Возврашает левый (минимальный) X (пикс.)
          */
-        inline unsigned short left() const { return cx - (w >> 1); }
+        inline unsigned short left() const
+        {
+            return cx - (w >> 1);
+        } /* left */
 
         /**
          * @brief Возвращате верхний (минимальный) Y (пикс.)
          */
-        inline unsigned short top() const { return cy - (h >> 1); }
-    };
+        inline unsigned short top() const
+        {
+            return cy - (h >> 1);
+        } /* top */
+    } /* struct Rect */;
 
     //---------------------------------------------------------------
 
     /**
      * @brief Прямоугольник (в относительных величинах [0..1])
      */
-    struct RectF {
+    struct RectF
+    {
         float cx; ///< Центр X
         float cy; ///< Центр Y
         float w; ///< Ширина
         float h; ///< Высота
-    };
+    } /* struct RectF */;
 
     //---------------------------------------------------------------
 
     TrShWrapper();
 
-    TrShWrapper(const TrShWrapper&) = delete;
+    TrShWrapper(const TrShWrapper &) = delete;
 
     ~TrShWrapper();
 
-    TrShWrapper& operator=(const TrShWrapper&) = delete;
+    TrShWrapper &operator=(const TrShWrapper &) = delete;
 
     //---------------------------------------------------------------
 
@@ -151,12 +160,10 @@ public:
      * @brief Возвращате указатель на trac_struct
      * @note для отладочных целей.
      */
-    void* tctl();
+    void *tctl();
 
-
-
-private:
+  private:
     TrShWrapperPrivate *m_d;
-};
+} /* class TrShWrapper */;
 
 #endif // TRSH_WRAPPER_H

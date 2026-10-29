@@ -1,336 +1,322 @@
 
 #include "Calculator.h"
 
-
 #include "SetModeCommand.h"
 #include "DelimiterAndCrc8CommandDecorator.h"
 #include "SetControlPositionCommand.h"
 #include "SetControlSpeedCommand.h"
 #include "SetControlTrackingCommand.h"
 
-
-
 #include <QDebug>
 
-
-Calculator::Calculator( const uint8_t hostId, QObject *parent):
-    CommandExecutor( parent)
-  , m_hostId( hostId)
-  , m_deviceId( 0x01)
-  , m_mode( Unknown)
-  , m_memsMode( 0x00)
-  , m_memsErrorAll( false)
-  , m_memsNotConfiguredFlags( 0x00)
-  , m_memsIllegalDataFlags( 0x00)
-  , m_memsNoResponseOnSpiFlags( 0x00)
-  , m_memsReserveFlags( 0x00)
-  , m_memsAxisSwitchMode( 0x00)
-  , m_memsProcessMode( 0x00)
-  , m_speedYaw( 0.0f)
-  , m_speedPitch( 0.0f)
-  , m_angleYaw( 0.0f)
-  , m_anglePitch( 0.0f)
-  , m_motorYawMode( 0x00)
-  , m_motorYawErrors( 0x00)
-  , m_motorYawFlags( 0x00)
-  , m_motorYawAngle( 0.0f)
-  , m_motorYawSpeed( 0.0f)
-  , m_motorPitchMode( 0x00)
-  , m_motorPitchErrors( 0x00)
-  , m_motorPitchFlags( 0x00)
-  , m_motorPitchAngle( 0.0f)
-  , m_motorPitchSpeed( 0.0f)
-  , m_unknownCommands( 0)
-  , m_statusWithErrorCommands( 0)
+Calculator::Calculator(const uint8_t hostId, QObject *parent)
+    : CommandExecutor(parent), m_hostId(hostId), m_deviceId(0x01), m_mode(Unknown),
+      m_memsMode(0x00), m_memsErrorAll(false), m_memsNotConfiguredFlags(0x00),
+      m_memsIllegalDataFlags(0x00), m_memsNoResponseOnSpiFlags(0x00), m_memsReserveFlags(0x00),
+      m_memsAxisSwitchMode(0x00), m_memsProcessMode(0x00), m_speedYaw(0.0f), m_speedPitch(0.0f),
+      m_angleYaw(0.0f), m_anglePitch(0.0f), m_motorYawMode(0x00), m_motorYawErrors(0x00),
+      m_motorYawFlags(0x00), m_motorYawAngle(0.0f), m_motorYawSpeed(0.0f), m_motorPitchMode(0x00),
+      m_motorPitchErrors(0x00), m_motorPitchFlags(0x00), m_motorPitchAngle(0.0f),
+      m_motorPitchSpeed(0.0f), m_unknownCommands(0), m_statusWithErrorCommands(0)
 {
 
-}
-
+} /* Calculator::Calculator */
 
 uint8_t Calculator::getHostId() const
 {
     return m_hostId;
-}
+} /* Calculator::getHostId */
 
-
-void Calculator::setHostId( const uint8_t hostId)
+void Calculator::setHostId(const uint8_t hostId)
 {
     m_hostId = hostId;
-}
-
+} /* Calculator::setHostId */
 
 uint8_t Calculator::getDeviceId() const
 {
     return m_deviceId;
-}
+} /* Calculator::getDeviceId */
 
-
-void Calculator::setDeviceId( const uint8_t deviceId)
+void Calculator::setDeviceId(const uint8_t deviceId)
 {
     m_deviceId = deviceId;
-}
+} /* Calculator::setDeviceId */
 
-
-void Calculator::setMode( const Mode mode)
+void Calculator::setMode(const Mode mode)
 {
     SetModeCommand::Mode cmdMode = SetModeCommand::Unknown;
-    switch( mode)
+    switch (mode)
     {
-    case Dummy:             cmdMode = SetModeCommand::Dummy;            break;
-    case Stabilization:     cmdMode = SetModeCommand::Stabilization;    break;
-    case RotaryPlatform:    cmdMode = SetModeCommand::RotaryPlatform;   break;
-    case Parkin:            cmdMode = SetModeCommand::Parkin;           break;
-    case Off:               cmdMode = SetModeCommand::Off;              break;
-    default:                                                            break;
-    }
+    case Dummy:
+        cmdMode = SetModeCommand::Dummy;
+        break;
+    case Stabilization:
+        cmdMode = SetModeCommand::Stabilization;
+        break;
+    case RotaryPlatform:
+        cmdMode = SetModeCommand::RotaryPlatform;
+        break;
+    case Parkin:
+        cmdMode = SetModeCommand::Parkin;
+        break;
+    case Off:
+        cmdMode = SetModeCommand::Off;
+        break;
+    default:
+        break;
+    } /* switch */
 
-    if( cmdMode == SetModeCommand::Unknown)
+    if (cmdMode == SetModeCommand::Unknown)
         return;
 
     // Command *const cmd = new SetModeCommand( cmdMode, m_hostId, m_deviceId, true);
-    Command *const cmd = new SetModeCommand( cmdMode, m_hostId, m_deviceId, false);
-    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator( cmd);
+    Command *const cmd = new SetModeCommand(cmdMode, m_hostId, m_deviceId, false);
+    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator(cmd);
 
-    if( cmdMode == SetModeCommand::Off)
-        qDebug() << Q_FUNC_INFO << "OFF" << decoratedCmd->serialize().toHex( ' ');
+    if (cmdMode == SetModeCommand::Off)
+        qDebug() << Q_FUNC_INFO << "OFF" << decoratedCmd->serialize().toHex(' ');
 
-    if( cmdMode == SetModeCommand::Stabilization)
-        qDebug() << Q_FUNC_INFO << "Stabilization" << decoratedCmd->serialize().toHex( ' ');
+    if (cmdMode == SetModeCommand::Stabilization)
+        qDebug() << Q_FUNC_INFO << "Stabilization" << decoratedCmd->serialize().toHex(' ');
 
-    if( cmdMode == SetModeCommand::RotaryPlatform)
-        qDebug() << Q_FUNC_INFO << "RotaryPlatform" << decoratedCmd->serialize().toHex( ' ');
+    if (cmdMode == SetModeCommand::RotaryPlatform)
+        qDebug() << Q_FUNC_INFO << "RotaryPlatform" << decoratedCmd->serialize().toHex(' ');
 
-    if( cmdMode == SetModeCommand::Parkin)
-        qDebug() << Q_FUNC_INFO << "Parkin" << decoratedCmd->serialize().toHex( ' ');
+    if (cmdMode == SetModeCommand::Parkin)
+        qDebug() << Q_FUNC_INFO << "Parkin" << decoratedCmd->serialize().toHex(' ');
 
-    emit sendCmd( decoratedCmd);
-}
-
+    emit sendCmd(decoratedCmd);
+} /* Calculator::setMode */
 
 void Calculator::getVersion()
 {
 
-}
-
+} /* Calculator::getVersion */
 
 void Calculator::getStatus()
 {
 
-}
+} /* Calculator::getStatus */
 
-
-void Calculator::setStatus( const uint8_t mode)
+void Calculator::setStatus(const uint8_t mode)
 {
     Mode newMode = Unknown;
-    switch( mode)
+    switch (mode)
     {
-    case SetModeCommand::Dummy:             newMode = Dummy;            break;
-    case SetModeCommand::Stabilization:     newMode = Stabilization;    break;
-    case SetModeCommand::RotaryPlatform:    newMode = RotaryPlatform;   break;
-    case SetModeCommand::Parkin:            newMode = Parkin;           break;
-    case SetModeCommand::Off:               newMode = Off;              break;
+    case SetModeCommand::Dummy:
+        newMode = Dummy;
+        break;
+    case SetModeCommand::Stabilization:
+        newMode = Stabilization;
+        break;
+    case SetModeCommand::RotaryPlatform:
+        newMode = RotaryPlatform;
+        break;
+    case SetModeCommand::Parkin:
+        newMode = Parkin;
+        break;
+    case SetModeCommand::Off:
+        newMode = Off;
+        break;
     default:
         qWarning() << Q_FUNC_INFO << "Unknow mode" << mode;
         return;
-    }
+    } /* switch */
 
-    if( m_mode == newMode)
+    if (m_mode == newMode)
         return;
 
     m_mode = newMode;
-    emit modeChanged( newMode);
-}
+    emit modeChanged(newMode);
+} /* Calculator::setStatus */
 
-
-void Calculator::setVersion( const uint32_t versionProtocolVdb, const uint32_t versionProtocol,
-                             const uint32_t versionDevice)
+void Calculator::setVersion(const uint32_t versionProtocolVdb, const uint32_t versionProtocol,
+                            const uint32_t versionDevice)
 {
-//    qDebug() << Q_FUNC_INFO << versionProtocolVdb << versionProtocol << versionDevice;
+    //    qDebug() << Q_FUNC_INFO << versionProtocolVdb << versionProtocol << versionDevice;
 
-    emit versionChanged( versionProtocolVdb, versionProtocol, versionDevice);
-}
+    emit versionChanged(versionProtocolVdb, versionProtocol, versionDevice);
+} /* Calculator::setVersion */
 
-
-void Calculator::setMemsMode( const uint8_t mode)
+void Calculator::setMemsMode(const uint8_t mode)
 {
-    emit memsModeChanged( mode);
-}
+    emit memsModeChanged(mode);
+} /* Calculator::setMemsMode */
 
-
-void Calculator::setErrorAllMems( const bool error)
+void Calculator::setErrorAllMems(const bool error)
 {
-    emit errorAllMemsChanged( error);
-}
+    emit errorAllMemsChanged(error);
+} /* Calculator::setErrorAllMems */
 
-
-void Calculator::setMemsNotConfigured( const uint8_t flags)
+void Calculator::setMemsNotConfigured(const uint8_t flags)
 {
-//    if( m_memsNotConfiguredFlags == flags)
-//        return;
+    //    if( m_memsNotConfiguredFlags == flags)
+    //        return;
 
-//    m_memsNotConfiguredFlags = flags;
+    //    m_memsNotConfiguredFlags = flags;
 
-    emit memsNotConfiguredChanged( flags);
-}
+    emit memsNotConfiguredChanged(flags);
+} /* Calculator::setMemsNotConfigured */
 
-
-void Calculator::setMemsIllegalData( const uint8_t flags)
+void Calculator::setMemsIllegalData(const uint8_t flags)
 {
-//    if( m_memsIllegalDataFlags == flags)
-//        return;
+    //    if( m_memsIllegalDataFlags == flags)
+    //        return;
 
-//    m_memsIllegalDataFlags = flags;
+    //    m_memsIllegalDataFlags = flags;
 
-    emit  memsIllegalDataChanged( flags);
-}
+    emit memsIllegalDataChanged(flags);
+} /* Calculator::setMemsIllegalData */
 
-
-void Calculator::setMemsNoResponseOnSpi( const uint8_t flags)
+void Calculator::setMemsNoResponseOnSpi(const uint8_t flags)
 {
-//    if( m_memsNoResponseOnSpiFlags == flags)
-//        return;
+    //    if( m_memsNoResponseOnSpiFlags == flags)
+    //        return;
 
-//    m_memsNoResponseOnSpiFlags = flags;
+    //    m_memsNoResponseOnSpiFlags = flags;
 
-    emit  memsNoResponseOnSpiChanged( flags);
-}
+    emit memsNoResponseOnSpiChanged(flags);
+} /* Calculator::setMemsNoResponseOnSpi */
 
-void Calculator::setMemsReserve( const uint8_t flags)
+void Calculator::setMemsReserve(const uint8_t flags)
 {
-//    if( m_memsReserveFlags == flags)
-//        return;
+    //    if( m_memsReserveFlags == flags)
+    //        return;
 
-//    m_memsReserveFlags = flags;
+    //    m_memsReserveFlags = flags;
 
-    emit  memsReserveChanged( flags);
-}
+    emit memsReserveChanged(flags);
+} /* Calculator::setMemsReserve */
 
-
-void Calculator::setMemsAxisSwitchMode( const uint8_t mode)
+void Calculator::setMemsAxisSwitchMode(const uint8_t mode)
 {
-    emit memsAxisSwitchModeChanged( mode);
-}
+    emit memsAxisSwitchModeChanged(mode);
+} /* Calculator::setMemsAxisSwitchMode */
 
-
-void Calculator::setMemsProcessMode( const uint8_t mode)
+void Calculator::setMemsProcessMode(const uint8_t mode)
 {
-    emit memsProcessModeChanged( mode);
-}
+    emit memsProcessModeChanged(mode);
+} /* Calculator::setMemsProcessMode */
 
-
-void Calculator::setMemsBoardStatusCommon( const uint8_t mode, const bool errorAllMems,
-                                           const uint8_t memsNotConfiguredFlags,
-                                           const uint8_t memsIllegalDataFlags,
-                                           const uint8_t memsNoResponseOnSpiFlags,
-                                           const uint8_t reserveFlags,
-                                           const uint8_t memsAxisSwitchMode,
-                                           const uint8_t memsProcessMode)
+void Calculator::setMemsBoardStatusCommon(
+    const uint8_t mode, const bool errorAllMems, const uint8_t memsNotConfiguredFlags,
+    const uint8_t memsIllegalDataFlags, const uint8_t memsNoResponseOnSpiFlags,
+    const uint8_t reserveFlags, const uint8_t memsAxisSwitchMode, const uint8_t memsProcessMode)
 {
     bool changed = false;
 
-    if( m_memsMode != mode)             {   changed = true;     m_memsMode = mode;                  }
-    if( m_memsErrorAll != errorAllMems) {   changed = true;     m_memsErrorAll = errorAllMems;      }
+    if (m_memsMode != mode)
+    {
+        changed = true;
+        m_memsMode = mode;
+    } /* if */
+    if (m_memsErrorAll != errorAllMems)
+    {
+        changed = true;
+        m_memsErrorAll = errorAllMems;
+    } /* if */
 
-    if( m_memsNotConfiguredFlags != memsNotConfiguredFlags)
+    if (m_memsNotConfiguredFlags != memsNotConfiguredFlags)
     {
         changed = true;
         m_memsNotConfiguredFlags = memsNotConfiguredFlags;
-    }
+    } /* if */
 
-    if( m_memsIllegalDataFlags != memsIllegalDataFlags)
+    if (m_memsIllegalDataFlags != memsIllegalDataFlags)
     {
         changed = true;
         m_memsIllegalDataFlags = memsIllegalDataFlags;
-    }
+    } /* if */
 
-    if( m_memsNoResponseOnSpiFlags != memsNoResponseOnSpiFlags)
+    if (m_memsNoResponseOnSpiFlags != memsNoResponseOnSpiFlags)
     {
         changed = true;
         m_memsNoResponseOnSpiFlags = memsNoResponseOnSpiFlags;
-    }
+    } /* if */
 
-    if( m_memsReserveFlags != reserveFlags)     {   changed = true;     m_memsReserveFlags = reserveFlags;      }
-    if( m_memsAxisSwitchMode != memsAxisSwitchMode)
+    if (m_memsReserveFlags != reserveFlags)
+    {
+        changed = true;
+        m_memsReserveFlags = reserveFlags;
+    } /* if */
+    if (m_memsAxisSwitchMode != memsAxisSwitchMode)
     {
         changed = true;
         m_memsAxisSwitchMode = memsAxisSwitchMode;
-    }
+    } /* if */
 
-    if( m_memsProcessMode != memsProcessMode)   {   changed = true;     m_memsProcessMode = memsProcessMode;    }
-
-    if( changed)
+    if (m_memsProcessMode != memsProcessMode)
     {
-        emit memsBoardStatusCommonChanged( mode, errorAllMems, memsNotConfiguredFlags, memsIllegalDataFlags,
-                                           memsNoResponseOnSpiFlags, reserveFlags,
-                                           memsAxisSwitchMode, memsProcessMode);
-    }
-}
+        changed = true;
+        m_memsProcessMode = memsProcessMode;
+    } /* if */
 
+    if (changed)
+    {
+        emit memsBoardStatusCommonChanged(mode, errorAllMems, memsNotConfiguredFlags,
+                                          memsIllegalDataFlags, memsNoResponseOnSpiFlags,
+                                          reserveFlags, memsAxisSwitchMode, memsProcessMode);
+    } /* if */
+} /* Calculator::setMemsBoardStatusCommon */
 
-void Calculator::setMemsBoardStatusSpeedAndAngle( const float speedYaw, const float speedPitch,
-                                                  const float angleYaw, const float anglePitch)
+void Calculator::setMemsBoardStatusSpeedAndAngle(const float speedYaw, const float speedPitch,
+                                                 const float angleYaw, const float anglePitch)
 {
-    if( qFuzzyCompare( m_speedYaw, speedYaw) && qFuzzyCompare( m_speedPitch, speedPitch) &&
-        qFuzzyCompare( m_angleYaw, angleYaw) && qFuzzyCompare( m_anglePitch, anglePitch))
+    if (qFuzzyCompare(m_speedYaw, speedYaw) && qFuzzyCompare(m_speedPitch, speedPitch) &&
+        qFuzzyCompare(m_angleYaw, angleYaw) && qFuzzyCompare(m_anglePitch, anglePitch))
     {
         return;
-    }
+    } /* if */
 
     m_speedYaw = speedYaw;
     m_speedPitch = speedPitch;
     m_angleYaw = angleYaw;
     m_anglePitch = anglePitch;
 
-    emit memsBoardStatusSpeedAndAngleChanged( speedYaw, speedPitch, angleYaw, anglePitch);
-}
+    emit memsBoardStatusSpeedAndAngleChanged(speedYaw, speedPitch, angleYaw, anglePitch);
+} /* Calculator::setMemsBoardStatusSpeedAndAngle */
 
-
-void Calculator::setMotorYawMode( const uint8_t mode)
+void Calculator::setMotorYawMode(const uint8_t mode)
 {
-    emit motorYawModeChanged( mode);
-}
+    emit motorYawModeChanged(mode);
+} /* Calculator::setMotorYawMode */
 
-
-void Calculator::setMotorYawErrors( const uint8_t flags)
+void Calculator::setMotorYawErrors(const uint8_t flags)
 {
     // if( m_motorYawErrors == flags)
     //     return;
 
     // m_motorYawErrors = flags;
-    emit motorYawErrorsChanged( flags);
-}
+    emit motorYawErrorsChanged(flags);
+} /* Calculator::setMotorYawErrors */
 
-
-void Calculator::setMotorYawFlags( const uint8_t flags)
+void Calculator::setMotorYawFlags(const uint8_t flags)
 {
     // if( m_motorYawFlags == flags)
     //     return;
 
     // m_motorYawFlags = flags;
-    emit motorYawFlagsChanged( flags);
-}
+    emit motorYawFlagsChanged(flags);
+} /* Calculator::setMotorYawFlags */
 
-
-void Calculator::setMotorYawAngle( const float angle)
+void Calculator::setMotorYawAngle(const float angle)
 {
-    emit motorYawAngleChanged( angle);
-}
+    emit motorYawAngleChanged(angle);
+} /* Calculator::setMotorYawAngle */
 
-
-void Calculator::setMotorYawSpeed( const float speed)
+void Calculator::setMotorYawSpeed(const float speed)
 {
-    emit motorYawSpeedChanged( speed);
-}
+    emit motorYawSpeedChanged(speed);
+} /* Calculator::setMotorYawSpeed */
 
-
-void Calculator::setYawMotorStatus( const uint8_t mode, const uint8_t errors, const uint8_t flags,
-                                    const float angle, const float speed)
+void Calculator::setYawMotorStatus(const uint8_t mode, const uint8_t errors, const uint8_t flags,
+                                   const float angle, const float speed)
 {
-    if( m_motorYawMode == mode && m_motorYawErrors == errors && m_motorYawFlags == flags &&
-        qFuzzyCompare( m_motorYawAngle, angle) && qFuzzyCompare( m_motorYawSpeed, speed))
+    if (m_motorYawMode == mode && m_motorYawErrors == errors && m_motorYawFlags == flags &&
+        qFuzzyCompare(m_motorYawAngle, angle) && qFuzzyCompare(m_motorYawSpeed, speed))
     {
         return;
-    }
+    } /* if */
 
     m_motorYawMode = mode;
     m_motorYawErrors = errors;
@@ -339,56 +325,50 @@ void Calculator::setYawMotorStatus( const uint8_t mode, const uint8_t errors, co
     m_motorYawSpeed = speed;
 
     // qDebug() << Q_FUNC_INFO << mode << errors << flags << angle << speed;
-    emit yawMotorStatusChanged( mode, errors, flags, angle, speed);
-}
+    emit yawMotorStatusChanged(mode, errors, flags, angle, speed);
+} /* Calculator::setYawMotorStatus */
 
-
-void Calculator::setMotorPitchMode( const uint8_t mode)
+void Calculator::setMotorPitchMode(const uint8_t mode)
 {
-    emit motorPitchModeChanged( mode);
-}
+    emit motorPitchModeChanged(mode);
+} /* Calculator::setMotorPitchMode */
 
-
-void Calculator::setMotorPitchErrors( const uint8_t flags)
+void Calculator::setMotorPitchErrors(const uint8_t flags)
 {
     // if( m_motorPitchErrors == flags)
     //     return;
 
     // m_motorPitchErrors = flags;
-    emit motorPitchErrorsChanged( flags);
-}
+    emit motorPitchErrorsChanged(flags);
+} /* Calculator::setMotorPitchErrors */
 
-
-void Calculator::setMotorPitchFlags( const uint8_t flags)
+void Calculator::setMotorPitchFlags(const uint8_t flags)
 {
     // if( m_motorPitchFlags == flags)
     //     return;
 
     // m_motorPitchFlags = flags;
-    emit motorPitchFlagsChanged( flags);
-}
+    emit motorPitchFlagsChanged(flags);
+} /* Calculator::setMotorPitchFlags */
 
-
-void Calculator::setMotorPitchAngle( const float angle)
+void Calculator::setMotorPitchAngle(const float angle)
 {
-    emit motorPitchAngleChanged( angle);
-}
+    emit motorPitchAngleChanged(angle);
+} /* Calculator::setMotorPitchAngle */
 
-
-void Calculator::setMotorPitchSpeed( const float speed)
+void Calculator::setMotorPitchSpeed(const float speed)
 {
-    emit motorPitchSpeedChanged( speed);
-}
+    emit motorPitchSpeedChanged(speed);
+} /* Calculator::setMotorPitchSpeed */
 
-
-void Calculator::setPitchMotorStatus( 	const uint8_t mode, const uint8_t errors, const uint8_t flags,
-                                        const float angle, const float speed)
+void Calculator::setPitchMotorStatus(const uint8_t mode, const uint8_t errors, const uint8_t flags,
+                                     const float angle, const float speed)
 {
-    if( m_motorPitchMode == mode && m_motorPitchErrors == errors && m_motorPitchFlags == flags &&
-        qFuzzyCompare( m_motorPitchAngle, angle) && qFuzzyCompare( m_motorPitchSpeed, speed))
+    if (m_motorPitchMode == mode && m_motorPitchErrors == errors && m_motorPitchFlags == flags &&
+        qFuzzyCompare(m_motorPitchAngle, angle) && qFuzzyCompare(m_motorPitchSpeed, speed))
     {
         return;
-    }
+    } /* if */
 
     m_motorPitchMode = mode;
     m_motorPitchErrors = errors;
@@ -397,129 +377,107 @@ void Calculator::setPitchMotorStatus( 	const uint8_t mode, const uint8_t errors,
     m_motorPitchSpeed = speed;
 
     // qDebug() << Q_FUNC_INFO << mode << errors << flags << angle << speed;
-    emit pitchMotorStatusChanged( mode, errors, flags, angle, speed);
+    emit pitchMotorStatusChanged(mode, errors, flags, angle, speed);
 
-}
+} /* Calculator::setPitchMotorStatus */
 
-
-//void Calculator::setMemsNotConfigured( const uint32_t memsNumber, const bool value)
+// void Calculator::setMemsNotConfigured( const uint32_t memsNumber, const bool value)
 //{
 
 //}
 
-
-void Calculator::setSpeedYaw( const float speed)
+void Calculator::setSpeedYaw(const float speed)
 {
-    emit speedYawChanged( speed);
-}
+    emit speedYawChanged(speed);
+} /* Calculator::setSpeedYaw */
 
-
-void Calculator::setSpeedPitch( const float speed)
+void Calculator::setSpeedPitch(const float speed)
 {
-    emit speedPitchChanged( speed);
-}
+    emit speedPitchChanged(speed);
+} /* Calculator::setSpeedPitch */
 
-
-void Calculator::setAngleYaw( const float angle)
+void Calculator::setAngleYaw(const float angle)
 {
-    emit angleYawChanged( angle);
-}
+    emit angleYawChanged(angle);
+} /* Calculator::setAngleYaw */
 
-
-void Calculator::setAnglePitch( const float angle)
+void Calculator::setAnglePitch(const float angle)
 {
-    emit anglePitchChanged( angle);
-}
+    emit anglePitchChanged(angle);
+} /* Calculator::setAnglePitch */
 
-
-void Calculator::setControlPosition( const float yaw, const float pitch)
+void Calculator::setControlPosition(const float yaw, const float pitch)
 {
-    Command *const cmd = new SetControlPositionCommand( yaw, pitch,
-                                                        m_hostId, m_deviceId, false);
-    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator( cmd);
+    Command *const cmd = new SetControlPositionCommand(yaw, pitch, m_hostId, m_deviceId, false);
+    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator(cmd);
     // qDebug()    << "setControlPosition" << yaw << pitch
     //             << decoratedCmd->serialize().size()
     //             << decoratedCmd->serialize().toHex( ' ');
 
-    emit sendCmd( decoratedCmd);
-}
+    emit sendCmd(decoratedCmd);
+} /* Calculator::setControlPosition */
 
-
-void Calculator::setControlSpeed( const float yaw, const float pitch)
+void Calculator::setControlSpeed(const float yaw, const float pitch)
 {
-    Command *const cmd = new SetControlSpeedCommand( yaw, pitch,
-                                                     m_hostId, m_deviceId, false);
-    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator( cmd);
+    Command *const cmd = new SetControlSpeedCommand(yaw, pitch, m_hostId, m_deviceId, false);
+    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator(cmd);
 
-    emit sendCmd( decoratedCmd);
-}
+    emit sendCmd(decoratedCmd);
+} /* Calculator::setControlSpeed */
 
-
-void Calculator::setControlTracking( const float yawMisalignment, const float pitchMisalignment,
-                                     const float yawAccelLimit, const float pitchAccelLimit)
+void Calculator::setControlTracking(const float yawMisalignment, const float pitchMisalignment,
+                                    const float yawAccelLimit, const float pitchAccelLimit)
 {
-    Command *const cmd = new SetControlTrackingCommand( yawMisalignment, pitchMisalignment,
-                                                        yawAccelLimit, pitchAccelLimit,
-                                                        m_hostId, m_deviceId, false);
-    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator( cmd);
+    Command *const cmd =
+        new SetControlTrackingCommand(yawMisalignment, pitchMisalignment, yawAccelLimit,
+                                      pitchAccelLimit, m_hostId, m_deviceId, false);
+    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator(cmd);
 
-    emit sendCmd( decoratedCmd);
+    emit sendCmd(decoratedCmd);
 
-}
+} /* Calculator::setControlTracking */
 
-
-void Calculator::setUnknownCommand( const uint8_t dstFunction)
+void Calculator::setUnknownCommand(const uint8_t dstFunction)
 {
-    Q_UNUSED( dstFunction);
+    Q_UNUSED(dstFunction);
 
-    m_unknownCommands ++;
-    if( m_unknownCommands < 0)
+    m_unknownCommands++;
+    if (m_unknownCommands < 0)
         m_unknownCommands = 0;
 
-    emit unknownCommandCounterChanged( m_unknownCommands);
-}
+    emit unknownCommandCounterChanged(m_unknownCommands);
+} /* Calculator::setUnknownCommand */
 
-
-void Calculator::setStatusWithErrorCommand( const uint8_t errorCode)
+void Calculator::setStatusWithErrorCommand(const uint8_t errorCode)
 {
-    Q_UNUSED( errorCode);
+    Q_UNUSED(errorCode);
 
-    m_statusWithErrorCommands ++;
-    if( m_statusWithErrorCommands < 0)
+    m_statusWithErrorCommands++;
+    if (m_statusWithErrorCommands < 0)
         m_statusWithErrorCommands = 0;
 
-    emit statusWithErrorCommandCounterChanged( m_statusWithErrorCommands);
-}
+    emit statusWithErrorCommandCounterChanged(m_statusWithErrorCommands);
+} /* Calculator::setStatusWithErrorCommand */
 
-
-void Calculator::setAirConditionerCmd(  const uint8_t fanSpeed,
-                                        const uint8_t heaterOn,
-                                        const int8_t peltierI)
+void Calculator::setAirConditionerCmd(const uint8_t fanSpeed, const uint8_t heaterOn,
+                                      const int8_t peltierI)
 {
 
-}
+} /* Calculator::setAirConditionerCmd */
 
-
-void Calculator::setAirConditionerState(    const uint8_t fanSpeed,
-                                            const uint8_t heaterOn,
-                                            const int8_t peltierI,
-                                            const int8_t t1,
-                                            const int8_t t2,
-                                            const int8_t t3,
-                                            const uint32_t errors)
+void Calculator::setAirConditionerState(const uint8_t fanSpeed, const uint8_t heaterOn,
+                                        const int8_t peltierI, const int8_t t1, const int8_t t2,
+                                        const int8_t t3, const uint32_t errors)
 {
 
-}
+} /* Calculator::setAirConditionerState */
 
-
-//void Calculator::setControlPositionCourse( const float course)
+// void Calculator::setControlPositionCourse( const float course)
 //{
 //
-//}
+// }
 
-
-//void Calculator::setControlPositionPitch( const float pitch)
+// void Calculator::setControlPositionPitch( const float pitch)
 //{
 
 //}
-

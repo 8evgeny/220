@@ -2,27 +2,21 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-
 #include <QByteArray>
-
 
 class Message
 {
-public:
+  public:
     Message()
     {
 
-    }
+    } /* Message */
 
-    Message(    const QByteArray startDelimiter,
-                const QByteArray payload,
-                const QByteArray crc):
-        m_startDelimiter( startDelimiter)
-      , m_payload( payload)
-      , m_crc( crc)
+    Message(const QByteArray startDelimiter, const QByteArray payload, const QByteArray crc)
+        : m_startDelimiter(startDelimiter), m_payload(payload), m_crc(crc)
     {
 
-    }
+    } /* Message */
 
     const QByteArray &getStartDelimiter() const
     {
@@ -41,15 +35,14 @@ public:
 
     uint32_t getSize() const
     {
-        return (uint32_t)m_startDelimiter.size() + (uint32_t)m_payload.size() + (uint32_t)m_crc.size();
-    }
+        return (uint32_t)m_startDelimiter.size() + (uint32_t)m_payload.size() +
+               (uint32_t)m_crc.size();
+    } /* getSize */
 
-private:
-    QByteArray  m_startDelimiter;
-    QByteArray  m_payload;
-    QByteArray  m_crc;
-};
-
+  private:
+    QByteArray m_startDelimiter;
+    QByteArray m_payload;
+    QByteArray m_crc;
+} /* class Message */;
 
 #endif
-

@@ -10,90 +10,99 @@ class TcpServer : public QTcpServer
 {
     Q_OBJECT
 
-    struct ClientData {
+    struct ClientData
+    {
         qint64 m_lastKeepAliveTimestamp;
 
         ClientData()
-            : m_lastKeepAliveTimestamp {QDateTime::currentMSecsSinceEpoch()}
-        {}
+            : m_lastKeepAliveTimestamp{QDateTime::currentMSecsSinceEpoch()}
+        {
+        } /* ClientData */
 
         bool isAlive(qint64 timeoutMs = 2000) const
         {
             return (QDateTime::currentMSecsSinceEpoch() - m_lastKeepAliveTimestamp) < timeoutMs;
-        }
+        } /* isAlive */
 
         void setAlive()
         {
             m_lastKeepAliveTimestamp = QDateTime::currentMSecsSinceEpoch();
-        }
-
+        } /* setAlive */
     };
 
-public:
-
+  public:
 #pragma pack(push, 1)
-    struct VdpHeader {
+    struct VdpHeader
+    {
         quint8 cmd;
         quint8 status;
-        struct {
+        struct
+        {
             quint8 function;
             quint8 device;
-        } src;
-        struct {
+        } /* struct */ src;
+        struct
+        {
             quint8 function;
             quint8 device;
-        }dst;
+        } /* struct */ dst;
         quint16 byteCount;
-    };
+    } /* struct VdpHeader */;
 #pragma pack(pop)
 
-    enum class ErrorSrc { None, Server, Client };
+    enum class ErrorSrc
+    {
+        None,
+        Server,
+        Client
+    } /* enum ErrorSrc */;
 
     explicit TcpServer(QObject *parent = nullptr);
     virtual ~TcpServer();
 
-    bool isKeepAliveProcEnabled() const {return m_keepAliveProcEnabled;}
+    bool isKeepAliveProcEnabled() const
+    {
+        return m_keepAliveProcEnabled;
+    } /* isKeepAliveProcEnabled */
 
     void start(quint16 port);
     void stop();
 
-    const QString& lastErrorString();
+    const QString &lastErrorString();
     QAbstractSocket::SocketError lastError() const;
     ErrorSrc lastErrorSrc() const;
 
-signals:
+  signals:
     void newClient(QTcpSocket *socket);
     void clientDisconnected(QTcpSocket *socket);
     void dataReceived(QTcpSocket *socket, const QByteArray &data);
 
     void errorOccured();
 
-
-public slots:
+  public slots:
 
     void setKeepAliveProcEnabled(bool state);
     void sendData(QTcpSocket *socket, const QByteArray &data);
     void disconnectClient(QTcpSocket *socket);
 
-
-private slots:
+  private slots:
 
     void onKeepAliveTimerTimeout();
 
-protected:
+  protected:
     void incomingConnection(qintptr socketDescriptor) override;
 
-private slots:
+  private slots:
 
     void onClientReadyRead();
     void onClientDisconnected();
     void onClientErrorOccurred(QAbstractSocket::SocketError error);
 
-private:
+  private:
     QHash<QTcpSocket *, ClientData> m_clients;
     bool m_keepAliveProcEnabled = true;
     QTimer m_keepAliveTimer;
     ErrorSrc m_lastErrSrc = ErrorSrc::None;
     QAbstractSocket::SocketError m_lastErr = QAbstractSocket::SocketError::UnknownSocketError;
     QString m_lastErrStr;
-};
+} /* class TcpServer */;

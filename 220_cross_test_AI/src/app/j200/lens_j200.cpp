@@ -1,32 +1,26 @@
 #include "lens_j200.h"
 #include "qdebug.h"
 
-
 LensJ200::LensJ200(QObject *parent)
-    : QObject{parent},
-    m_currentCommandID(0),
-    m_isContinuous(false),
-    m_pendingRequest(false),
-    minPosition(0),
-    maxPosition(32000)
+    : QObject{parent}, m_currentCommandID(0), m_isContinuous(false), m_pendingRequest(false),
+      minPosition(0), maxPosition(32000)
 {
+
     QObject::connect(&serialPort, &QSerialPort::readyRead, this, &LensJ200::read);
+
     m_status.zoomPosition = 0;
     m_status.focusPosition = 0;
-}
-
-
+} /* LensJ200::LensJ200 */
 
 LensJ200::~LensJ200()
 {
     qDebug() << Q_FUNC_INFO;
-  //  serialPort.close();
-}
-
+    //  serialPort.close();
+} /* LensJ200::~LensJ200 */
 
 bool LensJ200::open(QString portName)
 {
-    qDebug()<<Q_FUNC_INFO<<"Open serial port:"<<portName;
+    qDebug() << Q_FUNC_INFO << "Open serial port:" << portName;
     serialPort.setPortName(portName);
     serialPort.setBaudRate(QSerialPort::Baud19200);
     serialPort.setDataBits(QSerialPort::Data8);
@@ -36,140 +30,144 @@ bool LensJ200::open(QString portName)
 
     m_status.isConnected = serialPort.open(QIODevice::ReadWrite);
 
-    return m_status.isConnected; //serialPort.open(QIODevice::ReadWrite);
-}
+    return m_status.isConnected; // serialPort.open(QIODevice::ReadWrite);
+} /* LensJ200::open */
 
 void LensJ200::close()
 {
-    if(serialPort.isOpen())
+    if (serialPort.isOpen())
         serialPort.close();
-}
+} /* LensJ200::close */
 
 void LensJ200::send(QByteArray req)
 {
 
-    if(!serialPort.isOpen())
+    if (!serialPort.isOpen())
         return;
-    if (req.length() < 1) {
+    if (req.length() < 1)
+    {
         return;
-    }
+    } /* if */
 
     char initPkt[] = {0x24, 0, 0, 0, 0};
     QByteArray ba(initPkt, sizeof(initPkt));
     ba[1] = m_currentCommandID = req.at(0);
 
     req = req.mid(1, req.length());
-    if ( req.length() ) {
+    if (req.length())
+    {
         ba[2] = req.length();
         ba[3] = (req.length()) >> 8;
         ba.insert(4, req);
-    }
+    } /* if */
 
-    ba[ba.length()-1] = getChecksum(ba, false);
+    ba[ba.length() - 1] = getChecksum(ba, false);
     m_request = ba;
-    //qDebug()<<Q_FUNC_INFO<<"Write data:"<<ba.toHex(' ');
+    // qDebug()<<Q_FUNC_INFO<<"Write data:"<<ba.toHex(' ');
     serialPort.write(ba);
-}
+} /* LensJ200::send */
 
 QByteArray m_serialbuf;
 void LensJ200::read()
 {
-    if(!serialPort.isOpen())
+    if (!serialPort.isOpen())
         return;
     const QByteArray data = serialPort.readAll();
-   // qDebug()<<Q_FUNC_INFO<<data.toHex(' ');
+    // qDebug()<<Q_FUNC_INFO<<data.toHex(' ');
 
     m_serialbuf.append(data);
-    bool ok =false ;
+    bool ok = false;
     int iCnt = 0;
-    while(m_serialbuf.length() >5)
+    while (m_serialbuf.length() > 5)
     {
 
-        if(m_serialbuf.data()[0]!= 0x24)
+        if (m_serialbuf.data()[0] != 0x24)
         {
             m_serialbuf.removeFirst();
             continue;
-        }
+        } /* if */
 
-        Lens::J200_HEAD* head = (Lens::J200_HEAD*)m_serialbuf.data();
-        int len_msg =  (head->len+sizeof(Lens::J200_HEAD)+sizeof(Lens::J200_TAIL));
+        Lens::J200_HEAD *head = (Lens::J200_HEAD *)m_serialbuf.data();
+        int len_msg = (head->len + sizeof(Lens::J200_HEAD) + sizeof(Lens::J200_TAIL));
 
-
-        if(len_msg>20)
+        if (len_msg > 20)
         {
             m_serialbuf.removeFirst();
             continue;
-        }
+        } /* if */
 
-        if( len_msg > m_serialbuf.length())
+        if (len_msg > m_serialbuf.length())
         {
-            if(iCnt >10)
+            if (iCnt > 10)
             {
 
                 m_serialbuf.removeFirst();
-                iCnt=0;
+                iCnt = 0;
                 continue;
-            }
+            } /* if */
             else
             {
-                iCnt ++;
+                iCnt++;
                 return;
-            }
-        }
-        iCnt=0;
+            } /* else */
+        } /* if */
+        iCnt = 0;
 
         QByteArray ans = m_serialbuf.mid(0, len_msg);
 
         bool ok = parseResponse(ans);
 
-        if(ok)
+        if (ok)
         {
             emit sendResponse(ok);
             m_serialbuf.remove(0, len_msg);
 
-        }
+        } /* if */
         else
             m_serialbuf.removeFirst();
         // if(!ok && m_serialbuf.length()>0)
         //     m_serialbuf.removeFirst();
         // else
         //    m_serialbuf.remove(0,6);
-    }
+    } /* while */
 
     // emit sendResponse(ok);
-   // qDebug()<<"";
-}
+    // qDebug()<<"";
+} /* LensJ200::read */
 
 uint8_t LensJ200::getChecksumOld(QByteArray data, bool isResponse)
 {
-    //qDebug()<<Q_FUNC_INFO<<data.toHex(' ');
+    // qDebug()<<Q_FUNC_INFO<<data.toHex(' ');
     uint8_t cs = data.at(0);
 
-    for (int i = 1; i < data.length()-1-(quint8)isResponse; i++) {
-   // for (int i = 1; i < data.length()-1; i++) {
+    for (int i = 1; i < data.length() - 1 - (quint8)isResponse; i++)
+    {
+        // for (int i = 1; i < data.length()-1; i++) {
         cs ^= data.at(i);
-        //    qDebug()<<Q_FUNC_INFO<<"data ="<<QString("%1").arg((quint8)data[i], 0, 16)<<"cs="<<QString("%1").arg((quint8)cs, 0, 16);
-    }
+        //    qDebug()<<Q_FUNC_INFO<<"data ="<<QString("%1").arg((quint8)data[i], 0,
+        //    16)<<"cs="<<QString("%1").arg((quint8)cs, 0, 16);
+    } /* for */
 
-    //qDebug()<<Q_FUNC_INFO<<"CS:"<<QString("%1").arg((quint8)cs, 0, 16);;
+    // qDebug()<<Q_FUNC_INFO<<"CS:"<<QString("%1").arg((quint8)cs, 0, 16);;
     return cs;
-}
+} /* LensJ200::getChecksumOld */
 
 uint8_t LensJ200::getChecksum(QByteArray data, bool isResponse)
 {
-    //qDebug()<<Q_FUNC_INFO<<data.toHex(' ');
+    // qDebug()<<Q_FUNC_INFO<<data.toHex(' ');
     uint8_t cs = data.at(0);
 
-    //for (int i = 1; i < data.length()-1-(quint8)isResponse; i++) {
-     for (int i = 1; i < data.length()-1; i++) {
+    // for (int i = 1; i < data.length()-1-(quint8)isResponse; i++) {
+    for (int i = 1; i < data.length() - 1; i++)
+    {
         cs ^= data.at(i);
-        //    qDebug()<<Q_FUNC_INFO<<"data ="<<QString("%1").arg((quint8)data[i], 0, 16)<<"cs="<<QString("%1").arg((quint8)cs, 0, 16);
-    }
+        //    qDebug()<<Q_FUNC_INFO<<"data ="<<QString("%1").arg((quint8)data[i], 0,
+        //    16)<<"cs="<<QString("%1").arg((quint8)cs, 0, 16);
+    } /* for */
 
-    //qDebug()<<Q_FUNC_INFO<<"CS:"<<QString("%1").arg((quint8)cs, 0, 16);;
+    // qDebug()<<Q_FUNC_INFO<<"CS:"<<QString("%1").arg((quint8)cs, 0, 16);;
     return cs;
-}
-
+} /* LensJ200::getChecksum */
 
 /*
  * Return the code of the executed command or 0 in case of error
@@ -177,15 +175,16 @@ uint8_t LensJ200::getChecksum(QByteArray data, bool isResponse)
 bool LensJ200::parseResponse(QByteArray resp)
 {
     // check packet length
-    if (resp.length() < minResponsePacketSizeBytes) {
-        qDebug()<<">>>1";
+    if (resp.length() < minResponsePacketSizeBytes)
+    {
+        qDebug() << ">>>1";
         return false;
-    }
+    } /* if */
 
-    Lens::J200_HEAD* head = (Lens::J200_HEAD*)resp.data();
+    Lens::J200_HEAD *head = (Lens::J200_HEAD *)resp.data();
 
-    if(head->synq != 0x24) return false;
-
+    if (head->synq != 0x24)
+        return false;
 
     //
     // 24 29 24 29 06 00 b8 59 3d 46 21 00 fe b0
@@ -197,17 +196,19 @@ bool LensJ200::parseResponse(QByteArray resp)
 
     // read and check crc
 
-    int cs = getChecksum(resp, true) ;
-    int oldcs = getChecksumOld(resp, true) ;
+    int cs = getChecksum(resp, true);
+    int oldcs = getChecksumOld(resp, true);
 
-    if ( (cs != resp.at(resp.length()-1)) && (oldcs != resp.at(resp.length()-1 ))) {
-        qDebug()<<"BAD Checksum";
+    if ((cs != resp.at(resp.length() - 1)) && (oldcs != resp.at(resp.length() - 1)))
+    {
+        qDebug() << "BAD Checksum";
         return false;
-    }
+    } /* if */
     // check operation status
-    if (resp.at(resp.length()-2) != successOperation) {
+    if (resp.at(resp.length() - 2) != successOperation)
+    {
         return false;
-    }
+    } /* if */
     // // check executed command ID
     // if ((resp.at(Packet::command) != m_currentCommandID) && (resp.at(Packet::command) != 0x29)) {
     //     qDebug()<<">>>>>>>>>>>>>>>>>"<<m_currentCommandID<<(quint8)resp.at(Packet::command);
@@ -215,7 +216,8 @@ bool LensJ200::parseResponse(QByteArray resp)
     // }
 
     // parse commands
-    switch (resp.at(Packet::command)) {
+    switch (resp.at(Packet::command))
+    {
     case 0x08:
     case 0x09:
         //    qDebug()<<"ddddd";
@@ -229,11 +231,10 @@ bool LensJ200::parseResponse(QByteArray resp)
     case 0x21:
     case 0x22:
 
-      //  qDebug()<<"Update Lens State";
+        //  qDebug()<<"Update Lens State";
         m_status.focusPosition = (resp.at(7) << 8) | resp.at(6);
-        m_status.zoomPosition = (resp.at(5) << 8) | resp.at(4) ;
+        m_status.zoomPosition = (resp.at(5) << 8) | resp.at(4);
         m_status.temperature = resp.at(8);
-
 
         // switch (m_currentCommandID) {
         // case (quint8)Lens::Command::ZoomOut:
@@ -269,7 +270,7 @@ bool LensJ200::parseResponse(QByteArray resp)
         m_status.focalLength = (resp.at(5) << 8) | resp.at(4);
     default:
         break;
-    }
+    } /* switch */
 
     return true;
-}
+} /* LensJ200::parseResponse */

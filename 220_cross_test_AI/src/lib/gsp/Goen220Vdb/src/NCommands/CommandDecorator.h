@@ -2,14 +2,12 @@
 #ifndef COMMAND_DECORATOR_H
 #define COMMAND_DECORATOR_H
 
-
 #include "Command.h"
-
 
 class CommandDecorator : public Command
 {
-public:
-    CommandDecorator(  Command *const command);
+  public:
+    CommandDecorator(Command *const command);
 
     ~CommandDecorator();
 
@@ -29,10 +27,8 @@ public:
 
     bool isRequest() const override;
 
-private:
-    Command *const  m_pCommand;
-};
-
+  private:
+    Command *const m_pCommand;
+} /* class CommandDecorator */;
 
 #endif
-

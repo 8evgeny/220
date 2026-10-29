@@ -3,28 +3,27 @@
 #include <QSortFilterProxyModel>
 #include "tlm_data_model_impl.h"
 
-namespace Goen220 {
-
-class TlmDataCategoryFilterModel : public QSortFilterProxyModel
+namespace Goen220
 {
-    Q_OBJECT
 
-public:
-    explicit TlmDataCategoryFilterModel(TlmDataModel::Category cat, TlmDataModelImpl *parent = nullptr);
+    class TlmDataCategoryFilterModel : public QSortFilterProxyModel
+    {
+        Q_OBJECT
 
+      public:
+        explicit TlmDataCategoryFilterModel(TlmDataModel::Category cat,
+                                            TlmDataModelImpl *parent = nullptr);
 
-protected:
+      protected:
+        TlmDataModelImpl *tmSrcModel() const;
 
-    TlmDataModelImpl *tmSrcModel() const;
+      private:
+        TlmDataModel::Category m_cat = TlmDataModel::Category::UNDEF;
 
-private:
-
-    TlmDataModel::Category m_cat = TlmDataModel::Category::UNDEF;
-
-    // QSortFilterProxyModel interface
-protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
-    bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const;
-};
+        // QSortFilterProxyModel interface
+      protected:
+        bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+        bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const;
+    } /* class TlmDataCategoryFilterModel */;
 
 } // namespace Goen220

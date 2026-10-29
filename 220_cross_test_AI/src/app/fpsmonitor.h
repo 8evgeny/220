@@ -4,11 +4,12 @@
 G_BEGIN_DECLS
 
 #define GST_TYPE_FPS_MONITOR (gst_fps_monitor_get_type())
-    G_DECLARE_FINAL_TYPE(GstFpsMonitor, gst_fps_monitor, GST, FPS_MONITOR, GstElement)
+G_DECLARE_FINAL_TYPE(GstFpsMonitor, gst_fps_monitor, GST, FPS_MONITOR, GstElement)
 
-    typedef void (*FpsCallback)(gdouble fps, gboolean stream_active, gpointer user_data);
+typedef void (*FpsCallback)(gdouble fps, gboolean stream_active, gpointer user_data);
 
-struct _GstFpsMonitor {
+struct _GstFpsMonitor
+{
     GstElement element;
 
     /* Properties */
@@ -22,7 +23,7 @@ struct _GstFpsMonitor {
     guint timer_id;
     GMutex lock;
     gboolean stream_active;
-};
+} /* struct _GstFpsMonitor */;
 
 GType gst_fps_monitor_get_type(void);
 

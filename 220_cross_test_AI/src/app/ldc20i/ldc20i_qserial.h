@@ -5,22 +5,22 @@
 #include <QSerialPort>
 #include <qthread.h>
 
-class LDC20I_QSerial: public QObject
+class LDC20I_QSerial : public QObject
 {
     Q_OBJECT
 
     QThread thread;
 
-public:
+  public:
     explicit LDC20I_QSerial(QString port, quint32 baudrate, QObject *parent = nullptr);
     ~LDC20I_QSerial();
 
-private:
+  private:
     QString port;
     quint32 baudrate;
-    QSerialPort* serialPort;
+    QSerialPort *serialPort;
     QByteArray buf;
-public slots:
+  public slots:
     qint32 initConnection();
     qint32 closeConnection();
 
@@ -29,10 +29,10 @@ public slots:
     void proc_sendData(QByteArray ba);
     void proc_Thread_Finished();
 
-Q_SIGNALS:
+  Q_SIGNALS:
     void dataParse(QByteArray ba);
     void deviceConnected();
 
-};
+} /* class LDC20I_QSerial */;
 
 #endif // LDC20I_QSERIAL_H

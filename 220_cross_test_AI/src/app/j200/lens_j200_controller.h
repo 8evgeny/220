@@ -7,30 +7,37 @@
 class LensJ200Controller : public QObject
 {
     Q_OBJECT
-public:
+  public:
     explicit LensJ200Controller(QObject *parent = nullptr);
 
     LensJ200Worker lensWorker;
 
     void connect(QString portName);
-    bool isConnected() {
+
+    bool isConnected()
+    {
         return lensWorker.status().isConnected;
-    };
-    qint8 getTemperature() {
+    } /* isConnected */;
+    qint8 getTemperature()
+    {
         return lensWorker.status().temperature;
-    }
-    quint16 getZoomPosition() {
+    } /* getTemperature */
+    quint16 getZoomPosition()
+    {
         return lensWorker.status().zoomPosition;
-    }
-    quint16 getFocusPosition() {
+    } /* getZoomPosition */
+    quint16 getFocusPosition()
+    {
         return lensWorker.status().focusPosition;
-    }
-    quint16 getFocalLength() {
+    } /* getFocusPosition */
+    quint16 getFocalLength()
+    {
         return lensWorker.status().focalLength;
-    }
-    Lens::Error error() {
+    } /* getFocalLength */
+    Lens::Error error()
+    {
         return lensWorker.error();
-    }  
+    } /* error */
     void proc_disconnect();
     void proc_report();
     void proc_zoomOutContinuous();
@@ -44,23 +51,18 @@ public:
     void proc_getFocalLength();
     void proc_gotoFocalLength(quint16 focalLength);
 
-
-
-
-protected:
+  protected:
     bool m_isConnected;
 
-signals:
+  signals:
     void lensConnect(bool isConnect, QString portName = "");
     void lensDisconnect();
-    void lensSendRequest(Lens::Command, const QByteArray& data = {});
+    void lensSendRequest(Lens::Command, const QByteArray &data = {});
 
-public slots:
+  public slots:
     void onConnected(bool);
-    //void onError(Lens::Error);
+    // void onError(Lens::Error);
 
-
-
-};
+} /* class LensJ200Controller */;
 
 #endif // LENS_J200_CONTROLLER_H

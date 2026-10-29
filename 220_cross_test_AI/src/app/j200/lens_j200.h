@@ -4,57 +4,60 @@
 #include <QObject>
 #include <QSerialPort>
 
-namespace Lens {
-
-enum class Command : char {
-    Report = 0x02,
-
-    ZoomIn = 0x08,
-    ZoomOut = 0x09,
-    ZoomInContinuous = 0x23,
-    ZoomOutContinuous = 0x24,
-    ZoomStop = 0x14,
-
-    FocusFarContinuous = 0x22,
-    FocusNearContinuous = 0x21,
-    FocusStop = 0x1B,
-
-    GotoPosition = 0x0D,
-    GetFocalLength = 0x42,
-    GotoFocalLength = 0x43,
-    SpeedSet = 0x1F,
-
-    Temperature = 0x45
-};
-
-enum class Error : char {
-    NoError,
-    Timeout,
-    BadResponse
-};
-
-typedef struct
+namespace Lens
 {
-    uint8_t synq;
-    uint8_t cmd;
-    uint16_t len;
 
-} J200_HEAD;
+    enum class Command : char
+    {
+        Report = 0x02,
 
-typedef struct
+        ZoomIn = 0x08,
+        ZoomOut = 0x09,
+        ZoomInContinuous = 0x23,
+        ZoomOutContinuous = 0x24,
+        ZoomStop = 0x14,
+
+        FocusFarContinuous = 0x22,
+        FocusNearContinuous = 0x21,
+        FocusStop = 0x1B,
+
+        GotoPosition = 0x0D,
+        GetFocalLength = 0x42,
+        GotoFocalLength = 0x43,
+        SpeedSet = 0x1F,
+
+        Temperature = 0x45
+    } /* enum Command */;
+
+    enum class Error : char
+    {
+        NoError,
+        Timeout,
+        BadResponse
+    } /* enum Error */;
+
+    typedef struct
+    {
+        uint8_t synq;
+        uint8_t cmd;
+        uint16_t len;
+
+    } /* struct */ J200_HEAD;
+
+    typedef struct
+    {
+        uint8_t ACK;
+        uint8_t CS;
+
+    } /* struct */ J200_TAIL;
+
+    static int maxEncoderValue = 31550;
+    static int minEncoderValue = 0; // 450;
+
+} /* namespace Lens */
+
+struct LensStatus
 {
-    uint8_t ACK;
-    uint8_t CS;
-
-} J200_TAIL;
-
-
-static int maxEncoderValue = 31550;
-static int minEncoderValue = 0; //450;
-
-}
-
-struct LensStatus {
     bool isConnected;
     int zoomPosition;
     int zoomMinPosition;
@@ -62,12 +65,12 @@ struct LensStatus {
     int focusPosition;
     int focalLength;
     int temperature;
-};
+} /* struct LensStatus */;
 
 class LensJ200 : public QObject
 {
     Q_OBJECT
-public:
+  public:
     explicit LensJ200(QObject *parent = nullptr);
     ~LensJ200();
 
@@ -76,17 +79,19 @@ public:
     void send(QByteArray req);
     void read();
 
-    LensStatus status() {
+    LensStatus status()
+    {
         return m_status;
-    };
+    } /* status */;
 
-protected:
-    enum Packet {
+  protected:
+    enum Packet
+    {
         syncChar = 0,
         command = 1,
         dataLength = 2,
         data = 4,
-    };
+    } /* enum Packet */;
 
     QSerialPort serialPort;
 
@@ -101,7 +106,7 @@ protected:
     bool m_pendingRequest;
     QByteArray m_request;
 
-private:
+  private:
     static const int serialPortTimeout = 2000; // in ms
     int maxPosition;
     int minPosition;
@@ -111,8 +116,8 @@ private:
 
     static const int errRead = -1;
 
-signals:
+  signals:
     void sendResponse(bool isOk);
-};
+} /* class LensJ200 */;
 
 #endif // LENSJ200_H

@@ -6,24 +6,14 @@
 
 #include <QByteArray>
 
-
 class ReadRequestCommand : public VdbCommand
 {
-public:
-    ReadRequestCommand( const uint8_t srcDevice, const uint8_t dstDevice,
-                        const uint8_t dstFunction,
-                        const QByteArray &payload);
+  public:
+    ReadRequestCommand(const uint8_t srcDevice, const uint8_t dstDevice, const uint8_t dstFunction,
+                       const QByteArray &payload);
 
-    ReadRequestCommand( const QByteArray &header, CommandExecutor *const commandExecutor = nullptr);
+    ReadRequestCommand(const QByteArray &header, CommandExecutor *const commandExecutor = nullptr);
 
-};
-
-
-
-
-
-
-
+} /* class ReadRequestCommand */;
 
 #endif
-

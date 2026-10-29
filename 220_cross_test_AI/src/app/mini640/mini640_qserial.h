@@ -5,25 +5,23 @@
 #include <QSerialPort>
 #include <qthread.h>
 
-class MINI640_QSerial: public QObject
+class MINI640_QSerial : public QObject
 {
     Q_OBJECT
 
     QThread thread;
 
-public:
+  public:
     explicit MINI640_QSerial(QString port, quint32 baudrate, QObject *parent = nullptr);
     ~MINI640_QSerial();
-    QSerialPort* m_serialPort = nullptr;
-private:
+    QSerialPort *m_serialPort = nullptr;
 
+  private:
     QString port = "";
     quint32 baudrate = 0;
 
-
-
     QByteArray buf;
-public slots:
+  public slots:
     qint32 initConnection();
     qint32 closeConnection();
 
@@ -34,11 +32,11 @@ public slots:
     void proc_sendData(QByteArray ba);
     void proc_Thread_Finished();
 
-Q_SIGNALS:
+  Q_SIGNALS:
     void dataParse(QByteArray ba);
     void deviceConnected();
     void sig_READY();
 
-};
+} /* class MINI640_QSerial */;
 
 #endif // MINI640_QSERIAL_H

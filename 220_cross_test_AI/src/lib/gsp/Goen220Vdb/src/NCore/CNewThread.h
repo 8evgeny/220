@@ -4,34 +4,30 @@
 #include <QObject>
 #include <QLoggingCategory>
 
-
-Q_DECLARE_LOGGING_CATEGORY( serviceThreadState)
-
+Q_DECLARE_LOGGING_CATEGORY(serviceThreadState)
 
 namespace NCore
 {
-
 
     class CNewThread : public QObject
     {
         Q_OBJECT
 
-    public:
-        explicit CNewThread( QObject *parent = nullptr);
+      public:
+        explicit CNewThread(QObject *parent = nullptr);
         virtual ~CNewThread();
 
-    public slots:
+      public slots:
         void stopThread();
 
-    protected slots:
+      protected slots:
         virtual void initializationInNewThread() = 0;
 
-    private:
+      private:
         QThread *m_pThread;
 
-    };
+    } /* class CNewThread */;
 
-
-}   //  namespace NCore
+} //  namespace NCore
 
 #endif // CNEWTHREAD_H

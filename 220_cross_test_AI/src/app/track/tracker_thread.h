@@ -9,43 +9,57 @@
 #include "trsh_wrapper.h"
 
 // ─── Lock-free single-slot (seqlock) ─────────────────────────────
-struct FrameSlot {
+struct FrameSlot
+{
     std::atomic<uint64_t> seq{0};
-    cv::Mat               data;
-    int                   channel = -1;
+    cv::Mat data;
+    int channel = -1;
 
-    void write(const cv::Mat &mat, int ch) {
+    void write(const cv::Mat &mat, int ch)
+    {
         uint64_t s = seq.load(std::memory_order_relaxed);
         seq.store(s + 1, std::memory_order_release);
-        data    = mat.clone();
+        data = mat.clone();
         channel = ch;
         seq.store(s + 2, std::memory_order_release);
-    }
+    } /* write */
 
-    bool read(cv::Mat &out, int &ch) {
+    bool read(cv::Mat &out, int &ch)
+    {
         uint64_t s1 = seq.load(std::memory_order_acquire);
-        if ((s1 & 1) || s1 == 0) return false;
+        if ((s1 & 1) || s1 == 0)
+            return false;
 
         cv::Mat tmp = data.clone();
         ch = channel;
 
         uint64_t s2 = seq.load(std::memory_order_acquire);
-        if (s1 != s2) return false;
+        if (s1 != s2)
+            return false;
 
         out = std::move(tmp);
         return true;
-    }
-};
+    } /* read */
+} /* struct FrameSlot */;
 
 // ─── Команды трекеру ──────────────────────────────────────────────
-struct TrackerCmd {
-    enum Type { NONE, SET_TARGET, STOP, REINIT, SWITCH };
-    Type                type = NONE;
-    TrShWrapper::Rect   target{};
-    std::string         iniPath;
-};
-class TrackerThread : public QThread {
-public:
+struct TrackerCmd
+{
+    enum Type
+    {
+        NONE,
+        SET_TARGET,
+        STOP,
+        REINIT,
+        SWITCH
+    } /* enum Type */;
+    Type type = NONE;
+    TrShWrapper::Rect target{};
+    std::string iniPath;
+} /* struct TrackerCmd */;
+class TrackerThread : public QThread
+{
+  public:
     explicit TrackerThread(FrameSlot *slot, QObject *parent = nullptr);
     ~TrackerThread() override;
 
@@ -62,14 +76,14 @@ public:
     bool isActive() const;
     bool isLockedOn() const;
 
-protected:
+  protected:
     void run() override;
 
-private:
+  private:
     FrameSlot *m_slot = nullptr;
 
     mutable QMutex m_cmdMutex;
-    TrackerCmd     m_pendingCmd;
+    TrackerCmd m_pendingCmd;
 
     mutable QMutex m_resultMutex;
     TrShWrapper::Rect m_obj{};
@@ -78,6 +92,6 @@ private:
     bool m_locked = false;
 
     std::atomic<bool> m_running{false};
-    std::atomic<int>  m_activeChannel{-1};
-};
+    std::atomic<int> m_activeChannel{-1};
+} /* class TrackerThread */;
 #endif // TRACKER_THREAD_H

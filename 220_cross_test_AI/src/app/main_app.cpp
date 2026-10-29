@@ -1,49 +1,48 @@
 #include "main_app.h"
-#include "glib.h"
 #include "gst_wrapper.h"
-//#include <CL/opencl.hpp>
+// #include <CL/opencl.hpp>
+#include <gst/play/gstplay.h>
 #include <QCoreApplication>
 #include <QFile>
-#include <vector>
-#include <fstream>
 #include <QDateTime>
 #include <QThread>
-#include <gst/gst.h>
-#include <gst/tag/tag.h>
-#include <gst/play/gstplay.h>
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusMessage>
 #include <QDBusReply>
 #include <csignal>
-#include  <qthreadpool.h>
 
 static Main_app *m_main_app;
 
-void disconnectAllInThread(QObject* thread) {
-    if (!thread) return;
+void disconnectAllInThread(QObject *thread)
+{
+    if (!thread)
+        return;
 
-    QObjectList objects = thread->findChildren<QObject*>();
-    for (QObject* obj : objects) {
+    QObjectList objects = thread->findChildren<QObject *>();
+    for (QObject *obj : objects)
+    {
         QObject::disconnect(obj, nullptr, nullptr, nullptr);
-    }
+    } /* for */
 
     // Also disconnect the thread's own signals
     QObject::disconnect(thread, nullptr, nullptr, nullptr);
-}
+} /* disconnectAllInThread */
 
-
-void disconnectAll(QObject* obj) {
-    if (!obj) return;
+void disconnectAll(QObject *obj)
+{
+    if (!obj)
+        return;
 
     // Отключаем все входящие и исходящие сигналы
     QObject::disconnect(obj, nullptr, nullptr, nullptr);
 
     // Рекурсивно для дочерних объектов
-    for (auto* child : obj->children()) {
+    for (auto *child : obj->children())
+    {
         disconnectAll(child);
-    }
-}
+    } /* for */
+} /* disconnectAll */
 
 static void handleSignal(int signal)
 {
@@ -53,59 +52,65 @@ static void handleSignal(int signal)
 
     qDebug() << "Handling termination event, signal:" << signal;
 
-    if (signal < 0) {
+    if (signal < 0)
+    {
         QCoreApplication::quit();
         return;
-    }
+    } /* if */
 
     // Откладываем cleanup из контекста signal handler
-    QTimer::singleShot(0, m_main_app, [signal]() {
-        emit m_main_app->sig_GST_StopCapture();
-        emit m_main_app->sig_VISCA_DISCONNECT();
-        emit m_main_app->sig_MINI640_CloseConnection();
-        emit m_main_app->sig_LensJ200_CloseConnection();
-        emit m_main_app->sig_LDC_CloseConnection();
+    QTimer::singleShot(0, m_main_app, [signal]()
+                       {
+                           emit m_main_app->sig_GST_StopCapture();
+                           emit m_main_app->sig_VISCA_DISCONNECT();
+                           emit m_main_app->sig_MINI640_CloseConnection();
+                           emit m_main_app->sig_LensJ200_CloseConnection();
+                           emit m_main_app->sig_LDC_CloseConnection();
 #ifdef GYRO_PLATFORM_HOST
-        emit m_main_app->sig_GSP_CloseConnection();
+                           emit m_main_app->sig_GSP_CloseConnection();
 #endif
 
-        // Закрытия потоков worker'ов
-        if (m_main_app->ldc_worker) {
-            //m_main_app->ldc_worker->closeConnection();
-            delete m_main_app->ldc_worker;
-            m_main_app->ldc_worker = nullptr;
-        }
+                           // Закрытия потоков worker'ов
+                           if (m_main_app->ldc_worker)
+                           {
+                               // m_main_app->ldc_worker->closeConnection();
+                               delete m_main_app->ldc_worker;
+                               m_main_app->ldc_worker = nullptr;
+                           } /* if */
 
-        if (m_main_app->cw) {
-            delete m_main_app->cw;
-            m_main_app->cw = nullptr;
-        }
+                           if (m_main_app->cw)
+                           {
+                               delete m_main_app->cw;
+                               m_main_app->cw = nullptr;
+                           } /* if */
 
-        if (m_main_app->mini640_worker) {
-            delete m_main_app->mini640_worker;
-            m_main_app->mini640_worker = nullptr;
-        }
+                           if (m_main_app->mini640_worker)
+                           {
+                               delete m_main_app->mini640_worker;
+                               m_main_app->mini640_worker = nullptr;
+                           } /* if */
 
-        if (m_main_app->lens_j200_wrapper) {
-            delete m_main_app->lens_j200_wrapper;
-            m_main_app->lens_j200_wrapper = nullptr;
-        }
+                           if (m_main_app->lens_j200_wrapper)
+                           {
+                               delete m_main_app->lens_j200_wrapper;
+                               m_main_app->lens_j200_wrapper = nullptr;
+                           } /* if */
 
-        if (m_main_app->net_conn) {
-            delete m_main_app->net_conn;
-            m_main_app->net_conn = nullptr;
-        }
+                           if (m_main_app->net_conn)
+                           {
+                               delete m_main_app->net_conn;
+                               m_main_app->net_conn = nullptr;
+                           } /* if */
 
-        qDebug() << "UARTs Closed, resources freed";
-        QCoreApplication::quit();
-    });
-}
-
+                           qDebug() << "UARTs Closed, resources freed";
+                           QCoreApplication::quit();
+                       } /* lambda */);
+} /* handleSignal */
 
 void handleSignal0()
 {
     handleSignal(0);
-}
+} /* handleSignal0 */
 
 Main_app::~Main_app()
 {
@@ -120,27 +125,29 @@ Main_app::~Main_app()
     // QObject::disconnect(this, nullptr, nullptr, nullptr);
 
 #ifdef GYRO_PLATFORM_HOST
-    if( m_pGyroPlatform)
+    if (m_pGyroPlatform)
     {
         m_pGyroPlatform->deleteLater();
         m_pGyroPlatform = nullptr;
-    }
+    } /* if */
 
 #endif
-}
+} /* Main_app::~Main_app */
 
 #include <csignal>
 
-void handleSegfault(int sig) {
+void handleSegfault(int sig)
+{
     qDebug() << "Segfault occurred. Signal: " << sig;
     // Print stack trace if possible
     exit(1);
-}
+} /* handleSegfault */
 
 Main_app::Main_app(QCoreApplication *app, QObject *parent)
     : QObject{parent}
 #ifdef GYRO_PLATFORM_HOST
-    , m_pGyroPlatform{ nullptr}
+      ,
+      m_pGyroPlatform{nullptr}
 #endif
 {
     signal(SIGSEGV, handleSegfault);
@@ -148,20 +155,18 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
     signal(SIGTERM, handleSignal);
 
     m_QT_App = app;
-   // tv_video_timer.setSingleShot(true);
+    // tv_video_timer.setSingleShot(true);
 
-    starttime= QDateTime::currentMSecsSinceEpoch();
+    starttime = QDateTime::currentMSecsSinceEpoch();
 
     qDebug() << "Main thread id: " << QThread::currentThreadId();
 
     m_main_app = this;
 
-    const QString iniPath = QCoreApplication::applicationDirPath()
-                            + "/config.ini";
-
+    const QString iniPath = QCoreApplication::applicationDirPath() + "/config.ini";
 
 #ifdef GYRO_PLATFORM_USE_DEBUG_CONFIG
-    sm = new SettingsManager( "/home/khadas/qt_projects/qgst-goen220/config_test_gsp.ini", this);
+    sm = new SettingsManager("/home/khadas/qt_projects/qgst-goen220/config_test_gsp.ini", this);
 
 #else
 
@@ -170,9 +175,8 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
 
     sm->loadSettings();
 
-
     GstPlay *player;
-    qDebug()<<"sm->settings_store.ip_host"<<sm->settings_store.ip_host;
+    qDebug() << "sm->settings_store.ip_host" << sm->settings_store.ip_host;
     // sm->settings_store.ip_dev = "192.168.1.91";
     //  sm->settings_store.ip_host = "192.168.1.18";
     // sm->settings_store.ip_host = "192.168.1.105";
@@ -199,13 +203,9 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
     // sm->settings_store.ldc_uart_port= "/dev/ttyCH9344USB1";
     // sm->settings_store.ldc_uart_baudrate = 115200;
 
-     //sm->writeAllSettings();
+    // sm->writeAllSettings();
 
-
-
-
-
-    //QTimer::singleShot(18000, this, handleSignal0);
+    // QTimer::singleShot(18000, this, handleSignal0);
 
     // QObject::connect(m_QT_App, &QCoreApplication::aboutToQuit, [this]() {
     //     qDebug()<<"APP aboutToQuit";
@@ -213,352 +213,392 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
 
     // });
 
+    //  run_opencl();
 
-  //  run_opencl();
-
-
-
-  // run_GST_Stream(sm->settings_store.ir_cam_video_device, 5001);
+    // run_GST_Stream(sm->settings_store.ir_cam_video_device, 5001);
 
     gst_wrp = new GST_Wrapper(sm);
 
     net_conn = new Network(sm, gst_wrp);
 
-    connect(&net_conn->cmd_parser, &CMD_Parser::sig_Switch_Channel, this,  &Main_app::proc_Switch_Channel, Qt::QueuedConnection);
-    connect(net_conn, &Network::sig_MPEG_TS_Telemetry, gst_wrp,  &GST_Wrapper::proc_MPEG_TS_Telemetry, Qt::QueuedConnection);
-    connect(&net_conn->cmd_parser, &CMD_Parser::sig_Switch_Channel, gst_wrp,  &GST_Wrapper::proc_Switch_Channel, Qt::QueuedConnection);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_Switch_Channel, this,
+            &Main_app::proc_Switch_Channel, Qt::QueuedConnection);
 
- //   net_conn->initSocket();
+    connect(net_conn, &Network::sig_MPEG_TS_Telemetry, gst_wrp,
+            &GST_Wrapper::proc_MPEG_TS_Telemetry, Qt::QueuedConnection);
+
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_Switch_Channel, gst_wrp,
+            &GST_Wrapper::proc_Switch_Channel, Qt::QueuedConnection);
+
+    //   net_conn->initSocket();
 
     video_init_timer.start(sm->settings_store.tv_cam_timeout);
 
-    connect(&this->video_init_timer, &QTimer::timeout,
-            this, &Main_app::proc_video_init_timeout, Qt::QueuedConnection);
+    connect(&this->video_init_timer, &QTimer::timeout, this, &Main_app::proc_video_init_timeout,
+            Qt::QueuedConnection);
 
-    connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY,
-            this, &Main_app::proc_GST_RDY, Qt::QueuedConnection);
+    connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY, this, &Main_app::proc_GST_RDY,
+            Qt::QueuedConnection);
 
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetTargetObject, gst_wrp,
+            &GST_Wrapper::proc_setTargetObject, Qt::QueuedConnection);
 
-   connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetTargetObject,
-           gst_wrp, &GST_Wrapper::proc_setTargetObject, Qt::QueuedConnection);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetStopTracking, gst_wrp,
+            &GST_Wrapper::proc_setStopTracking, Qt::QueuedConnection);
 
-   connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackingSetStopTracking,
-          gst_wrp, &GST_Wrapper::proc_setStopTracking, Qt::QueuedConnection);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackerChannelChanged, net_conn,
+            &Network::procSetTrackerChannel, Qt::QueuedConnection);
 
-   connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackerChannelChanged,
-           net_conn, &Network::procSetTrackerChannel, Qt::QueuedConnection);
+    ldc_worker = new LDC20I_Worker(sm->settings_store.ldc_uart_port,
+                                   sm->settings_store.ldc_uart_baudrate, this);
 
+    connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY, this, &Main_app::proc_GST_InitReady,
+            Qt::QueuedConnection);
 
+    connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking, net_conn,
+            &Network::procUpdateActiveLockTracking, Qt::QueuedConnection);
 
-    ldc_worker = new LDC20I_Worker(sm->settings_store.ldc_uart_port,sm->settings_store.ldc_uart_baudrate,this);
+    connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject, net_conn, &Network::procUpdateTrackerObject,
+            Qt::QueuedConnection);
 
+    connect(this, &Main_app::sig_GST_StopCapture, gst_wrp, &GST_Wrapper::proc_stopCapture);
 
-   connect(gst_wrp, &GST_Wrapper::sig_STREAM_RDY, this, &Main_app::proc_GST_InitReady , Qt::QueuedConnection);
-   connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking, net_conn, &Network::procUpdateActiveLockTracking , Qt::QueuedConnection);
-   connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject, net_conn, &Network::procUpdateTrackerObject , Qt::QueuedConnection);
+    isTvUartInit = false;
 
-   connect(this, &Main_app::sig_GST_StopCapture , gst_wrp, &GST_Wrapper::proc_stopCapture);
+    connect(ldc_worker, &LDC20I_Worker::send_LDC_State, net_conn, &Network::procLDCstatus,
+            Qt::QueuedConnection);
 
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_LDC_CMD, ldc_worker,
+            &LDC20I_Worker::proc_LDCSendCmd, Qt::QueuedConnection);
 
+    //  connect(this, &Main_app::sig_LDC_CloseConnection,
+    //          ldc_worker, &LDC20I_Worker::slot_CloseConnection, Qt::QueuedConnection);
 
-   isTvUartInit=false;
-
-   connect(ldc_worker, &LDC20I_Worker::send_LDC_State,
-           net_conn, &Network::procLDCstatus, Qt::QueuedConnection);
-
-   connect(&net_conn->cmd_parser, &CMD_Parser::sig_LDC_CMD,
-           ldc_worker, &LDC20I_Worker::proc_LDCSendCmd, Qt::QueuedConnection);
-
- //  connect(this, &Main_app::sig_LDC_CloseConnection,
- //          ldc_worker, &LDC20I_Worker::slot_CloseConnection, Qt::QueuedConnection);
-
-
-
-
-    mini640_worker = new MINI640_Worker (sm->settings_store.ir_cam_uart_port,9600,
-                                         sm->settings_store.ir_cam_period,
-                                         sm->settings_store.ir_cam_exp,
-                                         sm->settings_store.ir_cam_gpol, this   );
-   if(sm->settings_store.ir_cam_en)
+    mini640_worker = new MINI640_Worker(
+        sm->settings_store.ir_cam_uart_port, 9600, sm->settings_store.ir_cam_period,
+        sm->settings_store.ir_cam_exp, sm->settings_store.ir_cam_gpol, this);
+    if (sm->settings_store.ir_cam_en)
     {
-        connect(mini640_worker, &MINI640_Worker::recv_MINI640_State, net_conn, &Network::proc_MINI640_State , Qt::QueuedConnection);
-        connect(this, &Main_app::sig_MINI640_InitConnection, mini640_worker, &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);
-        connect(this, &Main_app::sig_MINI640_CloseConnection, mini640_worker, &MINI640_Worker::proc_CtrlCloseConnection , Qt::QueuedConnection);
 
-        connect(mini640_worker, &MINI640_Worker::sig_READY, this, &Main_app::proc_MINI640_InitReady, Qt::QueuedConnection);
-    }
+        connect(mini640_worker, &MINI640_Worker::recv_MINI640_State, net_conn,
+                &Network::proc_MINI640_State, Qt::QueuedConnection);
 
+        connect(this, &Main_app::sig_MINI640_InitConnection, mini640_worker,
+                &MINI640_Worker::proc_CtrlInitConnection, Qt::QueuedConnection);
 
-    lens_j200_wrapper = new LensJ200Wrapper(sm->settings_store.ir_lens_uart_port, sm->settings_store.ir_lens_uart_baudrate);
+        connect(this, &Main_app::sig_MINI640_CloseConnection, mini640_worker,
+                &MINI640_Worker::proc_CtrlCloseConnection, Qt::QueuedConnection);
 
-    connect(lens_j200_wrapper, &LensJ200Wrapper::sig_ReportReady, net_conn , &Network::procJ200status, Qt::QueuedConnection);
-    connect(&(net_conn->cmd_parser),  &CMD_Parser::sig_J200_CMD, lens_j200_wrapper, &LensJ200Wrapper::proc_SendCMD, Qt::QueuedConnection);
-    connect(&(net_conn->cmd_parser), &CMD_Parser::sig_MINI640_CMD, mini640_worker, &MINI640_Worker::proc_MINI640_ExecCmd, Qt::QueuedConnection);
+        connect(mini640_worker, &MINI640_Worker::sig_READY, this, &Main_app::proc_MINI640_InitReady,
+                Qt::QueuedConnection);
 
-    connect(this, &Main_app::sig_LensJ200_CloseConnection, lens_j200_wrapper, &LensJ200Wrapper::proc_CtrlCloseConnection, Qt::QueuedConnection);
+    } /* if */
 
+    lens_j200_wrapper = new LensJ200Wrapper(sm->settings_store.ir_lens_uart_port,
+                                            sm->settings_store.ir_lens_uart_baudrate);
 
+    connect(lens_j200_wrapper, &LensJ200Wrapper::sig_ReportReady, net_conn,
+            &Network::procJ200status, Qt::QueuedConnection);
 
+    connect(&(net_conn->cmd_parser), &CMD_Parser::sig_J200_CMD, lens_j200_wrapper,
+            &LensJ200Wrapper::proc_SendCMD, Qt::QueuedConnection);
 
-    //QTimer::singleShot(100, this, [&](){
+    connect(&(net_conn->cmd_parser), &CMD_Parser::sig_MINI640_CMD, mini640_worker,
+            &MINI640_Worker::proc_MINI640_ExecCmd, Qt::QueuedConnection);
 
+    connect(this, &Main_app::sig_LensJ200_CloseConnection, lens_j200_wrapper,
+            &LensJ200Wrapper::proc_CtrlCloseConnection, Qt::QueuedConnection);
 
+    // QTimer::singleShot(100, this, [&](){
 
-      //  connect(mini640_worker, &MINI640_Worker::recv_MINI640_State, net_conn, &Network::proc_MINI640_State , Qt::QueuedConnection);
-      //  connect(this, &Main_app::sig_MINI640_InitConnection, mini640_worker, &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection);
-      //  connect(this, &Main_app::sig_MINI640_CloseConnection, mini640_worker, &MINI640_Worker::proc_CtrlCloseConnection , Qt::QueuedConnection);
-      //  connect(mini640_worker, &MINI640_Worker::sig_READY, this, &Main_app::proc_MINI640_InitReady, Qt::QueuedConnection);
-      // emit sig_MINI640_InitConnection();
+    //  connect(mini640_worker, &MINI640_Worker::recv_MINI640_State, net_conn,
+    //  &Network::proc_MINI640_State , Qt::QueuedConnection); connect(this,
+    //  &Main_app::sig_MINI640_InitConnection, mini640_worker,
+    //  &MINI640_Worker::proc_CtrlInitConnection , Qt::QueuedConnection); connect(this,
+    //  &Main_app::sig_MINI640_CloseConnection, mini640_worker,
+    //  &MINI640_Worker::proc_CtrlCloseConnection , Qt::QueuedConnection); connect(mini640_worker,
+    //  &MINI640_Worker::sig_READY, this, &Main_app::proc_MINI640_InitReady, Qt::QueuedConnection);
+    // emit sig_MINI640_InitConnection();
 
-  // });
+    // });
 
+    QTimer::singleShot(1000, this, [this]()
+                       {
+                           qDebug() << "GST PIPE STARTED";
 
+                           // Безопасная инициализация LDC через invokeMethod (worker может ещё не быть готов)
+                           // ldc_worker->initConnection(sm->settings_store.ldc_uart_port,
+                           //                         sm->settings_store.ldc_uart_baudrate);
+                           ldc_worker->proc_CtrlInitConnection();
 
-    QTimer::singleShot(1000, this, [this]() {
-        qDebug() << "GST PIPE STARTED";
+                           if (sm->settings_store.ir_cam_en)
+                               emit sig_MINI640_InitConnection();
 
-        // Безопасная инициализация LDC через invokeMethod (worker может ещё не быть готов)
-        //ldc_worker->initConnection(sm->settings_store.ldc_uart_port,
-         //                         sm->settings_store.ldc_uart_baudrate);
-ldc_worker->proc_CtrlInitConnection();
+                           if (sm->settings_store.tv_cam_en)
+                           {
+                               cw = new Camera_EV9500M_Worker();
 
-        if (sm->settings_store.ir_cam_en)
-            emit sig_MINI640_InitConnection();
+                               connect(&net_conn->cmd_parser, &CMD_Parser::sig_VISCA_CMD, cw,
+                                       &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
 
-        if (sm->settings_store.tv_cam_en) {
-            cw = new Camera_EV9500M_Worker();
-            connect(&net_conn->cmd_parser, &CMD_Parser::sig_VISCA_CMD, cw, &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
-            connect(this, &Main_app::sig_VISCA_CMD, cw, &Camera_EV9500M_Worker::proc_VISCA_CMD, Qt::QueuedConnection);
-            connect(this, &Main_app::sig_VISCA_CONNECT, cw, &Camera_EV9500M_Worker::proc_VISCA_CONNECT, Qt::QueuedConnection);
-            connect(this, &Main_app::sig_VISCA_DISCONNECT, cw, &Camera_EV9500M_Worker::proc_VISCA_DISCONNECT, Qt::QueuedConnection);
-            connect(cw, &Camera_EV9500M_Worker::sig_sendStatus, net_conn, &Network::procVICAPstatus, Qt::QueuedConnection);
-            cw->cameraInit();
-        }
-    });
+                               connect(this, &Main_app::sig_VISCA_CMD, cw, &Camera_EV9500M_Worker::proc_VISCA_CMD,
+                                       Qt::QueuedConnection);
 
-    if(sm->settings_store.tv_cam_en)
-        QTimer::singleShot(5000, this, [&](){
-          emit sig_VISCA_CONNECT(sm->settings_store.tv_cam_uart_port, sm->settings_store.tv_cam_uart_baudrate);
-       });
+                               connect(this, &Main_app::sig_VISCA_CONNECT, cw,
+                                       &Camera_EV9500M_Worker::proc_VISCA_CONNECT, Qt::QueuedConnection);
 
+                               connect(this, &Main_app::sig_VISCA_DISCONNECT, cw,
+                                       &Camera_EV9500M_Worker::proc_VISCA_DISCONNECT, Qt::QueuedConnection);
+
+                               connect(cw, &Camera_EV9500M_Worker::sig_sendStatus, net_conn, &Network::procVICAPstatus,
+                                       Qt::QueuedConnection);
+
+                               cw->cameraInit();
+                           } /* if */
+                       } /* lambda */);
+
+    if (sm->settings_store.tv_cam_en)
+        QTimer::singleShot(5000, this, [&]()
+                           {
+                               emit sig_VISCA_CONNECT(sm->settings_store.tv_cam_uart_port,
+                                                      sm->settings_store.tv_cam_uart_baudrate);
+                           } /* lambda */);
 
 #ifdef GYRO_PLATFORM_HOST
     qDebug() << "GSP: Init";
     m_pGyroPlatform = new Goen220GyroPlatformHost();
-    m_pGyroPlatformHandler = new GyroPlatformHandler( m_pGyroPlatform);
+    m_pGyroPlatformHandler = new GyroPlatformHandler(m_pGyroPlatform);
     initGyroPlatform();
 
 #endif
 
-}
+} /* Main_app::Main_app */
 
 void Main_app::proc_GST_InitReady()
 {
- //   qDebug()<<"GST PIPE STARTED";
+    //   qDebug()<<"GST PIPE STARTED";
 
-  //  dbus_wrapper.dbus_CommInit();
+    //  dbus_wrapper.dbus_CommInit();
 
-}
+} /* Main_app::proc_GST_InitReady */
 
 void Main_app::proc_GST_RDY()
 {
     video_init_timer.stop();
-}
-
+} /* Main_app::proc_GST_RDY */
 
 void Main_app::proc_MINI640_InitReady()
 {
-    Q_ASSERT(mini640_worker!=nullptr);
-    Q_ASSERT(net_conn!=nullptr);
+    Q_ASSERT(mini640_worker != nullptr);
+    Q_ASSERT(net_conn != nullptr);
 
-    qDebug()<<" 640 init ok";
-  //  emit sig_MINI640_InitConnection();
-    //mini640_worker->proc_CtrlInitConnection();
-}
-
-
-
+    qDebug() << " 640 init ok";
+    //  emit sig_MINI640_InitConnection();
+    // mini640_worker->proc_CtrlInitConnection();
+} /* Main_app::proc_MINI640_InitReady */
 
 void Main_app::proc_Switch_Channel(quint32 channel, quint8 en)
 {
 
-    if(channel == 0x00) // TV
+    if (channel == 0x00) // TV
     {
-//        tv_v4l2.enableFrameRequest(en);
+        //        tv_v4l2.enableFrameRequest(en);
 
-//        ir_v4l2.enableFrameRequest(!en);
-    }
-    if(channel == 0x03) // IR
+        //        ir_v4l2.enableFrameRequest(!en);
+    } /* if */
+    if (channel == 0x03) // IR
     {
-//        tv_v4l2.enableFrameRequest(!en);
-//        ir_v4l2.enableFrameRequest(en);
-    }
-}
-
+        //        tv_v4l2.enableFrameRequest(!en);
+        //        ir_v4l2.enableFrameRequest(en);
+    } /* if */
+} /* Main_app::proc_Switch_Channel */
 
 #ifdef GYRO_PLATFORM_HOST
 
-    void Main_app::initGyroPlatform()
-    {
-        if( m_pGyroPlatform == nullptr || m_pGyroPlatformHandler == nullptr || net_conn == nullptr || sm == nullptr)
-            return;
+void Main_app::initGyroPlatform()
+{
+    if (m_pGyroPlatform == nullptr || m_pGyroPlatformHandler == nullptr || net_conn == nullptr ||
+        sm == nullptr)
+        return;
 
-        m_pGyroPlatform->setHostId( 0x00);
-        m_pGyroPlatform->setDeviceId( sm->settings_store.m_gyroPlatform_deviceId);    //  0x01
+    m_pGyroPlatform->setHostId(0x00);
+    m_pGyroPlatform->setDeviceId(sm->settings_store.m_gyroPlatform_deviceId); //  0x01
 
-        qDebug() << m_pGyroPlatform->getSerialPorts();
+    qDebug() << m_pGyroPlatform->getSerialPorts();
 
-        // m_pGyroPlatform->setSerialPortName( QString::fromUtf8( "ttyCH9344USB2"));   //2
-        m_pGyroPlatform->setSerialPortName( sm->settings_store.m_gyroPlatform_uartPort);
+    // m_pGyroPlatform->setSerialPortName( QString::fromUtf8( "ttyCH9344USB2"));   //2
+    m_pGyroPlatform->setSerialPortName(sm->settings_store.m_gyroPlatform_uartPort);
 
-        qDebug() << Q_FUNC_INFO <<
-            "****************************************************************" <<
-            "uartPort=" << sm->settings_store.m_gyroPlatform_uartPort <<
-            "deviceId=" << sm->settings_store.m_gyroPlatform_deviceId <<
-            "uartDebug=" << sm->settings_store.m_gyroPlatform_uartDebug;
+    qDebug() << Q_FUNC_INFO << "****************************************************************"
+             << "uartPort=" << sm->settings_store.m_gyroPlatform_uartPort
+             << "deviceId=" << sm->settings_store.m_gyroPlatform_deviceId
+             << "uartDebug=" << sm->settings_store.m_gyroPlatform_uartDebug;
 
-        QTimer::singleShot( 7000, this, [&]()    //  4000
-            {
-                m_pGyroPlatform->connect( true);
-            }
-        );
+    QTimer::singleShot(7000, this,
+                       [&]() //  4000
+                       {
+                           m_pGyroPlatform->connect(true);
+                       } /* lambda */
+    );
 
-        m_pGyroPlatformHandler->enableCompensateGyroDrift( sm->settings_store.m_gyroPlatform_compensateGyroDrift);
-        m_pGyroPlatformHandler->setGyroDrift(   sm->settings_store.m_gyroPlatform_yawGyroDrift,
-                                                sm->settings_store.m_gyroPlatform_pitchGyroDrift);
+    m_pGyroPlatformHandler->enableCompensateGyroDrift(
+        sm->settings_store.m_gyroPlatform_compensateGyroDrift);
+    m_pGyroPlatformHandler->setGyroDrift(sm->settings_store.m_gyroPlatform_yawGyroDrift,
+                                         sm->settings_store.m_gyroPlatform_pitchGyroDrift);
 
+    connect(m_pGyroPlatform, &Goen220GyroPlatformHost::stateConnectToRemoteDeviceChanged, net_conn,
+            &Network::procGspStatus, Qt::QueuedConnection);
 
-        connect( m_pGyroPlatform, &Goen220GyroPlatformHost::stateConnectToRemoteDeviceChanged, net_conn, &Network::procGspStatus, Qt::QueuedConnection);
-        connect( m_pGyroPlatformHandler, &GyroPlatformHandler::motorAngleChanged, net_conn, &Network::procGspMotorAngle, Qt::QueuedConnection);
-        connect( m_pGyroPlatformHandler, &GyroPlatformHandler::motorSpeedChanged, net_conn, &Network::procGspMotorSpeed, Qt::QueuedConnection);
+    connect(m_pGyroPlatformHandler, &GyroPlatformHandler::motorAngleChanged, net_conn,
+            &Network::procGspMotorAngle, Qt::QueuedConnection);
 
-        connect( m_pGyroPlatformHandler, &GyroPlatformHandler::positionModeChanged, net_conn, &Network::procGspPositionMode, Qt::QueuedConnection);
-        connect( &net_conn->cmd_parser, &CMD_Parser::sig_setDrivePositionMode, m_pGyroPlatformHandler, &GyroPlatformHandler::setDrivePositionMode, Qt::QueuedConnection);
+    connect(m_pGyroPlatformHandler, &GyroPlatformHandler::motorSpeedChanged, net_conn,
+            &Network::procGspMotorSpeed, Qt::QueuedConnection);
 
-        connect( &net_conn->cmd_parser, &CMD_Parser::sig_setControlSpeed, m_pGyroPlatformHandler, &GyroPlatformHandler::setControlSpeed, Qt::QueuedConnection);
-        connect( &net_conn->cmd_parser, &CMD_Parser::sig_setControlPositionRel, m_pGyroPlatformHandler, &GyroPlatformHandler::setControlPositionRel, Qt::QueuedConnection);
-        connect( &net_conn->cmd_parser, &CMD_Parser::sig_setControlPositionAbs, m_pGyroPlatformHandler, &GyroPlatformHandler::setControlPositionAbs, Qt::QueuedConnection);
+    connect(m_pGyroPlatformHandler, &GyroPlatformHandler::positionModeChanged, net_conn,
+            &Network::procGspPositionMode, Qt::QueuedConnection);
 
-        connect( &net_conn->cmd_parser, &CMD_Parser::sig_setStabilization, m_pGyroPlatformHandler, &GyroPlatformHandler::setStabilization, Qt::QueuedConnection);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_setDrivePositionMode, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::setDrivePositionMode, Qt::QueuedConnection);
 
-       #ifdef GYRO_PLATFORM_HOST
-        connect(this, &Main_app::sig_GSP_CloseConnection, this,   &Main_app::proc_deinitGyroPlatform, Qt::QueuedConnection);
-        connect( &net_conn->cmd_parser, &CMD_Parser::sig_turnOffMotors, m_pGyroPlatformHandler, &GyroPlatformHandler::turnOffMotors, Qt::QueuedConnection);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_setControlSpeed, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::setControlSpeed, Qt::QueuedConnection);
 
-        //  Tracking:
-        connect( gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking, m_pGyroPlatformHandler, &GyroPlatformHandler::setActiveLockTracking, Qt::QueuedConnection);
-        connect( gst_wrp, &GST_Wrapper::sig_rdyOutObject, m_pGyroPlatformHandler, &GyroPlatformHandler::updateTrackerObject, Qt::QueuedConnection);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_setControlPositionRel, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::setControlPositionRel, Qt::QueuedConnection);
 
-        connect( net_conn, &Network::tvFieldChanged, m_pGyroPlatformHandler, &GyroPlatformHandler::setTvField, Qt::QueuedConnection);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_setControlPositionAbs, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::setControlPositionAbs, Qt::QueuedConnection);
 
-        connect(net_conn, &Network::sig_irFieldChanged,
-                m_pGyroPlatformHandler, &GyroPlatformHandler::setIrField, Qt::QueuedConnection);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_setStabilization, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::setStabilization, Qt::QueuedConnection);
 
-        connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackerChannelChanged,
-                m_pGyroPlatformHandler, &GyroPlatformHandler::procSetTrackerChannel, Qt::QueuedConnection);
+#ifdef GYRO_PLATFORM_HOST
 
-        // Калибровка дрейфа гироплатформы
-        connect(&net_conn->cmd_parser, &CMD_Parser::sig_setGyroDriftCalibration,
-                m_pGyroPlatformHandler, &GyroPlatformHandler::startGyroDriftCalibration,
-                Qt::QueuedConnection);
+    connect(this, &Main_app::sig_GSP_CloseConnection, this, &Main_app::proc_deinitGyroPlatform,
+            Qt::QueuedConnection);
 
-        // Сигнал завершения калибровки → обновляем телеметрию / логируем
-        connect(m_pGyroPlatformHandler, &GyroPlatformHandler::calibrationCompleted, this,
-                [](const float yawDrift, const float pitchDrift, const bool success) {
-                    if (success)
-                        qDebug() << "GYRO CALIBRATION OK: yaw=" << yawDrift << "pitch=" << pitchDrift;
-                    else
-                        qWarning() << "GYRO CALIBRATION FAILED";
-                }, Qt::QueuedConnection);
-        connect(&net_conn->cmd_parser, &CMD_Parser::sig_setGyroDrift,
-               m_pGyroPlatformHandler, [this](const float yawDrift, const float pitchDrift) {
-                   qDebug() << "GYRO DRIFT MANUAL SET: yaw=" << yawDrift
-                            << "pitch=" << pitchDrift;
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_turnOffMotors, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::turnOffMotors, Qt::QueuedConnection);
 
-                   // Применяем к хендлеру
-                   m_pGyroPlatformHandler->setGyroDrift(yawDrift, pitchDrift);
+    //  Tracking:
 
-                   // Включаем компенсацию если ещё не включена
-                   m_pGyroPlatformHandler->enableCompensateGyroDrift(true);
+    connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::setActiveLockTracking, Qt::QueuedConnection);
 
-                   // Сохраняем в config.ini
-                   QSettings settings(
-                       QCoreApplication::applicationDirPath() + "/config.ini",
-                       QSettings::IniFormat);
+    connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::updateTrackerObject, Qt::QueuedConnection);
 
-                   settings.setValue("GyroPlatform.YawGyroDrift",   yawDrift);
-                   settings.setValue("GyroPlatform.PitchGyroDrift",  pitchDrift);
-                   settings.setValue("GyroPlatform.CompensateGyroDrift",  true);
-                   settings.sync();
+    connect(net_conn, &Network::tvFieldChanged, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::setTvField, Qt::QueuedConnection);
 
-                   qDebug() << "GYRO DRIFT saved to config.ini";
-               }, Qt::QueuedConnection);
+    connect(net_conn, &Network::sig_irFieldChanged, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::setIrField, Qt::QueuedConnection);
 
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_TrackerChannelChanged, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::procSetTrackerChannel, Qt::QueuedConnection);
 
-        m_pGyroPlatform->setTimeoutWaitingResponse( 100);
-        m_pGyroPlatform->setTimeBetweenStatusRequests( 100);
+    // Калибровка дрейфа гироплатформы
 
-        //  Для отладки:
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_setGyroDriftCalibration, m_pGyroPlatformHandler,
+            &GyroPlatformHandler::startGyroDriftCalibration, Qt::QueuedConnection);
 
-        if( sm->settings_store.m_gyroPlatform_uartDebug)
+    // Сигнал завершения калибровки → обновляем телеметрию / логируем
+
+    connect(m_pGyroPlatformHandler, &GyroPlatformHandler::calibrationCompleted, this,
+        [](const float yawDrift, const float pitchDrift, const bool success)
         {
-            m_pGyroPlatform->setTimeoutWaitingResponse( 500);
-            m_pGyroPlatform->setTimeBetweenStatusRequests( 1000);
+            if (success)
+                qDebug() << "GYRO CALIBRATION OK: yaw=" << yawDrift << "pitch=" << pitchDrift;
+            else
+                qWarning() << "GYRO CALIBRATION FAILED";
+        } /* lambda */,
+        Qt::QueuedConnection);
 
-            m_pGyroPlatform->setPrintTxRawDataSerialPort( true);
-            m_pGyroPlatform->setPrintRxRawDataSerialPort( true);
+    connect(&net_conn->cmd_parser, &CMD_Parser::sig_setGyroDrift, m_pGyroPlatformHandler,
+        [this](const float yawDrift, const float pitchDrift)
+        {
+            qDebug() << "GYRO DRIFT MANUAL SET: yaw=" << yawDrift << "pitch=" << pitchDrift;
 
-            connect( m_pGyroPlatform, &Goen220GyroPlatformHost::txRawDataSerialPortText, this,
-                [this]( const QString &text)
+            // Применяем к хендлеру
+            m_pGyroPlatformHandler->setGyroDrift(yawDrift, pitchDrift);
+
+            // Включаем компенсацию если ещё не включена
+            m_pGyroPlatformHandler->enableCompensateGyroDrift(true);
+
+            // Сохраняем в config.ini
+            QSettings settings(QCoreApplication::applicationDirPath() + "/config.ini",
+                               QSettings::IniFormat);
+
+            settings.setValue("GyroPlatform.YawGyroDrift", yawDrift);
+            settings.setValue("GyroPlatform.PitchGyroDrift", pitchDrift);
+            settings.setValue("GyroPlatform.CompensateGyroDrift", true);
+            settings.sync();
+
+            qDebug() << "GYRO DRIFT saved to config.ini";
+        } /* lambda */,
+        Qt::QueuedConnection);
+
+    m_pGyroPlatform->setTimeoutWaitingResponse(100);
+    m_pGyroPlatform->setTimeBetweenStatusRequests(100);
+
+    //  Для отладки:
+
+    if (sm->settings_store.m_gyroPlatform_uartDebug)
+    {
+        m_pGyroPlatform->setTimeoutWaitingResponse(500);
+        m_pGyroPlatform->setTimeBetweenStatusRequests(1000);
+
+        m_pGyroPlatform->setPrintTxRawDataSerialPort(true);
+        m_pGyroPlatform->setPrintRxRawDataSerialPort(true);
+
+        connect(m_pGyroPlatform, &Goen220GyroPlatformHost::txRawDataSerialPortText, this,
+                [this](const QString &text)
                 {
                     qDebug() << "GSP " << text;
-                }
-            );
+                } /* lambda */
+        );
 
-            connect( m_pGyroPlatform, &Goen220GyroPlatformHost::rxRawDataSerialPortText, this,
-                    [this]( const QString &text)
-                    {
-                        qDebug() << "GSP " << text;
-                    }
-            );
-        }
-        #endif
-    }
+        connect(m_pGyroPlatform, &Goen220GyroPlatformHost::rxRawDataSerialPortText, this,
+                [this](const QString &text)
+                {
+                    qDebug() << "GSP " << text;
+                } /* lambda */
+        );
 
-
+    } /* if */
+#endif
+} /* Main_app::initGyroPlatform */
 
 #endif
-    void Main_app::proc_deinitGyroPlatform()
-    {
+void Main_app::proc_deinitGyroPlatform()
+{
 #ifdef GYRO_PLATFORM_HOST
-        m_pGyroPlatform->connect( false);
-        qDebug() << "GSP DeInit success";
+    m_pGyroPlatform->connect(false);
+    qDebug() << "GSP DeInit success";
 #endif
-    }
+} /* Main_app::proc_deinitGyroPlatform */
 
 void Main_app::proc_video_init_timeout()
 {
     video_init_timer.stop();
 
-    qDebug() << "GST subsystem timeout:" << QDateTime::currentMSecsSinceEpoch()-starttime;
+    qDebug() << "GST subsystem timeout:" << QDateTime::currentMSecsSinceEpoch() - starttime;
 
     handleSignal(-100);
     // tv_v4l2.stopCapture();
     // V4L2::sleep(1);
     // tv_v4l2.freeFrameBuffers();
 
-
     // tv_v4l2.close();
     // V4L2::sleep(1);
 
-
     // tv_v4l2.open(sm->settings_store.tv_cam_video_device, 0);
     // tv_v4l2.startCapture(tv_imageFormat);
-   // video_timer.start(sm->settings_store.tv_cam_timeout);
-   // isTvUartInit=false;
+    // video_timer.start(sm->settings_store.tv_cam_timeout);
+    // isTvUartInit=false;
 
-
-}
+} /* Main_app::proc_video_init_timeout */
 
 // void Main_app::ir_video_timeout()
 // {
@@ -569,20 +609,15 @@ void Main_app::proc_video_init_timeout()
 //     V4L2::sleep(1);
 //     ir_v4l2.freeFrameBuffers();
 
-
 //     ir_v4l2.close();
 //     V4L2::sleep(1);
-
 
 //     ir_v4l2.open(sm->settings_store.ir_cam_video_device, 0);
 //     ir_v4l2.startCapture(ir_imageFormat);*/
 //     ir_video_timer.start(sm->settings_store.ir_cam_timeout);
 //     isIRUartInit=false;
 
-
 // }
-
-
 
 // void Main_app::tv_video_reset_wd()
 // {
@@ -606,7 +641,6 @@ void Main_app::proc_video_init_timeout()
 //     isIRUartInit=true;
 
 // }
-
 
 // static cl::Program* program;
 // void Main_app::run_opencl()
@@ -663,12 +697,11 @@ void Main_app::proc_video_init_timeout()
 //         return;
 //     }
 
-//     std::string kernelCode((std::istreambuf_iterator<char>(kernelFile)), std::istreambuf_iterator<char>());
+//     std::string kernelCode((std::istreambuf_iterator<char>(kernelFile)),
+//     std::istreambuf_iterator<char>());
 //     //qDebug()<<kernelCode;
 
 //     cl::Program program(context, kernelCode);
 //     program.build({device});
-
-
 
 // }

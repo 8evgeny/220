@@ -2,46 +2,44 @@
 #include <qdebug.h>
 
 LensJ200Wrapper::LensJ200Wrapper(QString port, quint32 baudrate, QObject *parent)
-    :m_baudrate (baudrate), m_port(port)
+    : m_baudrate(baudrate), m_port(port)
 {
     moveToThread(&thread);
-    connect(&thread, &QThread::started, this, [this]{
-        m_j200_ctrl = new LensJ200Controller();
 
-        qDebug() << Q_FUNC_INFO <<"Lens J200 Wrapper thread id: " << QThread::currentThreadId();
+    connect(&thread, &QThread::started, this, [this]
+            {
+                m_j200_ctrl = new LensJ200Controller();
 
-        m_NotificationTimer = new QTimer(this);
-        m_NotificationTimer->setInterval(100);
+                qDebug() << Q_FUNC_INFO << "Lens J200 Wrapper thread id: " << QThread::currentThreadId();
 
-        connect(m_NotificationTimer, &QTimer::timeout, this, &LensJ200Wrapper::proc_timerUpdate);
+                m_NotificationTimer = new QTimer(this);
+                m_NotificationTimer->setInterval(100);
 
-        QTimer::singleShot(100, this, [&](){
-            m_j200_ctrl->connect(m_port);
-            m_NotificationTimer->start();
-        });
+                connect(m_NotificationTimer, &QTimer::timeout, this, &LensJ200Wrapper::proc_timerUpdate);
 
+                QTimer::singleShot(100, this, [&]()
+                                   {
+                                       m_j200_ctrl->connect(m_port);
+                                       m_NotificationTimer->start();
+                                   } /* lambda */);
+            } /* lambda */);
 
-
-
-    });
     QObject::connect(&thread, &QThread::finished, this, &LensJ200Wrapper::proc_Thread_Finished);
 
     thread.start();
 
-
-}
-
+} /* LensJ200Wrapper::LensJ200Wrapper */
 
 LensJ200Wrapper::~LensJ200Wrapper()
 {
     qDebug() << Q_FUNC_INFO;
-    //m_NotificationTimer->stop();
+    // m_NotificationTimer->stop();
 
     thread.exit();
     thread.wait();
-    qDebug()<<Q_FUNC_INFO << "LensJ200Wrapper thread exit";
+    qDebug() << Q_FUNC_INFO << "LensJ200Wrapper thread exit";
 
-}
+} /* LensJ200Wrapper::~LensJ200Wrapper */
 
 void LensJ200Wrapper::proc_Thread_Finished()
 {
@@ -49,93 +47,90 @@ void LensJ200Wrapper::proc_Thread_Finished()
     // m_NotificationTimer->stop();
     // delete m_NotificationTimer;
     // delete(m_j200_ctrl);
-}
-
-
+} /* LensJ200Wrapper::proc_Thread_Finished */
 
 void LensJ200Wrapper::proc_CtrlCloseConnection()
 {
     m_NotificationTimer->stop();
     m_j200_ctrl->proc_disconnect();
-    qDebug()<<"LensJ200 UART Closed";
+    qDebug() << "LensJ200 UART Closed";
 
-}
+} /* LensJ200Wrapper::proc_CtrlCloseConnection */
 
 void LensJ200Wrapper::proc_timerUpdate()
 {
-    if(m_j200_ctrl == nullptr)
+    if (m_j200_ctrl == nullptr)
         return;
-    if(!m_j200_ctrl->isConnected())
+    if (!m_j200_ctrl->isConnected())
         return;
 
-    if(m_IsRequestReport)
+    if (m_IsRequestReport)
     {
         m_j200_ctrl->proc_report();
-       // m_j200_ctrl->proc_getFocalLength();
-    }
+        // m_j200_ctrl->proc_getFocalLength();
+    } /* if */
 
     m_ds.focalLength = m_j200_ctrl->getFocalLength();
     m_ds.zoomPosition = m_j200_ctrl->getZoomPosition();
     m_ds.focusPosition = m_j200_ctrl->getFocusPosition();
     m_ds.temperature = m_j200_ctrl->getTemperature();
 
-
     emit sig_ReportReady(m_ds);
-}
+} /* LensJ200Wrapper::proc_timerUpdate */
 
 void LensJ200Wrapper::proc_SendCMD(J200_CMD_enum cmd, const quint32 par1, const quint32 par2)
 {
 
-    if(m_j200_ctrl == nullptr)
+    if (m_j200_ctrl == nullptr)
         return;
-    if(!m_j200_ctrl->isConnected())
+    if (!m_j200_ctrl->isConnected())
         return;
-  //  qDebug() << Q_FUNC_INFO << cmd<< "  "<< par1 << "  " << par2;
-    quint32 par1_curr=0;
-    quint32 par2_curr=0;
-    switch(cmd)
+    //  qDebug() << Q_FUNC_INFO << cmd<< "  "<< par1 << "  " << par2;
+    quint32 par1_curr = 0;
+    quint32 par2_curr = 0;
+    switch (cmd)
     {
-    case  J200_DISCONNECT:
+    case J200_DISCONNECT:
         m_j200_ctrl->proc_disconnect();
         break;
-    case  J200_REPORT:
+    case J200_REPORT:
         m_j200_ctrl->proc_report();
         break;
     case J200_ZOOM_OUT_CONT:
         m_j200_ctrl->proc_zoomOutContinuous();
-        m_IsRequestReport=false;
+        m_IsRequestReport = false;
         break;
     case J200_ZOOM_IN_CONT:
         m_j200_ctrl->proc_zoomInContinuous();
-        m_IsRequestReport=false;
+        m_IsRequestReport = false;
         break;
     case J200_ZOOM_STOP:
         m_j200_ctrl->proc_zoomStop();
-        m_IsRequestReport=true;
+        m_IsRequestReport = true;
         break;
     case J200_FOCUS_FAR_CONT:
         m_j200_ctrl->proc_focusFarContinuous();
-        m_IsRequestReport=false;
+        m_IsRequestReport = false;
         break;
     case J200_FOCUS_NEAR_CONT:
         m_j200_ctrl->proc_focusNearContinuous();
-        m_IsRequestReport=false;
+        m_IsRequestReport = false;
         break;
     case J200_FOCUS_STOP:
         m_j200_ctrl->proc_focusStop();
-        m_IsRequestReport=true;
+        m_IsRequestReport = true;
         break;
     case J200_SET_SPEED:
-        m_j200_ctrl->proc_setSpeed(par1,par2);
+        m_j200_ctrl->proc_setSpeed(par1, par2);
         break;
     case J200_GOTO_POS:
         par1_curr = par1;
         par2_curr = par2;
-        if(par2 == 0xFFFFFFFF)
-            par2_curr = (quint32) m_j200_ctrl->getFocusPosition();
-        if(par1 == 0xFFFFFFFF)
-            par1_curr = (quint32)  m_j200_ctrl->getZoomPosition();
-        qDebug()<<"ZOOM set to pos " << par1_curr<< " FOCUS set to pos: " << par2_curr;
+        if (par2 == 0xFFFFFFFF)
+            par2_curr = (quint32)m_j200_ctrl->getFocusPosition();
+        if (par1 == 0xFFFFFFFF)
+            par1_curr = (quint32)m_j200_ctrl->getZoomPosition();
+        qDebug() << "ZOOM set to pos " << par1_curr << " FOCUS set to pos: " << par2_curr;
         m_j200_ctrl->proc_gotoPosition(par1_curr, par2_curr);
 
         break;
@@ -143,5 +138,5 @@ void LensJ200Wrapper::proc_SendCMD(J200_CMD_enum cmd, const quint32 par1, const 
         m_j200_ctrl->proc_gotoFocalLength(par1);
         break;
 
-    }
-}
+    } /* switch */
+} /* LensJ200Wrapper::proc_SendCMD */

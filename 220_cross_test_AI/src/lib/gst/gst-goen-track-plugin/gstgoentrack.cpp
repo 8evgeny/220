@@ -25,13 +25,11 @@
 
 // Forward declarations
 
-static int iter =0;
-static bool isInit =false;
+static int iter = 0;
+static bool isInit = false;
 
-
-
-static gdouble m_K [640*512];
-static gdouble m_B [640 * 512];
+static gdouble m_K[640 * 512];
+static gdouble m_B[640 * 512];
 
 static const uint32_t L = 65536;
 static double n_k_original[L];
@@ -51,7 +49,6 @@ static TrShWrapper track_wrapper;
 #define kTableFile "/home/khadas/gst/ir_calib/kTable.txt"
 #define bTableFile "/home/khadas/gst/ir_calib/bTable.txt"
 
-
 static cv::Mat m_frameT1;
 static cv::Mat m_frameT2;
 static cv::Mat m_frame;
@@ -62,52 +59,53 @@ static cv::Mat m_map;
 #define imgSize 640 * 512
 
 #define m_threshold 0x40
-static const gchar introspection_xml[] =
-    "<node>"
-    "  <interface name='org.istok.GoenTrack'>"
-    "    <method name='SetBrightness'>"
-    "      <arg type='d' name='brightness' direction='in'/>"
-    "    </method>"
-    "    <method name='GetOutObject'>"
-    "      <arg type='u' name='cx' direction='out'/>"
-    "      <arg type='u' name='cy' direction='out'/>"
-    "      <arg type='u' name='w' direction='out'/>"
-    "      <arg type='u' name='h' direction='out'/>"
-    "    </method>"
-    "    <method name='GetOutRoi'>"
-    "      <arg type='u' name='cx' direction='out'/>"
-    "      <arg type='u' name='cy' direction='out'/>"
-    "      <arg type='u' name='w' direction='out'/>"
-    "      <arg type='u' name='h' direction='out'/>"
-    "    </method>"
-    "    <method name='SetTargetObject'>"
-    "      <arg type='u' name='cx' direction='in'/>"
-    "      <arg type='u' name='cy' direction='in'/>"
-    "      <arg type='u' name='w' direction='in'/>"
-    "      <arg type='u' name='h' direction='in'/>"
-    "    </method>"
-    "    <method name='SetStopTracking'>"
-    "    </method>"
-    "    <method name='GetActiveLockTracking'>"
-    "      <arg type='b' name='active' direction='out'/>"
-    "      <arg type='b' name='locked' direction='out'/>"
-    "    </method>"
-    "   <method name='SetRoiExt'>"
-    "      <arg type='d' name='ext' direction='in'/>"
-    "    </method>"
-    "  </interface>"
-    "</node>";
+static const gchar introspection_xml[] = "<node>"
+                                         "  <interface name='org.istok.GoenTrack'>"
+                                         "    <method name='SetBrightness'>"
+                                         "      <arg type='d' name='brightness' direction='in'/>"
+                                         "    </method>"
+                                         "    <method name='GetOutObject'>"
+                                         "      <arg type='u' name='cx' direction='out'/>"
+                                         "      <arg type='u' name='cy' direction='out'/>"
+                                         "      <arg type='u' name='w' direction='out'/>"
+                                         "      <arg type='u' name='h' direction='out'/>"
+                                         "    </method>"
+                                         "    <method name='GetOutRoi'>"
+                                         "      <arg type='u' name='cx' direction='out'/>"
+                                         "      <arg type='u' name='cy' direction='out'/>"
+                                         "      <arg type='u' name='w' direction='out'/>"
+                                         "      <arg type='u' name='h' direction='out'/>"
+                                         "    </method>"
+                                         "    <method name='SetTargetObject'>"
+                                         "      <arg type='u' name='cx' direction='in'/>"
+                                         "      <arg type='u' name='cy' direction='in'/>"
+                                         "      <arg type='u' name='w' direction='in'/>"
+                                         "      <arg type='u' name='h' direction='in'/>"
+                                         "    </method>"
+                                         "    <method name='SetStopTracking'>"
+                                         "    </method>"
+                                         "    <method name='GetActiveLockTracking'>"
+                                         "      <arg type='b' name='active' direction='out'/>"
+                                         "      <arg type='b' name='locked' direction='out'/>"
+                                         "    </method>"
+                                         "   <method name='SetRoiExt'>"
+                                         "      <arg type='d' name='ext' direction='in'/>"
+                                         "    </method>"
+                                         "  </interface>"
+                                         "</node>";
 
 // D-Bus method handler
 
-
-static GDBusInterfaceVTable dbus_vtable ;
+static GDBusInterfaceVTable dbus_vtable;
 
 // Fully define the class structure
-struct GoenTrackClass : public GstBaseTransformClass {};
+struct GoenTrackClass : public GstBaseTransformClass
+{
+} /* struct GoenTrackClass */;
 
 // Define the plugin class
-struct GoenTrack : public GstBaseTransform {
+struct GoenTrack : public GstBaseTransform
+{
     gdouble brightness;
 
     TrShWrapper::Rect rectObject;
@@ -121,9 +119,11 @@ struct GoenTrack : public GstBaseTransform {
 
     GDBusConnection *dbus_connection;
 
-    static GType get_type() {
+    static GType get_type()
+    {
         static GType type = 0;
-        if (!type) {
+        if (!type)
+        {
             static const GTypeInfo info = {
                 sizeof(GoenTrackClass), // Size of the class structure
                 nullptr,
@@ -135,16 +135,13 @@ struct GoenTrack : public GstBaseTransform {
                 0,
                 (GInstanceInitFunc)instance_init,
             };
-            type = g_type_register_static(GST_TYPE_BASE_TRANSFORM, PLUGIN_NAME, &info, (GTypeFlags)0);
-        }
+            type =
+                g_type_register_static(GST_TYPE_BASE_TRANSFORM, PLUGIN_NAME, &info, (GTypeFlags)0);
+        } /* if */
         return type;
-    }
+    } /* get_type */
 
-public:
-
-
-
-
+  public:
     // D-Bus introspection XML
 
     static void on_bus_acquired(GDBusConnection *connection, const gchar *name, gpointer user_data)
@@ -154,27 +151,25 @@ public:
 
         // Export the D-Bus object
         guint registration_id = g_dbus_connection_register_object(
-            connection,
-            DBUS_PATH,
-            g_dbus_node_info_new_for_xml(introspection_xml, &error)->interfaces[0],
-            &dbus_vtable,
+            connection, DBUS_PATH,
+            g_dbus_node_info_new_for_xml(introspection_xml, &error)->interfaces[0], &dbus_vtable,
             self,
-            NULL,  // Pass NULL as the GDestroyNotify function
+            NULL, // Pass NULL as the GDestroyNotify function
             &error // Pass the GError** here
-            );
+        );
 
         if (registration_id == 0)
         {
             GST_ERROR_OBJECT(self, "Failed to register D-Bus object: %s", error->message);
             g_error_free(error);
-        }
+        } /* if */
         else
         {
             GST_INFO_OBJECT(self, "D-Bus object registered successfully");
-        }
+        } /* else */
 
         self->dbus_connection = connection;
-    }
+    } /* on_bus_acquired */
 
     static void goen_track_dispose(GObject *object)
     {
@@ -185,10 +180,10 @@ public:
         {
             g_object_unref(self->dbus_connection);
             self->dbus_connection = NULL;
-        }
+        } /* if */
 
         // G_OBJECT_CLASS(goen_track_parent_class)->dispose(object);
-    }
+    } /* goen_track_dispose */
 
     static gboolean set_caps(GstBaseTransform *trans, GstCaps *incaps, GstCaps *outcaps)
     {
@@ -200,13 +195,12 @@ public:
         {
             GST_ERROR_OBJECT(self, "Failed to parse input caps");
             return FALSE;
-        }
+        } /* if */
 
         // Configure output caps (GRAY8 with same resolution/framerate)
         GstVideoInfo out_info;
         gst_video_info_init(&out_info);
-        gst_video_info_set_format(&out_info, GST_VIDEO_FORMAT_RGB,
-                                  GST_VIDEO_INFO_WIDTH(&in_info),
+        gst_video_info_set_format(&out_info, GST_VIDEO_FORMAT_RGB, GST_VIDEO_INFO_WIDTH(&in_info),
                                   GST_VIDEO_INFO_HEIGHT(&in_info));
 
         // Preserve framerate
@@ -225,12 +219,10 @@ public:
             GST_DEBUG("Plugin received GRAY16_LE format");
             // Perform any initialization specific to GRAY16_LE
             return TRUE;
-        }
+        } /* if */
 
         return TRUE;
-    }
-
-
+    } /* set_caps */
 
     /*
     static void gst_badPixMap(GoenTrackClass *klass)
@@ -280,15 +272,15 @@ public:
         if (program.ptr() == nullptr)
         {
             CV_Error(cv::Error::OpenCLApiCallError, "Kernel compilation error: " + build_err);
-        }
+        } /* if */
 
         cv::ocl::Kernel kernel("cal_kernel", program);
         if (kernel.empty())
         {
             CV_Error(cv::Error::OpenCLApiCallError, "Failed to create kernel");
-        }
+        } /* if */
         return true;
-    }
+    } /* gst_ocl_init */
 
     static gboolean gst_readKBTablesFromFile()
     {
@@ -298,7 +290,7 @@ public:
         {
             std::cout << "\nCannot open file and read m_K table.\n\n";
             return false;
-        }
+        } /* if */
 
         inK.read((char *)&m_K, sizeof m_K); // считываем блок данных
         if (inK.good())
@@ -310,26 +302,24 @@ public:
         {
             std::cout << "\nCannot open file and read m_B table.\n\n";
             return false;
-        }
+        } /* if */
 
         inB.read((char *)&m_B, sizeof m_B); // считываем блок данных
         if (inB.good())
             std::cout << "\nm_B table was sucessfully read from file!\n\n";
         inB.close();
 
-
-        for(int i = 0; i< imgSize; i++)
+        for (int i = 0; i < imgSize; i++)
         {
             m_Ki[i] = static_cast<int16_t>(round(m_K[i] * (1 << 13)));
             m_Bi[i] = static_cast<int16_t>(round(m_B[i]));
 
             // std::cout << "m_Ki: " << m_Ki[i] << " m_K: " << m_K[i] << "\n\n" ;
             // std::cout << "m_Bi: " << m_Bi[i] << " m_B: " << m_B[i] << "\n\n";
-        }
-
+        } /* for */
 
         return true;
-    }
+    } /* gst_readKBTablesFromFile */
     static void gst_badPixMap()
     {
         cv::Mat difFrame(m_frameT1.size(), CV_16U);
@@ -343,16 +333,14 @@ public:
             if (*itDif < m_threshold)
             {
                 *itNew = std::numeric_limits<uchar>::max();
-            }
+            } /* if */
             else
                 *itNew = std::numeric_limits<uchar>::min();
-        }
+        } /* for */
 
         // cv::imwrite(mapFile, m_map, {cv::IMWRITE_PNG_COMPRESSION, 0});
         // cv::imshow("map", m_map);
-    }
-
-
+    } /* gst_badPixMap */
 
     static void gst_correction(cv::Mat &img)
     {
@@ -363,15 +351,15 @@ public:
         {
             pix = static_cast<int32_t>((m_K[i] * (*it)) + m_Bi[i]);
 
-            if(pix < 0)
+            if (pix < 0)
                 pix = 0;
-            if(pix > 65535)
+            if (pix > 65535)
                 pix = 65535;
             (*it) = static_cast<uint16_t>(pix);
             //  (*it) = static_cast<uint16_t>(((m_Ki[i] * (*it)) >> 13) + m_Bi[i]);
 
-        }
-    }
+        } /* for */
+    } /* gst_correction */
 
     static void gst_calcOrigHist(cv::Mat &m_frame)
     {
@@ -380,12 +368,12 @@ public:
         for (; it != itEnd; ++it)
         {
             n_k_original[*it]++;
-        }
+        } /* for */
         for (int i = 0; i < L; i++)
         {
             p_k_original[i] = (n_k_original[i] / (imgSize));
-        }
-    }
+        } /* for */
+    } /* gst_calcOrigHist */
 
     static void gst_histEqualization16bit(cv::Mat &img)
     {
@@ -397,7 +385,7 @@ public:
         {
             s_k[i] = std::round((L - 1) * sum);
             sum += p_k_original[i];
-        }
+        } /* for */
 
         auto itEqu = img_equ.begin<uint16_t>();
         auto itEquEnd = img_equ.end<uint16_t>();
@@ -407,33 +395,27 @@ public:
         for (; (it != itEnd) || (itEqu != itEquEnd); ++it, ++itEqu)
         {
             *itEqu = s_k[*it];
-        }
+        } /* for */
 
         auto itEqual = img_equ.begin<uint16_t>();
         auto itEqualEnd = img_equ.end<uint16_t>();
         for (; (itEqual != itEqualEnd); ++itEqual)
         {
             ++n_k_equalized[*itEqual];
-        }
+        } /* for */
 
         for (int i = 0; i < L; i++)
         {
             p_k_equalized[i] = (n_k_equalized[i] / (H * W));
-        }
+        } /* for */
 
         img_equ.copyTo(img);
-    }
+    } /* gst_histEqualization16bit */
 
-
-
-    static void handle_set_brightness(GDBusConnection *connection,
-                                      const gchar *sender,
-                                      const gchar *object_path,
-                                      const gchar *interface_name,
-                                      const gchar *method_name,
-                                      GVariant *parameters,
-                                      GDBusMethodInvocation *invocation,
-                                      gpointer user_data)
+    static void handle_set_brightness(GDBusConnection *connection, const gchar *sender,
+                                      const gchar *object_path, const gchar *interface_name,
+                                      const gchar *method_name, GVariant *parameters,
+                                      GDBusMethodInvocation *invocation, gpointer user_data)
     {
         GoenTrack *self = GST_GOENTRACK(user_data);
         gdouble new_brightness;
@@ -452,20 +434,15 @@ public:
         self->brightness = new_brightness;
         GST_OBJECT_UNLOCK(self);
 
-        std::cout << "OU, YEAH "
-                  << self->brightness << "\n\n";
+        std::cout << "OU, YEAH " << self->brightness << "\n\n";
         // Respond to the caller
         g_dbus_method_invocation_return_value(invocation, NULL);
-    }
+    } /* handle_set_brightness */
 
-    static void handle_set_roi_ext(GDBusConnection *connection,
-                                      const gchar *sender,
-                                      const gchar *object_path,
-                                      const gchar *interface_name,
-                                      const gchar *method_name,
-                                      GVariant *parameters,
-                                      GDBusMethodInvocation *invocation,
-                                      gpointer user_data)
+    static void handle_set_roi_ext(GDBusConnection *connection, const gchar *sender,
+                                   const gchar *object_path, const gchar *interface_name,
+                                   const gchar *method_name, GVariant *parameters,
+                                   GDBusMethodInvocation *invocation, gpointer user_data)
     {
         GoenTrack *self = GST_GOENTRACK(user_data);
         gdouble new_roi_ext;
@@ -474,30 +451,26 @@ public:
         g_variant_get(parameters, "(d)", &new_roi_ext);
 
         // Clamp the brightness value to the valid range (-255 to 255)
-        if ((new_roi_ext > 0) &&  (new_roi_ext < 100))
+        if ((new_roi_ext > 0) && (new_roi_ext < 100))
 
-         {
+        {
             // Update the brightness property
             GST_OBJECT_LOCK(self);
             track_wrapper.setRoiExt(new_roi_ext);
             GST_OBJECT_UNLOCK(self);
 
             std::cout << "handle_set_roi_ext " << new_roi_ext << "\n\n";
-         }
+        } /* if */
         else
-             std::cout << "handle_set_roi_ext " << new_roi_ext << " DATA ERROR!\n\n";
+            std::cout << "handle_set_roi_ext " << new_roi_ext << " DATA ERROR!\n\n";
         // Respond to the caller
         g_dbus_method_invocation_return_value(invocation, NULL);
-    }
+    } /* handle_set_roi_ext */
 
-    static void handle_set_stop_tracking(GDBusConnection *connection,
-                                      const gchar *sender,
-                                      const gchar *object_path,
-                                      const gchar *interface_name,
-                                      const gchar *method_name,
-                                      GVariant *parameters,
-                                      GDBusMethodInvocation *invocation,
-                                      gpointer user_data)
+    static void handle_set_stop_tracking(GDBusConnection *connection, const gchar *sender,
+                                         const gchar *object_path, const gchar *interface_name,
+                                         const gchar *method_name, GVariant *parameters,
+                                         GDBusMethodInvocation *invocation, gpointer user_data)
     {
         GoenTrack *self = GST_GOENTRACK(user_data);
 
@@ -509,82 +482,63 @@ public:
         std::cout << "STOP TRACKING \n";
         // Respond to the caller
         g_dbus_method_invocation_return_value(invocation, NULL);
-    }
-    static void handle_get_out_object(GDBusConnection *connection,
-                                const gchar *sender,
-                                const gchar *object_path,
-                                const gchar *interface_name,
-                                const gchar *method_name,
-                                GVariant *parameters,
-                                GDBusMethodInvocation *invocation,
-                                gpointer user_data) {
+    } /* handle_set_stop_tracking */
+    static void handle_get_out_object(GDBusConnection *connection, const gchar *sender,
+                                      const gchar *object_path, const gchar *interface_name,
+                                      const gchar *method_name, GVariant *parameters,
+                                      GDBusMethodInvocation *invocation, gpointer user_data)
+    {
         // Serialize the Rect fields into a D-Bus response
         GoenTrack *self = GST_GOENTRACK(user_data);
         GST_OBJECT_LOCK(self);
-        TrShWrapper::Rect outObjectD= self->rectObject;
+        TrShWrapper::Rect outObjectD = self->rectObject;
         GST_OBJECT_UNLOCK(self);
 
         g_dbus_method_invocation_return_value(
             invocation,
-            g_variant_new("(uuuu)", outObjectD.cx, outObjectD.cy, outObjectD.w, outObjectD.h)
-            );
-    }
+            g_variant_new("(uuuu)", outObjectD.cx, outObjectD.cy, outObjectD.w, outObjectD.h));
+    } /* handle_get_out_object */
 
-    static void handle_get_out_roi(GDBusConnection *connection,
-                                      const gchar *sender,
-                                      const gchar *object_path,
-                                      const gchar *interface_name,
-                                      const gchar *method_name,
-                                      GVariant *parameters,
-                                      GDBusMethodInvocation *invocation,
-                                      gpointer user_data) {
+    static void handle_get_out_roi(GDBusConnection *connection, const gchar *sender,
+                                   const gchar *object_path, const gchar *interface_name,
+                                   const gchar *method_name, GVariant *parameters,
+                                   GDBusMethodInvocation *invocation, gpointer user_data)
+    {
         // Serialize the Rect fields into a D-Bus response
         GoenTrack *self = GST_GOENTRACK(user_data);
         GST_OBJECT_LOCK(self);
-        TrShWrapper::Rect outRoidD= self->rectROI;
+        TrShWrapper::Rect outRoidD = self->rectROI;
         GST_OBJECT_UNLOCK(self);
 
         g_dbus_method_invocation_return_value(
-            invocation,
-            g_variant_new("(uuuu)", outRoidD.cx, outRoidD.cy, outRoidD.w, outRoidD.h)
-            );
-    }
+            invocation, g_variant_new("(uuuu)", outRoidD.cx, outRoidD.cy, outRoidD.w, outRoidD.h));
+    } /* handle_get_out_roi */
 
-    static void handle_get_active_lock(GDBusConnection *connection,
-                                   const gchar *sender,
-                                   const gchar *object_path,
-                                   const gchar *interface_name,
-                                   const gchar *method_name,
-                                   GVariant *parameters,
-                                   GDBusMethodInvocation *invocation,
-                                   gpointer user_data) {
+    static void handle_get_active_lock(GDBusConnection *connection, const gchar *sender,
+                                       const gchar *object_path, const gchar *interface_name,
+                                       const gchar *method_name, GVariant *parameters,
+                                       GDBusMethodInvocation *invocation, gpointer user_data)
+    {
         // Serialize the Rect fields into a D-Bus response
         GoenTrack *self = GST_GOENTRACK(user_data);
         GST_OBJECT_LOCK(self);
-        bool bActive= self->bTrackIsActive;
-        bool bLock= self->bTrackIsLockedOn;
+        bool bActive = self->bTrackIsActive;
+        bool bLock = self->bTrackIsLockedOn;
         GST_OBJECT_UNLOCK(self);
 
-        g_dbus_method_invocation_return_value(
-            invocation,
-            g_variant_new("(bb)", bActive, bLock)
-            );
-    }
-
+        g_dbus_method_invocation_return_value(invocation, g_variant_new("(bb)", bActive, bLock));
+    } /* handle_get_active_lock */
 
     // D-Bus method handler for SetRect
-    static void handle_set_target_object(GDBusConnection *connection,
-                                const gchar *sender,
-                                const gchar *object_path,
-                                const gchar *interface_name,
-                                const gchar *method_name,
-                                GVariant *parameters,
-                                GDBusMethodInvocation *invocation,
-                                gpointer user_data) {
+    static void handle_set_target_object(GDBusConnection *connection, const gchar *sender,
+                                         const gchar *object_path, const gchar *interface_name,
+                                         const gchar *method_name, GVariant *parameters,
+                                         GDBusMethodInvocation *invocation, gpointer user_data)
+    {
         // Extract the Rect fields from the parameters
         guint cx, cy, w, h;
         g_variant_get(parameters, "(uuuu)", &cx, &cy, &w, &h);
-        std::cout<<"handle_set_target_object"<<std::endl;
+        std::cout << "handle_set_target_object" << std::endl;
         TrShWrapper::Rect target_obj;
         // Update the static Rect variable
         target_obj.cx = (unsigned short)cx;
@@ -594,23 +548,19 @@ public:
 
         GoenTrack *self = GST_GOENTRACK(user_data);
         GST_OBJECT_LOCK(self);
-        self->rectTargetObject= target_obj;
+        self->rectTargetObject = target_obj;
         self->bIsNewTargetObj = true;
         GST_OBJECT_UNLOCK(self);
 
-        GST_INFO("Updated Rect: cx=%u, cy=%u, w=%u, h=%u", target_obj.cx, target_obj.cy, target_obj.w, target_obj.h);
+        GST_INFO("Updated Rect: cx=%u, cy=%u, w=%u, h=%u", target_obj.cx, target_obj.cy,
+                 target_obj.w, target_obj.h);
 
         // Respond to the caller
         g_dbus_method_invocation_return_value(invocation, NULL);
-    }
+    } /* handle_set_target_object */
 
-
-
-    static GstCaps *
-    gst_ir_filter_transform_caps(GstBaseTransform *trans,
-                                 GstPadDirection direction,
-                                 GstCaps *caps,
-                                 GstCaps *filter)
+    static GstCaps *gst_ir_filter_transform_caps(GstBaseTransform *trans, GstPadDirection direction,
+                                                 GstCaps *caps, GstCaps *filter)
     {
         GstCaps *result = gst_caps_new_empty();
         guint i, n;
@@ -629,18 +579,14 @@ public:
             {
                 /* Transforming sink caps (input) to src caps (output) */
                 gst_structure_set_name(new_structure, "video/x-raw");
-                gst_structure_set(new_structure,
-                                  "format", G_TYPE_STRING, "RGB",
-                                  NULL);
-            }
+                gst_structure_set(new_structure, "format", G_TYPE_STRING, "RGB", NULL);
+            } /* if */
             else
             {
                 /* Transforming src caps (output) to sink caps (input) */
                 gst_structure_set_name(new_structure, "video/x-raw");
-                gst_structure_set(new_structure,
-                                  "format", G_TYPE_STRING, "RGB",
-                                  NULL);
-            }
+                gst_structure_set(new_structure, "format", G_TYPE_STRING, "RGB", NULL);
+            } /* else */
 
             /* Preserve other fields */
             if (gst_structure_has_field(new_structure, "width"))
@@ -651,32 +597,30 @@ public:
                 gst_structure_remove_field(new_structure, "framerate");
 
             gst_caps_append_structure(result, new_structure);
-        }
+        } /* for */
 
         if (filter)
         {
             GstCaps *tmp = result;
             result = gst_caps_intersect(tmp, filter);
             gst_caps_unref(tmp);
-        }
+        } /* if */
 
         GST_DEBUG_OBJECT(trans, "Transformed caps: %" GST_PTR_FORMAT, result);
         return result;
-    }
+    } /* gst_ir_filter_transform_caps */
 
     // Initialize the class
-    static void class_init(GoenTrackClass* klass) {
-        GstElementClass* element_class = GST_ELEMENT_CLASS(klass);
+    static void class_init(GoenTrackClass *klass)
+    {
+        GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
         GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
         gobject_class->dispose = goen_track_dispose;
 
         gst_element_class_set_metadata(
-            element_class,
-            "Gray16 to Gray8 Converter with Brightness Enhancement",
-            "Filter/Converter",
-            "Converts GRAY16 to GRAY8 and enhances brightness",
-            "Your Name <your.email@example.com>"
-            );
+            element_class, "Gray16 to Gray8 Converter with Brightness Enhancement",
+            "Filter/Converter", "Converts GRAY16 to GRAY8 and enhances brightness",
+            "Your Name <your.email@example.com>");
         // Define the sink pad template
         /*gst_element_class_add_pad_template(
     element_class,
@@ -685,118 +629,127 @@ public:
                                              "format", G_TYPE_STRING, "GRAY16_LE",
                                              "width", GST_TYPE_INT_RANGE, 1, G_MAXINT,
                                              "height", GST_TYPE_INT_RANGE, 1, G_MAXINT,
-                                             "framerate", GST_TYPE_FRACTION_RANGE, 0, 1, G_MAXINT, 1,
-                                             nullptr))
+                                             "framerate", GST_TYPE_FRACTION_RANGE, 0, 1, G_MAXINT,
+1, nullptr))
 );
 */
         // Sink pad template (accept ANY resolution/framerate as long as format=GRAY16_LE)
         // Sink pad template (accept any GRAY16_LE video)
 
-        GstStaticPadTemplate sink_template = GST_STATIC_PAD_TEMPLATE(
-            "sink",          // Pad name
-            GST_PAD_SINK,    // Pad direction (sink)
-            GST_PAD_ALWAYS,  // Pad presence (always available)
-            GST_STATIC_CAPS( // Supported caps
-                "video/x-raw, "
-                "format = (string) RGB, "         // Accept GRAY16_LE format
-                "width = (int) [ 1, MAX ], "        // Width range
-                "height = (int) [ 1, MAX ], "       // Height range
-                "framerate = (fraction) [ 0, MAX ]" // Frame rate range
-                ));
+        GstStaticPadTemplate sink_template =
+            GST_STATIC_PAD_TEMPLATE("sink", // Pad name
+                                    GST_PAD_SINK, // Pad direction (sink)
+                                    GST_PAD_ALWAYS, // Pad presence (always available)
+                                    GST_STATIC_CAPS( // Supported caps
+                                        "video/x-raw, "
+                                        "format = (string) RGB, " // Accept GRAY16_LE format
+                                        "width = (int) [ 1, MAX ], " // Width range
+                                        "height = (int) [ 1, MAX ], " // Height range
+                                        "framerate = (fraction) [ 0, MAX ]" // Frame rate range
+                                        ));
 
         gst_element_class_add_pad_template(element_class,
                                            gst_static_pad_template_get(&sink_template));
 
         // Source pad template (output GRAY8)
 
-        GstStaticPadTemplate source_template = GST_STATIC_PAD_TEMPLATE(
-            "src",          // Pad name
-            GST_PAD_SRC,    // Pad direction (sink)
-            GST_PAD_ALWAYS,  // Pad presence (always available)
-            GST_STATIC_CAPS( // Supported caps
-                "video/x-raw, "
-                "format = (string) RGB, "     // Accept GRAY16_LE format
-                "width = (int) [ 1, MAX ], "        // Width range
-                "height = (int) [ 1, MAX ], "       // Height range
-                "framerate = (fraction) [ 0, MAX ]" // Frame rate range
-                ));
+        GstStaticPadTemplate source_template =
+            GST_STATIC_PAD_TEMPLATE("src", // Pad name
+                                    GST_PAD_SRC, // Pad direction (sink)
+                                    GST_PAD_ALWAYS, // Pad presence (always available)
+                                    GST_STATIC_CAPS( // Supported caps
+                                        "video/x-raw, "
+                                        "format = (string) RGB, " // Accept GRAY16_LE format
+                                        "width = (int) [ 1, MAX ], " // Width range
+                                        "height = (int) [ 1, MAX ], " // Height range
+                                        "framerate = (fraction) [ 0, MAX ]" // Frame rate range
+                                        ));
+
+        dbus_vtable = {handle_set_brightness, NULL, NULL};
 
         dbus_vtable = {
-                       handle_set_brightness,
-                       NULL,
-                       NULL};
-
-        dbus_vtable = {
-            .method_call = [](GDBusConnection *connection,
-                              const gchar *sender,
-                              const gchar *object_path,
-                              const gchar *interface_name,
-                              const gchar *method_name,
-                              GVariant *parameters,
-                              GDBusMethodInvocation *invocation,
-                              gpointer user_data) {
-                if (g_strcmp0(method_name, "SetBrightness") == 0) {
-                    handle_set_brightness(connection, sender, object_path, interface_name, method_name, parameters, invocation, user_data);
-                } else if (g_strcmp0(method_name, "GetOutObject") == 0) {
-                    handle_get_out_object(connection, sender, object_path, interface_name, method_name, parameters, invocation, user_data);
-                } else if (g_strcmp0(method_name, "GetOutRoi") == 0) {
-                    handle_get_out_roi(connection, sender, object_path, interface_name, method_name, parameters, invocation, user_data);
-                } else if (g_strcmp0(method_name, "SetRoiExt") == 0) {
-                    handle_set_roi_ext(connection, sender, object_path, interface_name, method_name, parameters, invocation, user_data);
-                } else if (g_strcmp0(method_name, "SetTargetObject") == 0) {
-                    handle_set_target_object(connection, sender, object_path, interface_name, method_name, parameters, invocation, user_data);
-                } else if (g_strcmp0(method_name, "SetStopTracking") == 0) {
-                    handle_set_stop_tracking(connection, sender, object_path, interface_name, method_name, parameters, invocation, user_data);
-                } else if (g_strcmp0(method_name, "GetActiveLockTracking") == 0) {
-                    handle_get_active_lock(connection, sender, object_path, interface_name, method_name, parameters, invocation, user_data);
-                }
-
-            },
+            .method_call =
+                [](GDBusConnection *connection, const gchar *sender, const gchar *object_path,
+                   const gchar *interface_name, const gchar *method_name, GVariant *parameters,
+                   GDBusMethodInvocation *invocation, gpointer user_data)
+            {
+                if (g_strcmp0(method_name, "SetBrightness") == 0)
+                {
+                    handle_set_brightness(connection, sender, object_path, interface_name,
+                                          method_name, parameters, invocation, user_data);
+                } /* if */
+                else if (g_strcmp0(method_name, "GetOutObject") == 0)
+                {
+                    handle_get_out_object(connection, sender, object_path, interface_name,
+                                          method_name, parameters, invocation, user_data);
+                } /* if */
+                else if (g_strcmp0(method_name, "GetOutRoi") == 0)
+                {
+                    handle_get_out_roi(connection, sender, object_path, interface_name,
+                                       method_name, parameters, invocation, user_data);
+                } /* if */
+                else if (g_strcmp0(method_name, "SetRoiExt") == 0)
+                {
+                    handle_set_roi_ext(connection, sender, object_path, interface_name,
+                                       method_name, parameters, invocation, user_data);
+                } /* if */
+                else if (g_strcmp0(method_name, "SetTargetObject") == 0)
+                {
+                    handle_set_target_object(connection, sender, object_path, interface_name,
+                                             method_name, parameters, invocation, user_data);
+                } /* if */
+                else if (g_strcmp0(method_name, "SetStopTracking") == 0)
+                {
+                    handle_set_stop_tracking(connection, sender, object_path, interface_name,
+                                             method_name, parameters, invocation, user_data);
+                } /* if */
+                else if (g_strcmp0(method_name, "GetActiveLockTracking") == 0)
+                {
+                    handle_get_active_lock(connection, sender, object_path, interface_name,
+                                           method_name, parameters, invocation, user_data);
+                } /* if */
+            } /* lambda */,
         };
 
         gst_element_class_add_pad_template(element_class,
                                            gst_static_pad_template_get(&source_template));
 
-       // gst_ocl_init();
-       // gst_badPixMap();
-       // gst_readKBTablesFromFile();
+        // gst_ocl_init();
+        // gst_badPixMap();
+        // gst_readKBTablesFromFile();
         track_wrapper.setIniFileNamePath("tracking.ini");
 
         // Set the transform_ip function
         GstBaseTransformClass *base_transform_class = GST_BASE_TRANSFORM_CLASS(klass);
         base_transform_class->set_caps = GST_DEBUG_FUNCPTR(set_caps);
         base_transform_class->transform = GST_DEBUG_FUNCPTR(transform);
-        base_transform_class->transform_caps =
-            GST_DEBUG_FUNCPTR(gst_ir_filter_transform_caps);
-    }
+        base_transform_class->transform_caps = GST_DEBUG_FUNCPTR(gst_ir_filter_transform_caps);
+    } /* class_init */
 
     // Initialize the instance
     static void instance_init(GoenTrack *self)
     {
-        self -> brightness = 0.5;
+        self->brightness = 0.5;
         // Acquire the D-Bus session bus
-        guint owner_id = g_bus_own_name(
-            G_BUS_TYPE_SESSION,
-            DBUS_NAME,
-            G_BUS_NAME_OWNER_FLAGS_NONE,
-            on_bus_acquired, // Called when the bus is acquired
-            NULL,            // Called when the name is acquired (optional)
-            NULL,            // Called when the name is lost (optional)
-            self,            // User data passed to callbacks
-            NULL             // No cleanup function for user_data
-            );
+        guint owner_id = g_bus_own_name(G_BUS_TYPE_SESSION, DBUS_NAME, G_BUS_NAME_OWNER_FLAGS_NONE,
+                                        on_bus_acquired, // Called when the bus is acquired
+                                        NULL, // Called when the name is acquired (optional)
+                                        NULL, // Called when the name is lost (optional)
+                                        self, // User data passed to callbacks
+                                        NULL // No cleanup function for user_data
+        );
 
         if (owner_id == 0)
         {
             GST_ERROR_OBJECT(self, "Failed to acquire D-Bus name");
-        }
+        } /* if */
 
-    }
+    } /* instance_init */
     // Transform function (must be static)
     static GstFlowReturn transform(GstBaseTransform *trans, GstBuffer *inbuf, GstBuffer *outbuf)
     {
         GoenTrack *self = GST_GOENTRACK(trans);
-       // double yOrig[L], yEqu[L], x[L];
+        // double yOrig[L], yEqu[L], x[L];
 
         isInit = true;
 
@@ -806,69 +759,65 @@ public:
         {
             GST_ERROR_OBJECT(self, "Failed to map buffers");
             return GST_FLOW_ERROR;
-        }
+        } /* if */
 
         // Get dimensions from caps
         GstVideoInfo in_info;
-        gst_video_info_from_caps(&in_info, gst_pad_get_current_caps(GST_BASE_TRANSFORM_SINK_PAD(trans)));
+        gst_video_info_from_caps(&in_info,
+                                 gst_pad_get_current_caps(GST_BASE_TRANSFORM_SINK_PAD(trans)));
         int width = GST_VIDEO_INFO_WIDTH(&in_info);
         int height = GST_VIDEO_INFO_HEIGHT(&in_info);
 
         // Convert GRAY16_LE to GRAY8
 
-        //std::cout<< "height" << height <<" width" << width<<std::endl;
+        // std::cout<< "height" << height <<" width" << width<<std::endl;
         cv::Mat rgb_in(height, width, CV_8UC3, in_map.data);
         cv::Mat rgb_out(height, width, CV_8UC3, out_map.data);
 
         rgb_in.copyTo(rgb_out);
 
-
         cv::Mat greyMat;
         cv::cvtColor(rgb_in, greyMat, cv::COLOR_RGBA2GRAY);
 
-        //rgb_in.convertTo(rgb_in, -1, self->brightness, 50);
+        // rgb_in.convertTo(rgb_in, -1, self->brightness, 50);
 
         for (int i = 0; i < L; i++)
         {
             n_k_original[i] = 0;
             n_k_equalized[i] = 0;
-        }
+        } /* for */
 
-        //gst_calcOrigHist(gray16);
-        //gst_correction(gray16);
-        // gst_histEqualization16bit(gray16);
+        // gst_calcOrigHist(gray16);
+        // gst_correction(gray16);
+        //  gst_histEqualization16bit(gray16);
 
-        // cv::UMat cv_source_frameU = cv::UMat(gray16.getUMat(cv::ACCESS_FAST, cv::USAGE_ALLOCATE_DEVICE_MEMORY));
-        // cv::UMat cv_dst_frameU;
+        // cv::UMat cv_source_frameU = cv::UMat(gray16.getUMat(cv::ACCESS_FAST,
+        // cv::USAGE_ALLOCATE_DEVICE_MEMORY)); cv::UMat cv_dst_frameU;
 
         // gray16(cv_source_frameU);
-         GST_OBJECT_LOCK(self);
-         if(self->bIsNewTargetObj)
-         {
-             track_wrapper.setTargetObject(self->rectTargetObject);
-         }
+        GST_OBJECT_LOCK(self);
+        if (self->bIsNewTargetObj)
+        {
+            track_wrapper.setTargetObject(self->rectTargetObject);
+        } /* if */
 
-         if(self->bIsStopTracking)
-         {
-             track_wrapper.stopTracking();
-         }
+        if (self->bIsStopTracking)
+        {
+            track_wrapper.stopTracking();
+        } /* if */
 
+        self->bIsStopTracking = false;
+        self->bIsNewTargetObj = false;
+        GST_OBJECT_UNLOCK(self);
 
-         self->bIsStopTracking =false;
-         self->bIsNewTargetObj = false;
-         GST_OBJECT_UNLOCK(self);
-
-
-        //std::cerr << "before track_wrapper.trackFrame"<< std::endl;
-       //  rgb_out=rgb_in;//.copyTo(rgb_out);
+        // std::cerr << "before track_wrapper.trackFrame"<< std::endl;
+        //  rgb_out=rgb_in;//.copyTo(rgb_out);
 
         track_wrapper.trackFrame(greyMat);
-        //std::cerr << "after track_wrapper.trackFrame"<< std::endl;
-
-
+        // std::cerr << "after track_wrapper.trackFrame"<< std::endl;
 
         GST_OBJECT_LOCK(self);
-        self->rectObject= track_wrapper.objectRect();
+        self->rectObject = track_wrapper.objectRect();
         self->rectROI = track_wrapper.roiRect();
         self->bTrackIsActive = track_wrapper.active();
         self->bTrackIsLockedOn = track_wrapper.lockedOn();
@@ -879,46 +828,41 @@ public:
         // rect.y = self->rectObject.cy;
         // rect.width = self->rectObject.w;
         // rect.height = self->rectObject.h;
-        //cv::rectangle(rgb_out, rect, cv::Scalar(0, 255, 0),2);
+        // cv::rectangle(rgb_out, rect, cv::Scalar(0, 255, 0),2);
 
-
-        //cv_source_frameU.convertTo(cv_dst_frameU, CV_8UC1, 1.0 / 256.0);
+        // cv_source_frameU.convertTo(cv_dst_frameU, CV_8UC1, 1.0 / 256.0);
 
         // memcpy(out_map.data, cv_dst_frameU.getMat(cv::ACCESS_FAST).data, imgSize);
 
         // Brightness enhancement
-        //gray8.convertTo(gray8, -1, 1.5, 50); // alpha=1.5, beta=50
+        // gray8.convertTo(gray8, -1, 1.5, 50); // alpha=1.5, beta=50
 
         gst_buffer_unmap(inbuf, &in_map);
         gst_buffer_unmap(outbuf, &out_map);
         return GST_FLOW_OK;
-    }
-};
+    } /* transform */
+} /* struct GoenTrack */;
 
 // Register the plugin
-static gboolean plugin_init(GstPlugin* plugin) {
+static gboolean plugin_init(GstPlugin *plugin)
+{
     gboolean ret = gst_element_register(plugin, PLUGIN_NAME, GST_RANK_NONE, GoenTrack::get_type());
-    if (!ret) {
+    if (!ret)
+    {
         g_printerr("Failed to register plugin '%s'\n", PLUGIN_NAME);
-    } else {
+    } /* if */
+    else
+    {
         g_print("Successfully registered plugin '%s'\n", PLUGIN_NAME);
-    }
+    } /* else */
 
     return ret;
-}
+} /* plugin_init */
 
 #ifndef PACKAGE
 #define PACKAGE "goentrack"
 #endif
 
-GST_PLUGIN_DEFINE(
-    GST_VERSION_MAJOR,
-    GST_VERSION_MINOR,
-    goentrack,
-    "Converts GRAY16 to GRAY8 and enhances brightness",
-    plugin_init,
-    "1.0",
-    "LGPL",
-    "Custom Plugins",
-    "http://example.com"
-    )
+GST_PLUGIN_DEFINE(GST_VERSION_MAJOR, GST_VERSION_MINOR, goentrack,
+                  "Converts GRAY16 to GRAY8 and enhances brightness", plugin_init, "1.0", "LGPL",
+                  "Custom Plugins", "http://example.com")

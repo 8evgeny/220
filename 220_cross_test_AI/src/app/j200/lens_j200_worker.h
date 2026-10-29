@@ -7,38 +7,40 @@
 #include <QQueue>
 #include <QTimer>
 
-
 class LensProtocol : public QObject
 {
     int command;
     int length;
     QByteArray data;
-};
+} /* class LensProtocol */;
 
 class LensJ200Worker : public QObject
 {
     Q_OBJECT
-public:
+  public:
     explicit LensJ200Worker(QObject *parent = nullptr);
     ~LensJ200Worker();
     void init();
-    LensStatus status() {
+    LensStatus status()
+    {
         return lens->status();
-    }
+    } /* status */
 
-    Lens::Error error() {
+    Lens::Error error()
+    {
         return m_error;
-    }
+    } /* error */
 
-    void errorReset() {
+    void errorReset()
+    {
         m_error = Lens::Error::NoError;
         requestQueue.clear();
         m_isProcessed = false;
-    }
+    } /* errorReset */
 
     LensProtocol message;
 
-protected:
+  protected:
     QThread thread;
     LensJ200 *lens;
     QTimer *timer;
@@ -50,21 +52,21 @@ protected:
     Lens::Error m_error;
     void sendRequest();
 
-private:
+  private:
     static const quint8 maxRetryCount = 5;
 
-signals:
+  signals:
     void connected(bool);
-//    void error(Lens::Error);
+    //    void error(Lens::Error);
 
-public slots:
+  public slots:
     void onConnect(bool isConnect, QString portName);
     void onCloseConnection();
 
-    void onSendRequest(Lens::Command commandID, const QByteArray& data = {});
+    void onSendRequest(Lens::Command commandID, const QByteArray &data = {});
     void onReceivedAck(bool);
     void onTimerTimeout();
     void proc_Thread_Finished();
-};
+} /* class LensJ200Worker */;
 
 #endif // LENS_J200_WORKER_H

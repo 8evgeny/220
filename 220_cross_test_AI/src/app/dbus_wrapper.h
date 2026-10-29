@@ -6,17 +6,16 @@
 #include <qdbusinterface.h>
 #include <qthread.h>
 
-class DBUS_Wrapper :public QObject
+class DBUS_Wrapper : public QObject
 {
     Q_OBJECT
     QThread thread;
 
-public:
+  public:
     explicit DBUS_Wrapper(SettingsManager *sm = nullptr, QObject *parent = nullptr);
     void dbus_CommInit();
 
-
-public slots:
+  public slots:
     /**
      * @brief Calls the SetBrightness method on the D-Bus interface.
      * @param brightness The brightness value to set (type: double).
@@ -61,15 +60,11 @@ public slots:
      */
     void setRoiExt(double ext);
 
-
-private:
+  private:
     SettingsManager *sm;
-    QDBusInterface *  dbusInterface;
+    QDBusInterface *dbusInterface;
     bool isInit = false;
 
-
-
-};
-
+} /* class DBUS_Wrapper */;
 
 #endif // DBUS_WRAPPER_H

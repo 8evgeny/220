@@ -1,30 +1,26 @@
 
 #include "ResultSetUnknownCommand.h"
 
-
-//#include "GyroPlatformProtocol.h"
+// #include "GyroPlatformProtocol.h"
 #include "CommandExecutor.h"
 
 #include <QDebug>
 
-
-
-
-ResultSetUnknownCommand::ResultSetUnknownCommand(   const uint8_t srcDevice, const uint8_t dstDevice, const uint8_t srcFunction):
-    WriteResponseCommand( srcDevice, dstDevice, srcFunction, FunctionNotExist, QByteArray())
+ResultSetUnknownCommand::ResultSetUnknownCommand(const uint8_t srcDevice, const uint8_t dstDevice,
+                                                 const uint8_t srcFunction)
+    : WriteResponseCommand(srcDevice, dstDevice, srcFunction, FunctionNotExist, QByteArray())
 {
 
-}
+} /* ResultSetUnknownCommand::ResultSetUnknownCommand */
 
-
-ResultSetUnknownCommand::ResultSetUnknownCommand( const QByteArray &header, CommandExecutor *const commandExecutor):
-    WriteResponseCommand( header, commandExecutor)
+ResultSetUnknownCommand::ResultSetUnknownCommand(const QByteArray &header,
+                                                 CommandExecutor *const commandExecutor)
+    : WriteResponseCommand(header, commandExecutor)
 {
 
-}
-
+} /* ResultSetUnknownCommand::ResultSetUnknownCommand */
 
 void ResultSetUnknownCommand::execute()
 {
-    m_pCommandExecutor->setUnknownCommand( getSrcFunction());
-}
+    m_pCommandExecutor->setUnknownCommand(getSrcFunction());
+} /* ResultSetUnknownCommand::execute */

@@ -2,18 +2,14 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-
 #include <QByteArray>
-
 
 class CommandExecutor;
 
-
-
 class Command
 {
-public:
-    Command( CommandExecutor *const commandExecutor = nullptr);
+  public:
+    Command(CommandExecutor *const commandExecutor = nullptr);
 
     virtual ~Command() = default;
 
@@ -32,12 +28,8 @@ public:
 
     virtual bool isRequest() const = 0;
 
-
-protected:
-    CommandExecutor *const  m_pCommandExecutor;
-};
-
-
+  protected:
+    CommandExecutor *const m_pCommandExecutor;
+} /* class Command */;
 
 #endif
-

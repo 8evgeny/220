@@ -4,12 +4,10 @@
 
 #include <iostream>
 
-class TrShWrapperPrivate {
+class TrShWrapperPrivate
+{
 
-public:
-
-
-
+  public:
     void createTracker(const cv::Mat &f)
     {
         if (m_t != nullptr)
@@ -23,16 +21,17 @@ public:
 
         bool ok = false;
         m_t = std::shared_ptr<trac_tmml>(create_track(m_iniFileName.c_str(), ok, m_t_ctl));
-        if(!ok) {
+        if (!ok)
+        {
             std::cerr << "Could not create tmml trac" << std::endl;
             return;
-        }
-    }
+        } /* if */
+    } /* createTracker */
 
     void setReinitFrame(int offset = 1)
     {
         m_reinit_frm = m_f_cnt + offset;
-    }
+    } /* setReinitFrame */
 
     void initTracker()
     {
@@ -46,40 +45,37 @@ public:
         m_t_ctl.key = 0;
         m_t_ctl.zahvat = 1;
         m_t_ctl.rect_ok = 2;
-    }
+    } /* initTracker */
 
     bool track(cv::Mat &f)
     {
-        if (!m_t)          // ← трекер не создан (INI не найден) — выходим
+        if (!m_t) // ← трекер не создан (INI не найден) — выходим
             return false;
-
 
         m_t_ctl.work_number = m_f_cnt;
         m_t_ctl.img_orig_data = f.data;
 
         m_t_ctl.roi_l = std::clamp(
-            1,
-            (int)std::round((m_t_ctl.obj_xy_x - m_t_ctl.obj_wh_2_w * m_ext_wh) *
-                             f.cols),
+            1, (int)std::round((m_t_ctl.obj_xy_x - m_t_ctl.obj_wh_2_w * m_ext_wh) * f.cols),
             f.cols - 4);
 
         m_t_ctl.roi_t = std::clamp(
-            1,
-            (int)std::round((m_t_ctl.obj_xy_y - m_t_ctl.obj_wh_2_h * m_ext_wh) *
-                             f.rows),
+            1, (int)std::round((m_t_ctl.obj_xy_y - m_t_ctl.obj_wh_2_h * m_ext_wh) * f.rows),
             f.rows - 4);
 
-        m_t_ctl.roi_w = std::clamp(
-            2, (int)std::round(m_t_ctl.obj_wh_2_w * 2.0f * m_ext_wh * f.cols),
-            f.cols - m_t_ctl.roi_l - 1);
+        m_t_ctl.roi_w =
+            std::clamp(2, (int)std::round(m_t_ctl.obj_wh_2_w * 2.0f * m_ext_wh * f.cols),
+                       f.cols - m_t_ctl.roi_l - 1);
 
-        m_t_ctl.roi_h = std::clamp(
-            2, (int)std::round(m_t_ctl.obj_wh_2_h * 2.0f * m_ext_wh * f.rows),
-            f.rows - m_t_ctl.roi_t - 1);
+        m_t_ctl.roi_h =
+            std::clamp(2, (int)std::round(m_t_ctl.obj_wh_2_h * 2.0f * m_ext_wh * f.rows),
+                       f.rows - m_t_ctl.roi_t - 1);
 
-        try {
+        try
+        {
 
-            if (get_trac(m_t) >= 0 && m_t_ctl.ok_match) {
+            if (get_trac(m_t) >= 0 && m_t_ctl.ok_match)
+            {
 
                 m_objF.cx = m_t_ctl.obj_xy_x;
                 m_objF.cy = m_t_ctl.obj_xy_y;
@@ -97,15 +93,17 @@ public:
                 m_roi.cy = m_t_ctl.roi_t + m_roi.h / 2;
 
                 return true;
-            }
+            } /* if */
 
-        } catch (const cv::Exception &e) {
+        } /* try */
+        catch (const cv::Exception &e)
+        {
 
             std::cerr << "OpenCV exception: " << e.what() << std::endl;
-        }
+        } /* catch */
 
         return false;
-    }
+    } /* track */
 
     bool update(cv::Mat &frame)
     {
@@ -120,17 +118,15 @@ public:
         if (m_t_ctl.zahvat)
             res = track(frame);
 
-
         m_f_cnt++;
         return res;
-    }
+    } /* update */
 
-
-public:
+  public:
     std::string m_iniFileName;
 
     trac_struct m_t_ctl;
-    float m_ext_wh = 8; //2.f * m_ext_wh_2;
+    float m_ext_wh = 8; // 2.f * m_ext_wh_2;
     std::shared_ptr<trac_tmml> m_t = nullptr;
 
     long long m_f_cnt = 0;
@@ -142,36 +138,35 @@ public:
     TrShWrapper::RectF m_objF;
     TrShWrapper::Rect m_roi;
 
-
-};
+} /* class TrShWrapperPrivate */;
 
 //--------------------------------------------------
 
 TrShWrapper::TrShWrapper()
-    : m_d {new TrShWrapperPrivate()}
+    : m_d{new TrShWrapperPrivate()}
 {
-}
+} /* TrShWrapper::TrShWrapper */
 
 TrShWrapper::~TrShWrapper()
 {
 
     delete m_d;
-}
+} /* TrShWrapper::~TrShWrapper */
 
 void TrShWrapper::setIniFileNamePath(const std::string &fileNamePath)
 {
     m_d->m_iniFileName = fileNamePath;
-}
+} /* TrShWrapper::setIniFileNamePath */
 
 float TrShWrapper::roiExt() const
 {
     return m_d->m_ext_wh;
-}
+} /* TrShWrapper::roiExt */
 
 void TrShWrapper::setRoiExt(float ext)
 {
     m_d->m_ext_wh = ext;
-}
+} /* TrShWrapper::setRoiExt */
 
 void TrShWrapper::reset()
 {
@@ -181,11 +176,12 @@ void TrShWrapper::reset()
     m_d->m_obj = {};
     m_d->m_roi = {};
     std::cerr << "[TrShWrapper] reset() — tracker destroyed" << std::endl;
-}
+} /* TrShWrapper::reset */
 
-bool TrShWrapper::isValid() const {
+bool TrShWrapper::isValid() const
+{
     return m_d->m_t != nullptr;
-}
+} /* TrShWrapper::isValid */
 
 void TrShWrapper::setTargetObject(const Rect &objectRect)
 {
@@ -193,37 +189,35 @@ void TrShWrapper::setTargetObject(const Rect &objectRect)
 
     if (!objectRect.valid())
         return;
-    if (objectRect.cx < 0 ||
-        objectRect.cx > (m_d->m_t_ctl.fr_w0 - objectRect.w / 2))
+    if (objectRect.cx < 0 || objectRect.cx > (m_d->m_t_ctl.fr_w0 - objectRect.w / 2))
         return;
-    if (objectRect.cy < 0 ||
-        objectRect.cy > (m_d->m_t_ctl.fr_h0 - objectRect.h / 2))
+    if (objectRect.cy < 0 || objectRect.cy > (m_d->m_t_ctl.fr_h0 - objectRect.h / 2))
         return;
 
     m_d->m_targetObj = objectRect;
 
     m_d->setReinitFrame();
-}
+} /* TrShWrapper::setTargetObject */
 
 void TrShWrapper::stopTracking()
 {
     m_d->m_t_ctl.key = 27;
-}
+} /* TrShWrapper::stopTracking */
 
 bool TrShWrapper::trackFrame(cv::Mat &frame)
 {
     return m_d->update(frame);
-}
+} /* TrShWrapper::trackFrame */
 
 bool TrShWrapper::active() const
 {
     return m_d->m_t != nullptr && m_d->m_t_ctl.zahvat;
-}
+} /* TrShWrapper::active */
 
 bool TrShWrapper::lockedOn() const
 {
     return m_d->m_t != nullptr && m_d->m_t_ctl.ok_match;
-}
+} /* TrShWrapper::lockedOn */
 
 const TrShWrapper::Rect &TrShWrapper::roiRect() const
 {
@@ -243,9 +237,9 @@ const TrShWrapper::RectF &TrShWrapper::objectRectF() const
 long long TrShWrapper::frameCounter() const
 {
     return m_d->m_f_cnt;
-}
+} /* TrShWrapper::frameCounter */
 
 void *TrShWrapper::tctl()
 {
     return &m_d->m_t_ctl;
-}
+} /* TrShWrapper::tctl */

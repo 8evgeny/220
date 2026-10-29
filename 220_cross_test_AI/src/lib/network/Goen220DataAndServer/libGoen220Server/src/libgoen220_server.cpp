@@ -7,66 +7,77 @@
 #include <QUdpSocket>
 #include <QThread>
 
-namespace Goen220 {
-namespace Server {
-
-Intrf::Intrf(QObject *parent)
-    : QObject{parent}
-{}
-
-Intrf::~Intrf() {}
-
-Intrf *create(QObject *parent)
+namespace Goen220
 {
-    return new ServerImpl(parent);
-}
+    namespace Server
+    {
 
-Intrf *createOnThread(QThread *th)
-{
-    if (QThread::currentThread() == th)
-        return create();
+        Intrf::Intrf(QObject *parent)
+            : QObject{parent}
+        {
+        } /* Intrf::Intrf */
 
-    Intrf *s = nullptr;
+        Intrf::~Intrf()
+        {
+        } /* Intrf::~Intrf */
 
-    auto f = [&s] { s = create(); };
+        Intrf *create(QObject *parent)
+        {
+            return new ServerImpl(parent);
+        } /* create */
 
-    if (th == nullptr)
-        th = new QThread();
+        Intrf *createOnThread(QThread *th)
+        {
+            if (QThread::currentThread() == th)
+                return create();
 
-    if (!th->isRunning())
-        th->start();
+            Intrf *s = nullptr;
 
-    { // wait for thread running
-        QEventLoop ll;
-        while (!th->isRunning())
-            ll.processEvents(QEventLoop::ExcludeUserInputEvents);
-    }
+            auto f = [&s]
+            {
+                s = create();
+            } /* lambda */;
 
-    auto ctx = new QObject();
-    ctx->moveToThread(th);
-    QMetaObject::invokeMethod(ctx, f, Qt::QueuedConnection);
-    ctx->deleteLater();
+            if (th == nullptr)
+                th = new QThread();
 
-    { // wait for new Server
-        QEventLoop ll;
-        while (s == nullptr)
-            ll.processEvents(QEventLoop::ExcludeUserInputEvents);
-    }
+            if (!th->isRunning())
+                th->start();
 
-    return s;
-}
+            { // wait for thread running
+                QEventLoop ll;
+                while (!th->isRunning())
+                    ll.processEvents(QEventLoop::ExcludeUserInputEvents);
+            } /* block */
 
-void removeServer(Intrf *server)
-{
-    QEventLoop ll;
+            auto ctx = new QObject();
+            ctx->moveToThread(th);
+            QMetaObject::invokeMethod(ctx, f, Qt::QueuedConnection);
+            ctx->deleteLater();
 
-    QObject::connect(server, &QObject::destroyed, &ll, [&ll] {
-        ll.exit();
-    }, Qt::QueuedConnection);
+            { // wait for new Server
+                QEventLoop ll;
+                while (s == nullptr)
+                    ll.processEvents(QEventLoop::ExcludeUserInputEvents);
+            } /* block */
 
-    server->deleteLater();
-    ll.exec();
-}
+            return s;
+        } /* createOnThread */
 
-} // namespace Server
+        void removeServer(Intrf *server)
+        {
+            QEventLoop ll;
+
+            QObject::connect(
+                server, &QObject::destroyed, &ll, [&ll]
+                {
+                    ll.exit();
+                } /* lambda */,
+                Qt::QueuedConnection);
+
+            server->deleteLater();
+            ll.exec();
+        } /* removeServer */
+
+    } // namespace Server
 } // namespace Goen220

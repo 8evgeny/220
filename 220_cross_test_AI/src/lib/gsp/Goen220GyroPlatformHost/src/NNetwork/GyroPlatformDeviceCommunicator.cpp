@@ -1,7 +1,6 @@
 
 #include "GyroPlatformDeviceCommunicator.h"
 
-
 #include "GetStatusCommand.h"
 #include "DelimiterAndCrc8CommandDecorator.h"
 
@@ -9,30 +8,24 @@
 
 #include <QDebug>
 
-
-
-
-
-
-GyroPlatformDeviceCommunicator::GyroPlatformDeviceCommunicator( const uint8_t hostId, const uint8_t deviceId, QObject *parent):
-	DeviceCommunicator( hostId, deviceId, parent)
+GyroPlatformDeviceCommunicator::GyroPlatformDeviceCommunicator(const uint8_t hostId,
+                                                               const uint8_t deviceId,
+                                                               QObject *parent)
+    : DeviceCommunicator(hostId, deviceId, parent)
 {
 
-}
-
+} /* GyroPlatformDeviceCommunicator::GyroPlatformDeviceCommunicator */
 
 GyroPlatformDeviceCommunicator::~GyroPlatformDeviceCommunicator()
 {
 
-}
+} /* GyroPlatformDeviceCommunicator::~GyroPlatformDeviceCommunicator */
 
-
-Command *GyroPlatformDeviceCommunicator::createGetStatusCommand( const uint8_t hostId, const uint8_t deviceId)
+Command *GyroPlatformDeviceCommunicator::createGetStatusCommand(const uint8_t hostId,
+                                                                const uint8_t deviceId)
 {
-    Command *const cmd = new GetStatusCommand( hostId, deviceId);
-    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator( cmd);
+    Command *const cmd = new GetStatusCommand(hostId, deviceId);
+    Command *const decoratedCmd = new DelimiterAndCrc8CommandDecorator(cmd);
 
     return decoratedCmd;
-}
-
-
+} /* GyroPlatformDeviceCommunicator::createGetStatusCommand */

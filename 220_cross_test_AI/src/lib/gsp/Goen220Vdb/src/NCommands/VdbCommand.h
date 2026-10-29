@@ -2,55 +2,48 @@
 #ifndef VDB_COMMAND_H
 #define VDB_COMMAND_H
 
-
 #include "Command.h"
 
 #include <QByteArray>
 
-
-
 class VdbCommand : public Command
 {
-public:
+  public:
     enum Cmd : uint8_t
     {
-         WriteRequest	= 0x00
-        ,WriteResponse	= 0x80
-        ,ReadRequest	= 0x01
-        ,ReadResponse	= 0x81
-    };
+        WriteRequest = 0x00,
+        WriteResponse = 0x80,
+        ReadRequest = 0x01,
+        ReadResponse = 0x81
+    } /* enum Cmd */;
 
     enum Error : uint8_t
     {
-         NoError 				= 0x00
+        NoError = 0x00
 
-        ,MessageDeliveryError	= 0x01
-        ,FunctionNotExist       = 0x04
+        ,
+        MessageDeliveryError = 0x01,
+        FunctionNotExist = 0x04
         //  ...
-    };
+    } /* enum Error */;
 
     enum RequestType : uint8_t
     {
-         RequestWithoutResponse = 0x00
-        ,RequestWithResponse    = 0x80
-    };
+        RequestWithoutResponse = 0x00,
+        RequestWithResponse = 0x80
+    } /* enum RequestType */;
 
-    VdbCommand( const Cmd cmd, const bool requiresResponse,
-                const Error error,
-                const uint8_t srcDevice, const uint8_t srcFunction,
-                const uint8_t dstDevice, const uint8_t dstFunction,
-                const QByteArray &payload,
-                CommandExecutor *const commandExecutor = nullptr);
+    VdbCommand(const Cmd cmd, const bool requiresResponse, const Error error,
+               const uint8_t srcDevice, const uint8_t srcFunction, const uint8_t dstDevice,
+               const uint8_t dstFunction, const QByteArray &payload,
+               CommandExecutor *const commandExecutor = nullptr);
 
-
-    VdbCommand( const QByteArray &headerAndPayload, CommandExecutor *const commandExecutor = nullptr);
-
+    VdbCommand(const QByteArray &headerAndPayload,
+               CommandExecutor *const commandExecutor = nullptr);
 
     QByteArray serialize() const override;
 
-
     bool isValid() const override;
-
 
     bool isRequiresResponse() const override;
 
@@ -64,18 +57,14 @@ public:
 
     bool isRequest() const override;
 
-
-protected:
-    void setPayload( const QByteArray &payload);
+  protected:
+    void setPayload(const QByteArray &payload);
 
     const QByteArray &getPayload() const;
 
-
-private:
-    QByteArray  m_header;
-    QByteArray  m_payload;
-};
-
+  private:
+    QByteArray m_header;
+    QByteArray m_payload;
+} /* class VdbCommand */;
 
 #endif
-
