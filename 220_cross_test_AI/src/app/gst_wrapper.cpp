@@ -1063,7 +1063,8 @@ GstElement *GST_Wrapper::run_GST_TVStream(QString videoDevice, QString clientIP,
         g_printerr("TV encoder link failed\n"); gst_object_unref(pipeline); return nullptr;
     }
 
-    GstPad *ts = gst_element_get_request_pad(tee, "src_%u");
+    GstPad *ts = gst_element_request_pad_simple(tee, "src_%u");
+    if (!ts) { g_printerr("Failed to request TV tracker pad\n"); gst_object_unref(pipeline); return nullptr; }
     GstPad *qs = gst_element_get_static_pad(queue2, "sink");
     if (gst_pad_link(ts, qs) != GST_PAD_LINK_OK) { gst_object_unref(ts); gst_object_unref(qs); gst_object_unref(pipeline); return nullptr; }
     gst_object_unref(qs);
@@ -1145,7 +1146,8 @@ GstElement *GST_Wrapper::run_GST_IRStreamISP(QString videoDevice, QString client
         g_printerr("IR encoder link failed\n"); gst_object_unref(pipeline); return nullptr;
     }
 
-    GstPad *ts = gst_element_get_request_pad(tee,"src_%u");
+    GstPad *ts = gst_element_request_pad_simple(tee,"src_%u");
+    if (!ts) { g_printerr("Failed to request IR tracker pad\n"); gst_object_unref(pipeline); return nullptr; }
     GstPad *qs = gst_element_get_static_pad(queue2,"sink");
     if (gst_pad_link(ts,qs)!=GST_PAD_LINK_OK) { gst_object_unref(ts); gst_object_unref(qs); gst_object_unref(pipeline); return nullptr; }
     gst_object_unref(qs);
@@ -1162,4 +1164,3 @@ GstElement *GST_Wrapper::run_GST_IRStreamISP(QString videoDevice, QString client
 
     return pipeline;
 }
-
