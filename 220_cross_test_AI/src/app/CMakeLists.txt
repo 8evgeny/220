@@ -264,6 +264,23 @@ target_link_libraries(test_EV9500 PRIVATE
     Qt6::SerialPort
 )
 
+add_executable(test_J200
+    test_J200.cpp
+    settingsmanager.cpp
+    settingsmanager.h
+    j200/lens_j200.cpp
+    j200/lens_j200.h
+)
+
+target_include_directories(test_J200 PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_link_libraries(test_J200 PRIVATE
+    Qt6::Core
+    Qt6::SerialPort
+)
+
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${GSTREAMER_INCLUDE_DIR}
     ${GLIB_INCLUDE_DIR}

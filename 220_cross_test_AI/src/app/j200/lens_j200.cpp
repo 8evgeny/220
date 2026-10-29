@@ -8,8 +8,13 @@ LensJ200::LensJ200(QObject *parent)
 
     QObject::connect(&serialPort, &QSerialPort::readyRead, this, &LensJ200::read);
 
+    m_status.isConnected = false;
     m_status.zoomPosition = 0;
+    m_status.zoomMinPosition = 0;
+    m_status.zoomMaxPosition = 0;
     m_status.focusPosition = 0;
+    m_status.focalLength = 0;
+    m_status.temperature = 0;
 } /* LensJ200::LensJ200 */
 
 LensJ200::~LensJ200()
@@ -18,11 +23,16 @@ LensJ200::~LensJ200()
     //  serialPort.close();
 } /* LensJ200::~LensJ200 */
 
-bool LensJ200::open(QString portName)
+bool LensJ200::open(QString portName, quint32 baudrate)
 {
-    qDebug() << Q_FUNC_INFO << "Open serial port:" << portName;
+    qDebug() << Q_FUNC_INFO << "Open serial port:" << portName << "baudrate:" << baudrate;
     serialPort.setPortName(portName);
-    serialPort.setBaudRate(QSerialPort::Baud19200);
+    if (!serialPort.setBaudRate(static_cast<qint32>(baudrate)))
+    {
+        qWarning() << Q_FUNC_INFO << "Cannot set baud rate:" << baudrate
+                   << serialPort.errorString();
+        return false;
+    } /* if */
     serialPort.setDataBits(QSerialPort::Data8);
     serialPort.setParity(QSerialPort::NoParity);
     serialPort.setStopBits(QSerialPort::OneStop);
@@ -37,6 +47,7 @@ void LensJ200::close()
 {
     if (serialPort.isOpen())
         serialPort.close();
+    m_status.isConnected = false;
 } /* LensJ200::close */
 
 void LensJ200::send(QByteArray req)

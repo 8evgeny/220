@@ -12,7 +12,7 @@ class LensJ200Controller : public QObject
 
     LensJ200Worker lensWorker;
 
-    void connect(QString portName);
+    void connect(QString portName, quint32 baudrate = 19200);
 
     bool isConnected()
     {
@@ -55,7 +55,7 @@ class LensJ200Controller : public QObject
     bool m_isConnected;
 
   signals:
-    void lensConnect(bool isConnect, QString portName = "");
+    void lensConnect(bool isConnect, QString portName = "", quint32 baudrate = 19200);
     void lensDisconnect();
     void lensSendRequest(Lens::Command, const QByteArray &data = {});
 

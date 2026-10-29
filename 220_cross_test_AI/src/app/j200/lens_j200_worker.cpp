@@ -39,7 +39,6 @@ void LensJ200Worker::init()
                 QObject::connect(lens, &LensJ200::sendResponse, this, &LensJ200Worker::onReceivedAck);
 
                 QObject::connect(timer, &QTimer::timeout, this, &LensJ200Worker::onTimerTimeout);
-
             } /* lambda */);
 
     QObject::connect(&thread, &QThread::finished, this, &LensJ200Worker::proc_Thread_Finished);
@@ -47,7 +46,7 @@ void LensJ200Worker::init()
     thread.start();
 } /* LensJ200Worker::init */
 
-void LensJ200Worker::onConnect(bool isConnect, QString portName)
+void LensJ200Worker::onConnect(bool isConnect, QString portName, quint32 baudrate)
 {
     // Disconnect
     if (!isConnect)
@@ -58,7 +57,7 @@ void LensJ200Worker::onConnect(bool isConnect, QString portName)
         return;
     } /* if */
     // Connect
-    if (!lens->open(portName))
+    if (!lens->open(portName, baudrate))
     {
         qDebug() << "Error opening serial port:" << portName;
         emit connected(false);

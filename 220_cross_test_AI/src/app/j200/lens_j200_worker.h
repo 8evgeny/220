@@ -60,7 +60,7 @@ class LensJ200Worker : public QObject
     //    void error(Lens::Error);
 
   public slots:
-    void onConnect(bool isConnect, QString portName);
+    void onConnect(bool isConnect, QString portName, quint32 baudrate);
     void onCloseConnection();
 
     void onSendRequest(Lens::Command commandID, const QByteArray &data = {});

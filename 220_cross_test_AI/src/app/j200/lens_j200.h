@@ -74,7 +74,7 @@ class LensJ200 : public QObject
     explicit LensJ200(QObject *parent = nullptr);
     ~LensJ200();
 
-    bool open(QString portName);
+    bool open(QString portName, quint32 baudrate = 19200);
     void close();
     void send(QByteArray req);
     void read();

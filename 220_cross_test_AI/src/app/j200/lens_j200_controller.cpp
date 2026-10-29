@@ -36,9 +36,9 @@ void printStackTrace()
 
     free(strs);
 } /* printStackTrace */
-void LensJ200Controller::connect(QString portname)
+void LensJ200Controller::connect(QString portname, quint32 baudrate)
 {
-    emit lensConnect(true, portname);
+    emit lensConnect(true, portname, baudrate);
 } /* LensJ200Controller::connect */
 
 void LensJ200Controller::proc_disconnect()

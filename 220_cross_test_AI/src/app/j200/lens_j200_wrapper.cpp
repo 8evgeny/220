@@ -19,7 +19,7 @@ LensJ200Wrapper::LensJ200Wrapper(QString port, quint32 baudrate, QObject *parent
 
                 QTimer::singleShot(100, this, [&]()
                                    {
-                                       m_j200_ctrl->connect(m_port);
+                                       m_j200_ctrl->connect(m_port, m_baudrate);
                                        m_NotificationTimer->start();
                                    } /* lambda */);
             } /* lambda */);
