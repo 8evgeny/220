@@ -1,0 +1,371 @@
+user@debian:~$ ssh ff2
+^C
+user@debian:~$ ssh ff2
+
+Welcome to Fenix 1.7.3 Ubuntu 24.04.2 LTS Linux 6.1.84  
+ _  ___               _             _____    _            ____  
+| |/ / |__   __ _  __| | __ _ ___  | ____|__| | __ _  ___|___ \ 
+| ' /| '_ \ / _` |/ _` |/ _` / __| |  _| / _` |/ _` |/ _ \ __) |
+| . \| | | | (_| | (_| | (_| \__ \ | |__| (_| | (_| |  __// __/ 
+|_|\_\_| |_|\__,_|\__,_|\__,_|___/ |_____\__,_|\__, |\___|_____|
+                                               |___/            
+
+ * Website:        https://www.khadas.com
+ * Documentation:  https://docs.khadas.com
+ * Forum:          https://forum.khadas.com
+
+Last login: Sun Mar 15 17:04:18 2026 from 192.168.1.108
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+○ qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: inactive (dead) since Sun 2026-03-15 17:00:28 MSK; 2min 44s ago
+   Duration: 15.724s
+    Process: 905 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+    Process: 1168 ExecStart=/home/khadas/qt_projects/qgst-goen220/qgst-goen220 (code=exited, status=0/SUCCESS)
+   Main PID: 1168 (code=exited, status=0/SUCCESS)
+        CPU: 6.566s
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+khadas@Khadas:~$ sudo systemctl start qgst-goen220.service 
+khadas@Khadas:~$ sudo systemctl enable qgst-goen220.service 
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+● qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2026-03-15 17:03:27 MSK; 13s ago
+   Main PID: 3428 (qgst-goen220)
+        CPU: 6.714s
+     CGroup: /system.slice/qgst-goen220.service
+             ├─3428 /home/khadas/qt_projects/qgst-goen220/qgst-goen220
+             └─3582 /usr/bin/v4l2-ctl -d /dev/video0 --set-fmt-video=width=1920 height=1080 pixelformat=RGB3 --stream-mmap=3 --stream-count=1 --stream-to=/d>
+
+Mar 15 17:03:35 Khadas qgst-goen220[3428]: 2026-03-15 17:03:35.425 [DEBUG] GSP:  Подключение к TTY:  "Установлено" (GyroPlatformHandler::initGyroPlatform():>
+Mar 15 17:03:35 Khadas qgst-goen220[3428]: 2026-03-15 17:03:35.429 [DEBUG] GSP: Связь с ГироПлатформой:  "Установлена" (GyroPlatformHandler::initGyroPlatfor>
+Mar 15 17:03:35 Khadas qgst-goen220[3428]: 2026-03-15 17:03:35.429 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01>
+Mar 15 17:03:35 Khadas qgst-goen220[3428]: 2026-03-15 17:03:35.429 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01>
+Mar 15 17:03:35 Khadas qgst-goen220[3428]: 2026-03-15 17:03:35.429 [DEBUG] GSP: Связь с ГироПлатформой:  "Установлена" (GyroPlatformHandler::initGyroPlatfor>
+Mar 15 17:03:35 Khadas qgst-goen220[3428]: 2026-03-15 17:03:35.429 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01>
+Mar 15 17:03:35 Khadas qgst-goen220[3428]: 2026-03-15 17:03:35.429 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01>
+Mar 15 17:03:35 Khadas qgst-goen220[3428]: [CAM CHECK] TV attempt 2/4
+Mar 15 17:03:37 Khadas qgst-goen220[3428]: [CAM CHECK] TV attempt 3/4
+Mar 15 17:03:40 Khadas qgst-goen220[3428]: [CAM CHECK] TV attempt 4/4
+
+khadas@Khadas:~$ sudo reboot now
+
+Broadcast message from root@Khadas on pts/1 (Sun 2026-03-15 17:05:20 MSK):
+
+The system will reboot now!
+
+khadas@Khadas:~$ Read from remote host 192.168.1.96: Connection reset by peer
+Connection to 192.168.1.96 closed.
+client_loop: send disconnect: Broken pipe
+user@debian:~$ ssh ff2
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 192.168.1.96 port 22
+user@debian:~$ ssh ff2
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 192.168.1.96 port 22
+user@debian:~$ ssh ff2
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 192.168.1.96 port 22
+user@debian:~$ ssh ff2
+^C  
+user@debian:~$ ssh ff2
+
+Welcome to Fenix 1.7.3 Ubuntu 24.04.2 LTS Linux 6.1.84  
+ _  ___               _             _____    _            ____  
+| |/ / |__   __ _  __| | __ _ ___  | ____|__| | __ _  ___|___ \ 
+| ' /| '_ \ / _` |/ _` |/ _` / __| |  _| / _` |/ _` |/ _ \ __) |
+| . \| | | | (_| | (_| | (_| \__ \ | |__| (_| | (_| |  __// __/ 
+|_|\_\_| |_|\__,_|\__,_|\__,_|___/ |_____\__,_|\__, |\___|_____|
+                                               |___/            
+
+ * Website:        https://www.khadas.com
+ * Documentation:  https://docs.khadas.com
+ * Forum:          https://forum.khadas.com
+
+Last login: Sun Mar 15 17:02:17 2026 from 192.168.1.108
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+○ qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: inactive (dead) since Sun 2026-03-15 17:05:38 MSK; 44s ago
+   Duration: 15.961s
+    Process: 898 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+    Process: 1140 ExecStart=/home/khadas/qt_projects/qgst-goen220/qgst-goen220 (code=exited, status=0/SUCCESS)
+   Main PID: 1140 (code=exited, status=0/SUCCESS)
+        CPU: 7.588s
+
+Mar 15 17:05:30 Khadas qgst-goen220[1140]: 2026-03-15 17:05:30.402 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01>
+Mar 15 17:05:30 Khadas qgst-goen220[1140]: 2026-03-15 17:05:30.402 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01>
+Mar 15 17:05:30 Khadas qgst-goen220[1140]: [CAM CHECK] TV attempt 2/4
+Mar 15 17:05:33 Khadas qgst-goen220[1140]: [CAM CHECK] TV attempt 3/4
+Mar 15 17:05:35 Khadas qgst-goen220[1140]: [CAM CHECK] TV attempt 4/4
+Mar 15 17:05:38 Khadas qgst-goen220[1140]: 2026-03-15 17:05:38.385 [DEBUG] GST subsystem timeout: 15072 (void Main_app::proc_video_init_timeout())
+Mar 15 17:05:38 Khadas qgst-goen220[1140]: 2026-03-15 17:05:38.385 [DEBUG] Handling termination event, signal: -100 (void handleSignal(int))
+Mar 15 17:05:38 Khadas qgst-goen220[1140]: 2026-03-15 17:05:38.385 [WARNING] Shutdown started — arming watchdog (5s)
+Mar 15 17:05:38 Khadas systemd[1]: qgst-goen220.service: Deactivated successfully.
+Mar 15 17:05:38 Khadas systemd[1]: qgst-goen220.service: Consumed 7.588s CPU time.
+khadas@Khadas:~$ sudo systemctl restart qgst-goen220.service 
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+● qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2026-03-15 17:06:56 MSK; 4s ago
+    Process: 2117 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+   Main PID: 2173 (qgst-goen220)
+        CPU: 297ms
+     CGroup: /system.slice/qgst-goen220.service
+             ├─2173 /home/khadas/qt_projects/qgst-goen220/qgst-goen220
+             └─2187 /usr/bin/v4l2-ctl -d /dev/video0 --set-fmt-video=width=1920 height=1080 pixelformat=RGB3 --stream-mmap=3 --stream-count=1 --stream-to=/d>
+
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.883 [DEBUG] qint32 MINI640_Controller::proc_initConnection() Thread id: 0x7f977eec00 (qint32 >
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.883 [DEBUG] MINI640 QSerial Connect (qint32 MINI640_QSerial::initConnection())
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.883 [DEBUG] "/dev/ttyS8" 9600 (qint32 MINI640_QSerial::initConnection())
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.884 [DEBUG] Port opened successfully! (qint32 MINI640_QSerial::initConnection())
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.884 [DEBUG] qint32 MINI640_QSerial::initConnection() MINI640 QSerial thread id:  0x7f967cec00>
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.884 [DEBUG] *** Connection init successfully qint32 MINI640_QSerial::initConnection() (qint32>
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.884 [DEBUG] void MINI640_QSerial::serialError(QSerialPort::SerialPortError) 0x7f967cec00 QSer>
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.884 [DEBUG] void MINI640_Controller::proc_InitReady() MINI640 Controller thread id:  0x7f977e>
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.884 [DEBUG] void MINI640_Worker::proc_InitReady() 0x7f9eda2c00 (void MINI640_Worker::proc_Ini>
+Mar 15 17:06:57 Khadas qgst-goen220[2173]: 2026-03-15 17:06:57.884 [DEBUG]  640 init ok (void Main_app::proc_MINI640_InitReady())
+khadas@Khadas:~$ sudo journalctl -u qgst-goen220.service -f -b 
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: 2026-03-15 17:07:04.261 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01 01 00 c4 1b" (virtual void Calculator::setMode(CommandExecutor::Mode))
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: 2026-03-15 17:07:04.261 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01 01 01 00 c3 8c" (virtual void Calculator::setMode(CommandExecutor::Mode))
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 2/4
+Mar 15 17:07:06 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 3/4
+Mar 15 17:07:09 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 4/4
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [DEBUG] GST subsystem timeout: 14521 (void Main_app::proc_video_init_timeout())
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [DEBUG] Handling termination event, signal: -100 (void handleSignal(int))
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [WARNING] Shutdown started — arming watchdog (5s)
+Mar 15 17:07:11 Khadas systemd[1]: qgst-goen220.service: Deactivated successfully.
+Mar 15 17:07:11 Khadas systemd[1]: qgst-goen220.service: Consumed 7.372s CPU time.
+q^C
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+○ qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: inactive (dead) since Sun 2026-03-15 17:07:11 MSK; 21s ago
+   Duration: 14.585s
+    Process: 2117 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+    Process: 2173 ExecStart=/home/khadas/qt_projects/qgst-goen220/qgst-goen220 (code=exited, status=0/SUCCESS)
+   Main PID: 2173 (code=exited, status=0/SUCCESS)
+        CPU: 7.372s
+
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: 2026-03-15 17:07:04.261 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01>
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: 2026-03-15 17:07:04.261 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01>
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 2/4
+Mar 15 17:07:06 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 3/4
+Mar 15 17:07:09 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 4/4
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [DEBUG] GST subsystem timeout: 14521 (void Main_app::proc_video_init_timeout())
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [DEBUG] Handling termination event, signal: -100 (void handleSignal(int))
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [WARNING] Shutdown started — arming watchdog (5s)
+Mar 15 17:07:11 Khadas systemd[1]: qgst-goen220.service: Deactivated successfully.
+Mar 15 17:07:11 Khadas systemd[1]: qgst-goen220.service: Consumed 7.372s CPU time.
+khadas@Khadas:~$ mc
+
+khadas@Khadas:~/qt_projects/qgst-goen220$ sudo systemctl status qgst-goen220.service 
+○ qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: inactive (dead) since Sun 2026-03-15 17:07:11 MSK; 1min 26s ago
+   Duration: 14.585s
+    Process: 2117 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+    Process: 2173 ExecStart=/home/khadas/qt_projects/qgst-goen220/qgst-goen220 (code=exited, status=0/SUCCESS)
+   Main PID: 2173 (code=exited, status=0/SUCCESS)
+        CPU: 7.372s
+
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: 2026-03-15 17:07:04.261 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01>
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: 2026-03-15 17:07:04.261 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01>
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 2/4
+Mar 15 17:07:06 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 3/4
+Mar 15 17:07:09 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 4/4
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [DEBUG] GST subsystem timeout: 14521 (void Main_app::proc_video_init_timeout())
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [DEBUG] Handling termination event, signal: -100 (void handleSignal(int))
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [WARNING] Shutdown started — arming watchdog (5s)
+Mar 15 17:07:11 Khadas systemd[1]: qgst-goen220.service: Deactivated successfully.
+Mar 15 17:07:11 Khadas systemd[1]: qgst-goen220.service: Consumed 7.372s CPU time.
+...skipping...
+○ qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: inactive (dead) since Sun 2026-03-15 17:07:11 MSK; 1min 26s ago
+   Duration: 14.585s
+    Process: 2117 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+    Process: 2173 ExecStart=/home/khadas/qt_projects/qgst-goen220/qgst-goen220 (code=exited, status=0/SUCCESS)
+   Main PID: 2173 (code=exited, status=0/SUCCESS)
+        CPU: 7.372s
+
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: 2026-03-15 17:07:04.261 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01>
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: 2026-03-15 17:07:04.261 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01>
+Mar 15 17:07:04 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 2/4
+Mar 15 17:07:06 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 3/4
+Mar 15 17:07:09 Khadas qgst-goen220[2173]: [CAM CHECK] TV attempt 4/4
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [DEBUG] GST subsystem timeout: 14521 (void Main_app::proc_video_init_timeout())
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [DEBUG] Handling termination event, signal: -100 (void handleSignal(int))
+Mar 15 17:07:11 Khadas qgst-goen220[2173]: 2026-03-15 17:07:11.401 [WARNING] Shutdown started — arming watchdog (5s)
+Mar 15 17:07:11 Khadas systemd[1]: qgst-goen220.service: Deactivated successfully.
+Mar 15 17:07:11 Khadas systemd[1]: qgst-goen220.service: Consumed 7.372s CPU time.
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+lines 1-19/19 (END)
+khadas@Khadas:~/qt_projects/qgst-goen220$ ./qgst-goen220
+2026-03-15 17:09:28.538 [DEBUG] Main thread id:  0x7fb5c67040 (Main_app::Main_app(QCoreApplication*, QObject*))
+2026-03-15 17:09:28.538 [DEBUG] "/home/khadas/qt_projects/qgst-goen220/config.ini" (void SettingsManager::loadSettings())
+2026-03-15 17:09:28.538 [DEBUG] sm->settings_store.ip_host "169.254.0.2" (Main_app::Main_app(QCoreApplication*, QObject*))
+2026-03-15 17:09:28.538 [DEBUG] GST_Wrapper::GST_Wrapper(SettingsManager*, QObject*) (GST_Wrapper::GST_Wrapper(SettingsManager*, QObject*))
+2026-03-15 17:09:28.539 [DEBUG] status bytecnt 512 (Telemetry::Telemetry())
+2026-03-15 17:09:28.539 [DEBUG] Network::Network(SettingsManager*, GST_Wrapper*, QObject*) Network (Network::Network(SettingsManager*, GST_Wrapper*, QObject*))
+[CAM CHECK] TV attempt 1/4
+2026-03-15 17:09:28.539 [DEBUG] CMD_Parser::CMD_Parser()::<lambda()> Network UDP CMD parser thread id:  0x7faa0a2c00 (CMD_Parser::CMD_Parser()::<lambda()>)
+2026-03-15 17:09:28.539 [DEBUG] ************* Network thread id: 0x7fa9892c00 Network::initSocket()::<lambda()> (Network::initSocket()::<lambda()>)
+2026-03-15 17:09:28.539 [DEBUG] MINI640_Worker::MINI640_Worker(QString, quint32, quint32, quint32, double, QObject*) OUT THREAD 0x7fb5c67040 (MINI640_Worker::MINI640_Worker(QString, quint32, quint32, quint32, double, QObject*))
+2026-03-15 17:09:28.539 [DEBUG] GSP: Init (Main_app::Main_app(QCoreApplication*, QObject*))
+2026-03-15 17:09:28.540 [DEBUG] [UDP] Listening on port 52516 (Network::initSocket()::<lambda()>)
+2026-03-15 17:09:28.540 [DEBUG] void LensJ200Worker::init() Main thread id: 0x7f9bffec00 (void LensJ200Worker::init())
+2026-03-15 17:09:28.540 [DEBUG] [TCP] Listening on port 52516 (Network::initSocket()::<lambda()>)
+2026-03-15 17:09:28.540 [DEBUG] MINI640_Worker::MINI640_Worker(QString, quint32, quint32, quint32, double, QObject*)::<lambda()> IN THREAD 0x7fa8872c00 (MINI640_Worker::MINI640_Worker(QString, quint32, quint32, quint32, double, QObject*)::<lambda()>)
+2026-03-15 17:09:28.540 [DEBUG] LensJ200Wrapper::LensJ200Wrapper(QString, quint32, QObject*)::<lambda()> Lens J200 Wrapper thread id:  0x7f9bffec00 (LensJ200Wrapper::LensJ200Wrapper(QString, quint32, QObject*)::<lambda()>)
+2026-03-15 17:09:28.540 [DEBUG] MINI640_Worker::MINI640_Worker(QString, quint32, quint32, quint32, double, QObject*)::<lambda()> MINI640 Worker thread id:  0x7fa8872c00 (MINI640_Worker::MINI640_Worker(QString, quint32, quint32, quint32, double, QObject*)::<lambda()>)
+2026-03-15 17:09:28.540 [DEBUG] LDC20I_Worker::LDC20I_Worker(QString, quint32, QObject*)::<lambda()> LDC-20I Worker thread id:  0x7fa9082c00 (LDC20I_Worker::LDC20I_Worker(QString, quint32, QObject*)::<lambda()>)
+2026-03-15 17:09:28.540 [DEBUG] LDC20I_QSerial::LDC20I_QSerial(QString, quint32, QObject*)::<lambda()> LDC-20I QSerial thread id:  0x7f9a7cec00 Port: "/dev/ttyS7" Baudrate 115200 (LDC20I_QSerial::LDC20I_QSerial(QString, quint32, QObject*)::<lambda()>)
+2026-03-15 17:09:28.540 [DEBUG] LensJ200Worker::init()::<lambda()> Lens thread started with id: 0x7f9afdec00 (LensJ200Worker::init()::<lambda()>)
+2026-03-15 17:09:28.540 [DEBUG] LDC20I_Controller::LDC20I_Controller(QString, quint32, QObject*)::<lambda()> LDC-20I QSerial thread id:  0x7f997aec00 (LDC20I_Controller::LDC20I_Controller(QString, quint32, QObject*)::<lambda()>)
+2026-03-15 17:09:28.566 [DEBUG] QList("ttyS0", "ttyS1", "ttyS3", "ttyS7", "ttyS8", "ttyS9", "ttyFIQ0") (void Main_app::initGyroPlatform())
+2026-03-15 17:09:28.566 [DEBUG] void Main_app::initGyroPlatform() **************************************************************** uartPort= "/dev/ttyS1" deviceId= 1 uartDebug= false (void Main_app::initGyroPlatform())
+2026-03-15 17:09:28.640 [DEBUG] bool LensJ200::open(QString) Open serial port: "/dev/ttyS0" (bool LensJ200::open(QString))
+2026-03-15 17:09:28.640 [DEBUG] Error opening serial port: "/dev/ttyS0" (void LensJ200Worker::onConnect(bool, QString))
+2026-03-15 17:09:28.640 [DEBUG] void LensJ200Controller::onConnected(bool) isConnected = false (void LensJ200Controller::onConnected(bool))
+2026-03-15 17:09:29.541 [DEBUG] GST PIPE STARTED (Main_app::Main_app(QCoreApplication*, QObject*)::<lambda()>)
+2026-03-15 17:09:29.541 [DEBUG] qint32 LDC20I_Controller::proc_initConnection() Thread id: 0x7fb5c67040 (qint32 LDC20I_Controller::proc_initConnection())
+2026-03-15 17:09:29.541 [DEBUG] void MINI640_Worker::proc_CtrlInitConnection() 0x7fa8872c00 (void MINI640_Worker::proc_CtrlInitConnection())
+2026-03-15 17:09:29.541 [DEBUG] qint32 MINI640_Controller::proc_initConnection() Thread id: 0x7f99fbec00 (qint32 MINI640_Controller::proc_initConnection())
+2026-03-15 17:09:29.541 [DEBUG] Camera_EV9500M_Worker::cameraInit()::<lambda()> Camera VISCA thread id: 0x7fb5c67040 (Camera_EV9500M_Worker::cameraInit()::<lambda()>)
+2026-03-15 17:09:29.541 [DEBUG] MINI640 QSerial Connect (qint32 MINI640_QSerial::initConnection())
+2026-03-15 17:09:29.541 [DEBUG] "/dev/ttyS8" 9600 (qint32 MINI640_QSerial::initConnection())
+2026-03-15 17:09:29.542 [DEBUG] Error opening serial port: "Permission error while locking the device" (qint32 MINI640_QSerial::initConnection())
+2026-03-15 17:09:29.542 [DEBUG] Segfault occurred. Signal:  11 (void handleSegfaultMain(int))
+
+khadas@Khadas:~/qt_projects/qgst-goen220$ ls /dev/tty*
+/dev/tty    /dev/tty13  /dev/tty19  /dev/tty24  /dev/tty3   /dev/tty35  /dev/tty40  /dev/tty46  /dev/tty51  /dev/tty57  /dev/tty62    /dev/ttyS0
+/dev/tty0   /dev/tty14  /dev/tty2   /dev/tty25  /dev/tty30  /dev/tty36  /dev/tty41  /dev/tty47  /dev/tty52  /dev/tty58  /dev/tty63    /dev/ttyS1
+/dev/tty1   /dev/tty15  /dev/tty20  /dev/tty26  /dev/tty31  /dev/tty37  /dev/tty42  /dev/tty48  /dev/tty53  /dev/tty59  /dev/tty7     /dev/ttyS3
+/dev/tty10  /dev/tty16  /dev/tty21  /dev/tty27  /dev/tty32  /dev/tty38  /dev/tty43  /dev/tty49  /dev/tty54  /dev/tty6   /dev/tty8     /dev/ttyS7
+/dev/tty11  /dev/tty17  /dev/tty22  /dev/tty28  /dev/tty33  /dev/tty39  /dev/tty44  /dev/tty5   /dev/tty55  /dev/tty60  /dev/tty9     /dev/ttyS8
+/dev/tty12  /dev/tty18  /dev/tty23  /dev/tty29  /dev/tty34  /dev/tty4   /dev/tty45  /dev/tty50  /dev/tty56  /dev/tty61  /dev/ttyFIQ0  /dev/ttyS9
+khadas@Khadas:~/qt_projects/qgst-goen220$ Read from remote host 192.168.1.96: Connection reset by peer
+Connection to 192.168.1.96 closed.
+client_loop: send disconnect: Broken pipe
+user@debian:~$ ssh ff2
+
+Welcome to Fenix 1.7.3 Ubuntu 24.04.2 LTS Linux 6.1.84  
+ _  ___               _             _____    _            ____  
+| |/ / |__   __ _  __| | __ _ ___  | ____|__| | __ _  ___|___ \ 
+| ' /| '_ \ / _` |/ _` |/ _` / __| |  _| / _` |/ _` |/ _ \ __) |
+| . \| | | | (_| | (_| | (_| \__ \ | |__| (_| | (_| |  __// __/ 
+|_|\_\_| |_|\__,_|\__,_|\__,_|___/ |_____\__,_|\__, |\___|_____|
+                                               |___/            
+
+ * Website:        https://www.khadas.com
+ * Documentation:  https://docs.khadas.com
+ * Forum:          https://forum.khadas.com
+
+Last login: Sun Mar 15 17:06:17 2026 from 192.168.1.108
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+● qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2026-03-15 17:05:22 MSK; 1min 58s ago
+    Process: 903 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+   Main PID: 1142 (qgst-goen220)
+        CPU: 7min 17.428s
+     CGroup: /system.slice/qgst-goen220.service
+             └─1142 /home/khadas/qt_projects/qgst-goen220/qgst-goen220
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+khadas@Khadas:~$ sudo journalctl -u qgst-goen220.service -f -b 
+^C
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+● qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2026-03-15 17:05:22 MSK; 2min 38s ago
+    Process: 903 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+   Main PID: 1142 (qgst-goen220)
+        CPU: 10min 14.780s
+     CGroup: /system.slice/qgst-goen220.service
+             └─1142 /home/khadas/qt_projects/qgst-goen220/qgst-goen220
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+khadas@Khadas:~$ sudo systemctl restart qgst-goen220.service 
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+● qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2026-03-15 17:08:33 MSK; 7s ago
+    Process: 2515 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+   Main PID: 2571 (qgst-goen220)
+        CPU: 2.190s
+     CGroup: /system.slice/qgst-goen220.service
+             ├─2571 /home/khadas/qt_projects/qgst-goen220/qgst-goen220
+             └─2583 "[v4l2-ctl]"
+
+Mar 15 17:08:38 Khadas qgst-goen220[2571]: 2026-03-15 17:08:38.366 [DEBUG] Camera connected successfully. Model: 70d (int TVCamera::connect(QString, quint32>
+Mar 15 17:08:38 Khadas qgst-goen220[2571]: 2026-03-15 17:08:38.367 [DEBUG] void Camera_EV9500M_Worker::proc_VISCA_CONNECT(QString, quint32) Camera connected>
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.450 [DEBUG] GSP:  Подключение к TTY:  "Установлено" (GyroPlatformHandler::initGyroPlatform():>
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.450 [DEBUG] GSP:  Подключение к TTY:  "Установлено" (GyroPlatformHandler::initGyroPlatform():>
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] GSP: Связь с ГироПлатформой:  "Установлена" (GyroPlatformHandler::initGyroPlatfor>
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01>
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01>
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] GSP: Связь с ГироПлатформой:  "Установлена" (GyroPlatformHandler::initGyroPlatfor>
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01>
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01>
+
+khadas@Khadas:~$ sudo journalctl -u qgst-goen220.service -f -b 
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01 01 01 00 c3 8c" (virtual void Calculator::setMode(CommandExecutor::Mode))
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] GSP: Связь с ГироПлатформой:  "Установлена" (GyroPlatformHandler::initGyroPlatform()::<lambda(bool)>)
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) OFF "aa 00 00 00 00 01 01 01 00 c4 1b" (virtual void Calculator::setMode(CommandExecutor::Mode))
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: 2026-03-15 17:08:40.453 [DEBUG] virtual void Calculator::setMode(CommandExecutor::Mode) Parkin "aa 00 00 00 00 01 01 01 00 c3 8c" (virtual void Calculator::setMode(CommandExecutor::Mode))
+Mar 15 17:08:40 Khadas qgst-goen220[2571]: [CAM CHECK] TV attempt 2/4
+Mar 15 17:08:43 Khadas qgst-goen220[2571]: [CAM CHECK] TV attempt 3/4
+Mar 15 17:08:45 Khadas qgst-goen220[2571]: [CAM CHECK] TV attempt 4/4
+Mar 15 17:08:48 Khadas qgst-goen220[2571]: [CAM CHECK] TV FAILED
+Mar 15 17:08:48 Khadas qgst-goen220[2571]: [CAM CHECK] IR attempt 1/4
+Mar 15 17:08:48 Khadas qgst-goen220[2571]: 2026-03-15 17:08:48.822 [DEBUG] EV9500M error status request (void Camera_EV9500M_Worker::timeout())
+Mar 15 17:08:51 Khadas qgst-goen220[2571]: [CAM CHECK] IR attempt 2/4
+Mar 15 17:08:54 Khadas qgst-goen220[2571]: [CAM CHECK] IR attempt 3/4
+Mar 15 17:08:56 Khadas qgst-goen220[2571]: 2026-03-15 17:08:56.830 [DEBUG] EV9500M error status request (void Camera_EV9500M_Worker::timeout())
+Mar 15 17:08:56 Khadas qgst-goen220[2571]: 2026-03-15 17:08:56.831 [DEBUG] GST subsystem timeout: 23541 (void Main_app::proc_video_init_timeout())
+Mar 15 17:08:56 Khadas qgst-goen220[2571]: 2026-03-15 17:08:56.831 [DEBUG] Handling termination event, signal: -100 (void handleSignal(int))
+Mar 15 17:08:56 Khadas qgst-goen220[2571]: 2026-03-15 17:08:56.831 [WARNING] Shutdown started — arming watchdog (5s)
+Mar 15 17:08:57 Khadas systemd[1]: qgst-goen220.service: Deactivated successfully.
+Mar 15 17:08:57 Khadas systemd[1]: qgst-goen220.service: Consumed 2.845s CPU time.
+^C
+khadas@Khadas:~$ sudo systemctl status qgst-goen220.service 
+○ qgst-goen220.service - QGST-GOEN220 Application Service
+     Loaded: loaded (/etc/systemd/system/qgst-goen220.service; enabled; preset: enabled)
+     Active: inactive (dead) since Sun 2026-03-15 17:08:57 MSK; 18s ago
+   Duration: 23.602s
+    Process: 2515 ExecStartPre=/bin/bash -c source /home/khadas/qt_projects/qgst-goen220/env_qgst.sh (code=exited, status=0/SUCCESS)
+    Process: 2571 ExecStart=/home/khadas/qt_projects/qgst-goen220/qgst-goen220 (code=exited, status=0/SUCCESS)
+   Main PID: 2571 (code=exited, status=0/SUCCESS)
+        CPU: 2.845s
+
+Mar 15 17:08:48 Khadas qgst-goen220[2571]: [CAM CHECK] IR attempt 1/4
+Mar 15 17:08:48 Khadas qgst-goen220[2571]: 2026-03-15 17:08:48.822 [DEBUG] EV9500M error status request (void Camera_EV9500M_Worker::timeout())
+Mar 15 17:08:51 Khadas qgst-goen220[2571]: [CAM CHECK] IR attempt 2/4
+Mar 15 17:08:54 Khadas qgst-goen220[2571]: [CAM CHECK] IR attempt 3/4
+Mar 15 17:08:56 Khadas qgst-goen220[2571]: 2026-03-15 17:08:56.830 [DEBUG] EV9500M error status request (void Camera_EV9500M_Worker::timeout())
+Mar 15 17:08:56 Khadas qgst-goen220[2571]: 2026-03-15 17:08:56.831 [DEBUG] GST subsystem timeout: 23541 (void Main_app::proc_video_init_timeout())
+Mar 15 17:08:56 Khadas qgst-goen220[2571]: 2026-03-15 17:08:56.831 [DEBUG] Handling termination event, signal: -100 (void handleSignal(int))
+Mar 15 17:08:56 Khadas qgst-goen220[2571]: 2026-03-15 17:08:56.831 [WARNING] Shutdown started — arming watchdog (5s)
+Mar 15 17:08:57 Khadas systemd[1]: qgst-goen220.service: Deactivated successfully.
+Mar 15 17:08:57 Khadas systemd[1]: qgst-goen220.service: Consumed 2.845s CPU time.
+khadas@Khadas:~$ 
