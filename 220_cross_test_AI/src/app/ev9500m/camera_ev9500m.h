@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QTimer>
+#include <QVector>
 #include "visca/libvisca.h"
 
 const uint8_t VISCA_POWER_ON = 2;
@@ -26,6 +27,13 @@ struct CameraStatus
     quint16 zoom_val = 0;
     quint8 awb_display_mode = 0;
 } /* struct CameraStatus */;
+
+struct CameraDiagnosticParameter
+{
+    QString name;
+    bool supported;
+    qint64 value;
+};
 
 class TVCamera : public QObject
 {
@@ -123,6 +131,9 @@ class TVCamera : public QObject
     bool getFocusValue();
     bool getZoomValue();
     bool getAWBDisplayMode();
+    QVector<CameraDiagnosticParameter> queryAdvancedParameters();
+    quint32 vendor() const;
+    quint32 model() const;
 
   protected:
     VISCAInterface_t interface;

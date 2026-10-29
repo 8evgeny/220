@@ -361,3 +361,63 @@ bool TVCamera::getAWBDisplayMode()
     uint32_t res = VISCA_get_spot_awb_display_mode(&interface, &camera, &m_status.awb_display_mode);
     return (res == VISCA_SUCCESS); // FIX
 } /* TVCamera::getAWBDisplayMode */
+
+QVector<CameraDiagnosticParameter> TVCamera::queryAdvancedParameters()
+{
+    QVector<CameraDiagnosticParameter> parameters;
+    uint8_t value8 = 0;
+    uint16_t value16 = 0;
+
+    auto query8 = [this, &parameters, &value8](const QString &name,
+                                               uint32_t (*query)(VISCAInterface_t *,
+                                                                 VISCACamera_t *, uint8_t *))
+    {
+        value8 = 0;
+        const uint32_t result = query(&interface, &camera, &value8);
+        parameters.append({name, result == VISCA_SUCCESS, value8});
+    } /* lambda */;
+    auto query16 =
+        [this, &parameters, &value16](
+            const QString &name,
+            uint32_t (*query)(VISCAInterface_t *, VISCACamera_t *, uint16_t *))
+    {
+        value16 = 0;
+        const uint32_t result = query(&interface, &camera, &value16);
+        parameters.append({name, result == VISCA_SUCCESS, value16});
+    } /* lambda */;
+
+    query8("Power", VISCA_get_power);
+    query8("Focus auto", VISCA_get_focus_auto);
+    query8("Focus mode", VISCA_get_focus_mode);
+    query8("Focus auto sense", VISCA_get_focus_auto_sense);
+    query16("Focus near limit", VISCA_get_focus_near_limit);
+    query8("White balance mode", VISCA_get_whitebal_mode);
+    query16("Red gain", VISCA_get_rgain_value);
+    query16("Blue gain", VISCA_get_bgain_value);
+    query8("Exposure mode", VISCA_get_auto_exp_mode);
+    query8("Slow shutter", VISCA_get_slow_shutter_auto);
+    query8("Digital zoom", VISCA_get_dzoom);
+    query8("Digital zoom limit", VISCA_get_dzoom_limit);
+    query16("Noise reduction", VISCA_get_nr_value);
+    query8("ICR mode", VISCA_get_icr_mode);
+    query8("Auto ICR mode", VISCA_get_auto_icr_mode);
+
+    uint8_t hlcLevel = 0;
+    uint8_t hlcMask = 0;
+    const uint32_t hlcResult =
+        VISCA_get_hlc_parameters(&interface, &camera, &hlcLevel, &hlcMask);
+    parameters.append({"HLC level", hlcResult == VISCA_SUCCESS, hlcLevel});
+    parameters.append({"HLC mask", hlcResult == VISCA_SUCCESS, hlcMask});
+
+    return parameters;
+} /* TVCamera::queryAdvancedParameters */
+
+quint32 TVCamera::vendor() const
+{
+    return camera.vendor;
+} /* TVCamera::vendor */
+
+quint32 TVCamera::model() const
+{
+    return camera.model;
+} /* TVCamera::model */

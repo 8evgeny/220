@@ -244,6 +244,26 @@ add_executable(qgst-goen220
 
 )
 
+add_executable(test_EV9500
+    test_EV9500.cpp
+    settingsmanager.cpp
+    settingsmanager.h
+    ev9500m/camera_ev9500m.cpp
+    ev9500m/camera_ev9500m.h
+    ev9500m/visca/libvisca.cpp
+    ev9500m/visca/libvisca.h
+    ev9500m/visca/libvisca_posix.cpp
+)
+
+target_include_directories(test_EV9500 PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_link_libraries(test_EV9500 PRIVATE
+    Qt6::Core
+    Qt6::SerialPort
+)
+
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${GSTREAMER_INCLUDE_DIR}
     ${GLIB_INCLUDE_DIR}
