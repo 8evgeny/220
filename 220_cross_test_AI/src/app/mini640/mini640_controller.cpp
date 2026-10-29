@@ -1098,7 +1098,7 @@ template <class CMD_TYPE_RAW> static QByteArray create_BA_CMD_Raw(const REQ_CMD 
     {
         char data_str[3];
         sprintf(data_str, "%02X", req.wr_data);
-        memcpy(cmd.data, data_str, sizeof(cmd.crc16));
+        memcpy(cmd.data, data_str, sizeof(cmd.data));
 
         // U8_CL *data_ptr= (U8_CL *)&req.wr_data;
         // cmd.data[0]= data_ptr->msb_val;
@@ -1142,6 +1142,5 @@ QByteArray MINI640_Controller::proc_MINI640_SendCMD(const REQ_CMD &req )
 
     return ba;
 }
-
 
 
