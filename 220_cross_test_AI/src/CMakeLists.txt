@@ -1,53 +1,43 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 
 project(qgst-goen220-daemon)
 
-set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/../build")
-set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "" FORCE)
+include(CTest)
+
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/../build" CACHE PATH "Installation directory" FORCE)
+endif()
 message(STATUS "Installation will go to: ${CMAKE_INSTALL_PREFIX}")
 
-set(CMAKE_AR "/usr/bin/aarch64-linux-gnu-ar")
-set(CMAKE_RANLIB "/usr/bin/aarch64-linux-gnu-ranlib")
+option(GYRO_PLATFORM_HOST_ENABLE "Build with the host gyro platform" ON)
 
-
-set( GYRO_PLATFORM_HOST_ENABLE true)
-
-
-add_compile_options(-fopenmp )
-
-find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network DBus
-
-    PATHS "${CMAKE_PREFIX_PATH}"
-    NO_DEFAULT_PATH
-    NO_CMAKE_FIND_ROOT_PATH
-)
-find_package(OpenMP REQUIRED   )
+find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network DBus)
 find_package(OpenCV REQUIRED)
 
 #set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компиляции.
 
-if( GYRO_PLATFORM_HOST_ENABLE)
-    add_compile_definitions( GYRO_PLATFORM_HOST)
-#    add_compile_definitions( GYRO_PLATFORM_USE_DEBUG_CONFIG)    #   Подмена config.ini на отладочный конфиг. Для отладки!
-    set( GYRO_PLATFORM_HOST_LIB_NAME Goen220GyroPlatformHost)
+if(GYRO_PLATFORM_HOST_ENABLE)
+    add_compile_definitions(GYRO_PLATFORM_HOST)
+#    add_compile_definitions(GYRO_PLATFORM_USE_DEBUG_CONFIG)    #   Подмена config.ini на отладочный конфиг. Для отладки!
+    set(GYRO_PLATFORM_HOST_LIB_NAME Goen220GyroPlatformHost)
 endif()
 
+add_subdirectory(app)
 
- add_subdirectory( app)
+add_subdirectory(lib/gst/gst-goen-fps-mon-plugin)
 
- add_subdirectory( lib/gst/gst-goen-fps-mon-plugin)
+add_subdirectory(lib/gst/gst-goen-ircam-plugin)
 
-
- add_subdirectory( lib/gst/gst-goen-ircam-plugin)
-
- add_subdirectory( lib/gst/gst-goen-track-plugin)
-
+add_subdirectory(lib/gst/gst-goen-track-plugin)
 
 # add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Data)
 # add_subdirectory( lib/network/Goen220DataAndServer/libGoen220Server)
 
+if(GYRO_PLATFORM_HOST_ENABLE)
+    add_subdirectory(lib/gsp/Goen220Vdb)
+    add_subdirectory(lib/gsp/Goen220GyroPlatformHost)
+endif()
 
-if( GYRO_PLATFORM_HOST_ENABLE)
-    add_subdirectory( lib/gsp/Goen220Vdb)
-    add_subdirectory( lib/gsp/Goen220GyroPlatformHost)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
 endif()
