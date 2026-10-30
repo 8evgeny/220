@@ -19,9 +19,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core LinguistTools)
 find_package(Qt6 REQUIRED COMPONENTS Network)
 find_package(Qt6 REQUIRED COMPONENTS DBus)
 
-
-
-
 # Найти OpenCL
 #find_package(OpenCL REQUIRED )
 find_package(OpenMP REQUIRED   )
@@ -49,20 +46,18 @@ endif()
 # GStreamer configuration
 find_path(GSTREAMER_INCLUDE_DIR gst/gst.h
     PATHS ${CMAKE_SYSROOT}/usr/include/gstreamer-1.0
-          ${CMAKE_SYSROOT}/usr/local/include/gstreamer-1.0
+    ${CMAKE_SYSROOT}/usr/local/include/gstreamer-1.0
     DOC "GStreamer include directory")
 
 find_path(GLIB_INCLUDE_DIR glib.h
     PATHS ${CMAKE_SYSROOT}/usr/include/glib-2.0
-          ${CMAKE_SYSROOT}/usr/local/include/glib-2.0
-          ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu/glib-2.0
+    ${CMAKE_SYSROOT}/usr/local/include/glib-2.0
+    ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu/glib-2.0
     DOC "GLIB include directory")
 
 find_path(GLIBCFG_INCLUDE_DIR glibconfig.h
     PATHS ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu/glib-2.0/include
     DOC "GLIB include directory")
-
-
 
 find_library(GSTREAMER_LIBRARY
     NAMES gstreamer-1.0
@@ -92,10 +87,9 @@ find_library(LIBDBUS_LIBRARY
 find_library(GSTVIDEO_LIBRARY
     NAMES gstvideo-1.0
     PATHS ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu
-          ${CMAKE_SYSROOT}/usr/lib
-          ${CMAKE_SYSROOT}/usr/local/lib
+    ${CMAKE_SYSROOT}/usr/lib
+    ${CMAKE_SYSROOT}/usr/local/lib
     DOC "GStreamer video library")
-
 
 if(NOT GSTREAMER_INCLUDE_DIR OR NOT GSTREAMER_LIBRARY OR NOT GSTBASE_LIBRARY OR NOT LIBGOBJECT_LIBRARY)
     message(FATAL_ERROR "GStreamer components not found")
@@ -143,7 +137,7 @@ endif() # END if(${USE_GPU} EQUAL 2)
 
 set(CMAKE_MAKE_PROGRAM "make -j${nproc}") # Число потоков компиляции.
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../../build) # директория сборки проекта
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}) # директория сборки проекта
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib_modules)
 
 set(LIST_VALID_COLOR_CHANNEL_MODES 8UC1 8UC2 8UC3 8UC4)
@@ -186,11 +180,11 @@ endif() # END if(${USE_GPU} EQUAL 1)
 if(${USE_GPU} EQUAL 2)
     set(trac_lib_name -l_trac_tmml_${USE_CORR_TYPE}_CL) # Название подключаемой библиотеки CL
     if(NOT ${USE_CORR_TYPE} EQUAL 10)
-       add_definitions(-DUSE_CL)
-       message(STATUS "--------------------------- USE_CORR_TYPE=${USE_CORR_TYPE}")
-       message(STATUS "--------------------------- USE_CL")
-       add_definitions(-Dclass_name=trac_tmml)
-       add_definitions(-Dcreate_name=create_track)
+        add_definitions(-DUSE_CL)
+        message(STATUS "--------------------------- USE_CORR_TYPE=${USE_CORR_TYPE}")
+        message(STATUS "--------------------------- USE_CL")
+        add_definitions(-Dclass_name=trac_tmml)
+        add_definitions(-Dcreate_name=create_track)
     endif() # END if(NOT ${USE_CORR_TYPE} EQUAL 10)
     if(${USE_CORR_TYPE} EQUAL 10)
         set(trac_lib_name -l_trac_tmml_RKNN) # Название подключаемой библиотеки CL
@@ -202,83 +196,71 @@ if(${USE_GPU} EQUAL 2)
     endif() # END if(${USE_CORR_TYPE} EQUAL 10)
 endif() # END if(${USE_GPU} EQUAL 2)
 
-
-
 find_package(OpenCV REQUIRED)
-
 
 find_package(Qt6 REQUIRED COMPONENTS SerialPort)
 
-
 if( GYRO_PLATFORM_HOST_ENABLE)
     set(	GYRO_PLATFORM_HANDLER_SRC
-                gpf/GyroPlatformHandler.cpp
-                gpf/GyroPlatformHandler.h
-                gpf/Pid.cpp
-                gpf/Pid.h)
+        gpf/GyroPlatformHandler.cpp
+        gpf/GyroPlatformHandler.h
+        gpf/Pid.cpp
+        gpf/Pid.h)
 endif()
 
+file(GLOB LDC20I_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_LIST_DIR}/ldc20i/*.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/ldc20i/*.h"
+)
+
+file(GLOB MINI640_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_LIST_DIR}/mini640/*.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/mini640/*.h"
+)
+
+file(GLOB EV9500M_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_LIST_DIR}/ev9500m/*.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/ev9500m/*.h"
+    "${CMAKE_CURRENT_LIST_DIR}/ev9500m/visca/*.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/ev9500m/visca/*.h"
+)
+
+file(GLOB J200_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_LIST_DIR}/j200/*.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/j200/*.h"
+)
+
+file(GLOB TRACK_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_LIST_DIR}/track/*.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/track/*.h"
+    "${CMAKE_CURRENT_LIST_DIR}/track/tracshats/*.hpp"
+)
 
 add_executable(qgst-goen220
-  main.cpp
-  cmd_parser.cpp cmd_parser.h       main_app.cpp main_app.h network.cpp network.h settingsmanager.cpp settingsmanager.h telemetry.cpp telemetry.h
-  ldc20i/ldc20i_controller.cpp ldc20i/ldc20i_controller.h ldc20i/ldc20i_qserial.cpp ldc20i/ldc20i_qserial.h ldc20i/ldc20i_worker.cpp ldc20i/ldc20i_worker.h
-
-  lib/lib_trac_tmml_8_CL.so
-
-
-  mini640/mini640_controller.cpp mini640/mini640_controller.h mini640/mini640_qserial.cpp mini640/mini640_qserial.h mini640/mini640_worker.cpp mini640/mini640_worker.h
-  ev9500m/visca/libvisca.cpp ev9500m/visca/libvisca.h ev9500m/visca/libvisca_posix.cpp ev9500m/camera_ev9500m.cpp ev9500m/camera_ev9500m.h ev9500m/camera_ev9500m_worker.cpp ev9500m/camera_ev9500m_worker.h
-  j200/lens_j200.cpp j200/lens_j200.h    j200/lens_j200_controller.cpp j200/lens_j200_controller.h
-  j200/lens_j200_wrapper.h j200/lens_j200_wrapper.cpp
-  gst_wrapper.cpp gst_wrapper.h
-  j200/lens_j200_worker.cpp j200/lens_j200_worker.h
-  #gpf/gpf_controller.cpp gpf/gpf_controller.h gpf/gpf_qserial.cpp gpf/gpf_qserial.h gpf/gpf_worker.cpp gpf/gpf_worker.h
-  # gpf/GyroPlatformHandler.cpp
-  # gpf/GyroPlatformHandler.h
-  ${GYRO_PLATFORM_HANDLER_SRC}
-  vdb_registers.h
-  track/tracker_thread.h track/tracker_thread.cpp track/trsh_wrapper.cpp track/trsh_wrapper.h
-
-  track/tracshats/tracshats.hpp  track/tracshats/trac_struct.hpp
-
-)
-
-add_executable(test_EV9500
-    test_EV9500.cpp
+    main.cpp
+    cmd_parser.cpp
+    cmd_parser.h
+    main_app.cpp
+    main_app.h
+    network.cpp
+    network.h
     settingsmanager.cpp
     settingsmanager.h
-    ev9500m/camera_ev9500m.cpp
-    ev9500m/camera_ev9500m.h
-    ev9500m/visca/libvisca.cpp
-    ev9500m/visca/libvisca.h
-    ev9500m/visca/libvisca_posix.cpp
-)
-
-target_include_directories(test_EV9500 PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}
-)
-
-target_link_libraries(test_EV9500 PRIVATE
-    Qt6::Core
-    Qt6::SerialPort
-)
-
-add_executable(test_J200
-    test_J200.cpp
-    settingsmanager.cpp
-    settingsmanager.h
-    j200/lens_j200.cpp
-    j200/lens_j200.h
-)
-
-target_include_directories(test_J200 PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}
-)
-
-target_link_libraries(test_J200 PRIVATE
-    Qt6::Core
-    Qt6::SerialPort
+    telemetry.cpp
+    telemetry.h
+    lib/lib_trac_tmml_8_CL.so
+    gst_wrapper.cpp
+    gst_wrapper.h
+    #gpf/gpf_controller.cpp gpf/gpf_controller.h gpf/gpf_qserial.cpp gpf/gpf_qserial.h gpf/gpf_worker.cpp gpf/gpf_worker.h
+    # gpf/GyroPlatformHandler.cpp
+    # gpf/GyroPlatformHandler.h
+    ${GYRO_PLATFORM_HANDLER_SRC}
+    vdb_registers.h
+    ${LDC20I_SOURCES}
+    ${MINI640_SOURCES}
+    ${EV9500M_SOURCES}
+    ${J200_SOURCES}
+    ${TRACK_SOURCES}
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -288,13 +270,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${OCV_INCLUDE_DIR}
 )
 
-file(GLOB TracShatsFiles "${CMAKE_CURRENT_LIST_DIR}/tracshats/*")
-
 #message("---CMAKE_CURRENT_LIST_DIR:" ${CMAKE_CURRENT_LIST_DIR}/lib)
 
 link_directories(${CMAKE_CURRENT_LIST_DIR}/lib)
-
-
 
 target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
     OpenMP::OpenMP_CXX
@@ -308,12 +286,11 @@ target_link_libraries(qgst-goen220 Qt${QT_VERSION_MAJOR}::Core
     ${GLIB_LIBRARY}
     ${LIBDBUS_LIBRARY}
     ${LIBGOBJECT_LIBRARY}
-    -L"${CMAKE_BINARY_DIR}/../prebuild/gst"  ${trac_lib_name}
-    -L"${CMAKE_BINARY_DIR}/../build/gst"  -lfpsmonitor
-    -L"${CMAKE_BINARY_DIR}/../build/gst"  -lgoentrack
+    -L"${GOEN220_PREBUILD_DIR}/gst"  ${trac_lib_name}
+    -L"${CMAKE_BINARY_DIR}/gst"  -lfpsmonitor
+    -L"${CMAKE_BINARY_DIR}/gst"  -lgoentrack
     ${GYRO_PLATFORM_HOST_LIB_NAME}
 )
-
 
 function(copy_qt_libraries target)
     # Get linked Qt libraries
@@ -326,8 +303,8 @@ function(copy_qt_libraries target)
             if(lib_path)
                 add_custom_command(TARGET ${target} POST_BUILD
                     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                        "${lib_path}"
-                        "${CMAKE_INSTALL_LIBDIR}/qt_libs/"
+                    "${lib_path}"
+                    "${CMAKE_INSTALL_LIBDIR}/qt_libs/"
                     COMMENT "Copying Qt library: ${lib_path}"
                 )
             endif()

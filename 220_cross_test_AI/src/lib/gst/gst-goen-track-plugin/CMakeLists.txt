@@ -272,7 +272,7 @@ target_link_libraries(${PROJECT_NAME}
     ${LIBGIO_LIBRARY}
     ${LIBDBUS_LIBRARY}
 
-   -L"${CMAKE_BINARY_DIR}/../prebuild/gst"  ${trac_lib_name}
+   -L"${GOEN220_PREBUILD_DIR}/gst"  ${trac_lib_name}
 
 
 )
@@ -283,7 +283,7 @@ message(" OCV " ${OpenCV_INCLUDE_DIRS} " LIB:"    ${OpenCV_LIBS})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../build/gst
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/gst
 )
 
 

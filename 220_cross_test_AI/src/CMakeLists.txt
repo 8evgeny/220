@@ -4,10 +4,21 @@ project(qgst-goen220-daemon)
 
 include(CTest)
 
+get_filename_component(GOEN220_SOURCE_ROOT "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+set(GOEN220_PREBUILD_DIR "${GOEN220_SOURCE_ROOT}/prebuild")
+
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/../build" CACHE PATH "Installation directory" FORCE)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE PATH "Installation directory" FORCE)
 endif()
 message(STATUS "Installation will go to: ${CMAKE_INSTALL_PREFIX}")
+
+add_custom_target(copy_prebuild_dependencies ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${GOEN220_PREBUILD_DIR}"
+        "${CMAKE_BINARY_DIR}"
+    COMMENT "Copying prebuild dependencies to build directory"
+    VERBATIM
+)
 
 option(GYRO_PLATFORM_HOST_ENABLE "Build with the host gyro platform" ON)
 
