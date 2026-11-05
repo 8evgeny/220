@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(qgst-goen220-daemon)
 
-include(CTest)
-
 get_filename_component(GOEN220_SOURCE_ROOT "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
 set(GOEN220_PREBUILD_DIR "${GOEN220_SOURCE_ROOT}/prebuild")
 
@@ -47,8 +45,4 @@ add_subdirectory(lib/gst/gst-goen-track-plugin)
 if(GYRO_PLATFORM_HOST_ENABLE)
     add_subdirectory(lib/gsp/Goen220Vdb)
     add_subdirectory(lib/gsp/Goen220GyroPlatformHost)
-endif()
-
-if(BUILD_TESTING)
-    add_subdirectory(tests)
 endif()

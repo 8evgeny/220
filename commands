@@ -46,3 +46,7 @@ gst-launch-1.0 v4l2src device=/dev/video60 ! queue ! jpegdec ! queue ! videoconv
 gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
 gst-launch-1.0 videotestsrc ! video/x-raw,width=1280,height=720 ! autovideosink
 
+paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t
+watch -n 1 -x bash -c 'paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s "$(printf "\t")" -t'
+
+sudo dmesg --follow
