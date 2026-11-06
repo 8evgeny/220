@@ -17,7 +17,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}\
     -mcpu=cortex-m4 \
     -std=gnu11 \
     -DUSE_HAL_DRIVER \
-    -DSTM32F407xx \
+    -DSTM32F431xx \
     -c \
     -Os \
     -ffunction-sections \
