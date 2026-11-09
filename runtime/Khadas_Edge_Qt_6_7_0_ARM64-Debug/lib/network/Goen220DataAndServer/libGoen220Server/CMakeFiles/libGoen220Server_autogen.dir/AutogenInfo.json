@@ -1,0 +1,167 @@
+{
+	"BUILD_DIR" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/lib/network/Goen220DataAndServer/libGoen220Server/libGoen220Server_autogen",
+	"CMAKE_BINARY_DIR" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/lib/network/Goen220DataAndServer/libGoen220Server",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server/CMakeLists.txt",
+		"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/.qtc/package-manager/auto-setup.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6Config.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6ConfigExtras.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6Targets.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6VersionlessTargets.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtFeature.cmake",
+		"/usr/share/cmake-3.28/Modules/CheckCXXCompilerFlag.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtFeatureCommon.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicAppleHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicCMakeHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicExternalProjectHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicFinalizerHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicFindPackageHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicPluginHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicTargetHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicTestHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicToolHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicWalkLibsHelpers.cmake",
+		"/usr/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6Dependencies.cmake",
+		"/CADs/Qt/6.7.0/gcc_64/lib/cmake/Qt6HostInfo/Qt6HostInfoConfig.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6Config.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6ConfigExtras.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6Targets.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6VersionlessTargets.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtFeature.cmake",
+		"/usr/share/cmake-3.28/Modules/CheckCXXCompilerFlag.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtFeatureCommon.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicAppleHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicCMakeHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicExternalProjectHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicFinalizerHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicFindPackageHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicPluginHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicTargetHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicTestHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicToolHelpers.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicWalkLibsHelpers.cmake",
+		"/usr/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake",
+		"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6Dependencies.cmake",
+		"/CADs/Qt/6.7.0/gcc_64/lib/cmake/Qt6HostInfo/Qt6HostInfoConfig.cmake"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src",
+	"DEP_FILE" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/lib/network/Goen220DataAndServer/libGoen220Server/libGoen220Server_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "libGoen220Server_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server/src/_internal/server_impl.h",
+			"MU",
+			"LT6EXEUWEU/moc_server_impl.cpp",
+			null
+		],
+		[
+			"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server/src/_internal/tcp_server.h",
+			"MU",
+			"LT6EXEUWEU/moc_tcp_server.cpp",
+			null
+		],
+		[
+			"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server/src/libgoen220_server.h",
+			"MU",
+			"UVLADIE3JM/moc_libgoen220_server.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/lib/network/Goen220DataAndServer/libGoen220Server/libGoen220Server_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/lib/network/Goen220DataAndServer/libGoen220Server/libGoen220Server_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "LIBGOEN22_SERVER_LIBRARY", "QT_CORE_LIB", "QT_NETWORK_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server/src",
+		"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Data/src",
+		"/home/projects/goen-220/qt_arm64_build/stage/include/QtCore",
+		"/home/projects/goen-220/qt_arm64_build/stage/include",
+		"/home/projects/goen-220/qt_arm64_build/stage/mkspecs/linux-g++",
+		"/home/projects/goen-220/qt_arm64_build/stage/include/QtNetwork",
+		"/usr/aarch64-linux-gnu/include/c++/11",
+		"/usr/aarch64-linux-gnu/include/c++/11/aarch64-linux-gnu",
+		"/usr/aarch64-linux-gnu/include/c++/11/backward",
+		"/usr/lib/gcc-cross/aarch64-linux-gnu/11/include",
+		"/usr/aarch64-linux-gnu/include",
+		"/home/projects/goen-220/sysroot/usr/include/aarch64-linux-gnu",
+		"/home/projects/goen-220/sysroot/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_GADGET_EXPORT",
+		"Q_ENUM_NS"
+	],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/bin/aarch64-linux-gnu-g++-11",
+		"-std=gnu++23",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/lib/network/Goen220DataAndServer/libGoen220Server/libGoen220Server_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/lib/network/Goen220DataAndServer/libGoen220Server/CMakeFiles/libGoen220Server_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/CADs/Qt/6.7.0/gcc_64/./libexec/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 7,
+	"SETTINGS_FILE" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/lib/network/Goen220DataAndServer/libGoen220Server/CMakeFiles/libGoen220Server_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server/src/_internal/server_impl.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server/src/_internal/tcp_server.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/network/Goen220DataAndServer/libGoen220Server/src/libgoen220_server.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

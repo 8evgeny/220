@@ -1,0 +1,1341 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/build/qgst-goen220"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"install",
+			"target_link_libraries",
+			"add_subdirectory",
+			"set_target_properties",
+			"include",
+			"find_package",
+			"find_dependency",
+			"_qt_internal_find_qt_dependencies",
+			"_qt_internal_find_third_party_dependencies",
+			"add_compile_options",
+			"add_definitions",
+			"add_compile_definitions",
+			"include_directories",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"app/CMakeLists.txt",
+			"CMakeLists.txt",
+			"lib/gsp/Goen220GyroPlatformHost/CMakeLists.txt",
+			"lib/gsp/Goen220Vdb/CMakeLists.txt",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6Gui/Qt6GuiVersionlessTargets.cmake",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake",
+			"/usr/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6StateMachine/Qt6StateMachineDependencies.cmake",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6StateMachine/Qt6StateMachineConfig.cmake",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/Qt6Config.cmake",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6/FindGLESv2.cmake",
+			"/home/projects/goen-220/qt_arm64_build/stage/lib/cmake/Qt6Gui/Qt6GuiDependencies.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 200,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 294,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 235,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 40,
+				"parent" : 4
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 147,
+				"parent" : 6
+			},
+			{
+				"file" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 3,
+				"line" : 168,
+				"parent" : 8
+			},
+			{
+				"command" : 6,
+				"file" : 3,
+				"line" : 46,
+				"parent" : 8
+			},
+			{
+				"file" : 10,
+				"parent" : 10
+			},
+			{
+				"command" : 6,
+				"file" : 10,
+				"line" : 167,
+				"parent" : 11
+			},
+			{
+				"file" : 9,
+				"parent" : 12
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 43,
+				"parent" : 13
+			},
+			{
+				"file" : 8,
+				"parent" : 14
+			},
+			{
+				"command" : 8,
+				"file" : 8,
+				"line" : 42,
+				"parent" : 15
+			},
+			{
+				"command" : 7,
+				"file" : 7,
+				"line" : 111,
+				"parent" : 16
+			},
+			{
+				"command" : 6,
+				"file" : 6,
+				"line" : 76,
+				"parent" : 17
+			},
+			{
+				"file" : 5,
+				"parent" : 18
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 60,
+				"parent" : 19
+			},
+			{
+				"file" : 4,
+				"parent" : 20
+			},
+			{
+				"command" : 4,
+				"file" : 4,
+				"line" : 61,
+				"parent" : 21
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 55,
+				"parent" : 19
+			},
+			{
+				"file" : 11,
+				"parent" : 23
+			},
+			{
+				"command" : 4,
+				"file" : 11,
+				"line" : 61,
+				"parent" : 24
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 159,
+				"parent" : 6
+			},
+			{
+				"command" : 6,
+				"file" : 2,
+				"line" : 47,
+				"parent" : 6
+			},
+			{
+				"file" : 10,
+				"parent" : 27
+			},
+			{
+				"command" : 6,
+				"file" : 10,
+				"line" : 167,
+				"parent" : 28
+			},
+			{
+				"file" : 9,
+				"parent" : 29
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 43,
+				"parent" : 30
+			},
+			{
+				"file" : 8,
+				"parent" : 31
+			},
+			{
+				"command" : 8,
+				"file" : 8,
+				"line" : 42,
+				"parent" : 32
+			},
+			{
+				"command" : 7,
+				"file" : 7,
+				"line" : 111,
+				"parent" : 33
+			},
+			{
+				"command" : 6,
+				"file" : 6,
+				"line" : 76,
+				"parent" : 34
+			},
+			{
+				"file" : 5,
+				"parent" : 35
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 60,
+				"parent" : 36
+			},
+			{
+				"file" : 4,
+				"parent" : 37
+			},
+			{
+				"command" : 4,
+				"file" : 4,
+				"line" : 61,
+				"parent" : 38
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 55,
+				"parent" : 36
+			},
+			{
+				"file" : 11,
+				"parent" : 40
+			},
+			{
+				"command" : 4,
+				"file" : 11,
+				"line" : 61,
+				"parent" : 41
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 43,
+				"parent" : 36
+			},
+			{
+				"file" : 13,
+				"parent" : 43
+			},
+			{
+				"command" : 9,
+				"file" : 13,
+				"line" : 33,
+				"parent" : 44
+			},
+			{
+				"command" : 7,
+				"file" : 7,
+				"line" : 36,
+				"parent" : 45
+			},
+			{
+				"command" : 6,
+				"file" : 6,
+				"line" : 76,
+				"parent" : 46
+			},
+			{
+				"file" : 12,
+				"parent" : 47
+			},
+			{
+				"command" : 2,
+				"file" : 12,
+				"line" : 84,
+				"parent" : 48
+			},
+			{
+				"command" : 10,
+				"file" : 1,
+				"line" : 16,
+				"parent" : 4
+			},
+			{
+				"command" : 11,
+				"file" : 0,
+				"line" : 138,
+				"parent" : 0
+			},
+			{
+				"command" : 12,
+				"file" : 1,
+				"line" : 30,
+				"parent" : 4
+			},
+			{
+				"command" : 11,
+				"file" : 0,
+				"line" : 171,
+				"parent" : 0
+			},
+			{
+				"command" : 11,
+				"file" : 0,
+				"line" : 174,
+				"parent" : 0
+			},
+			{
+				"command" : 11,
+				"file" : 0,
+				"line" : 175,
+				"parent" : 0
+			},
+			{
+				"command" : 13,
+				"file" : 0,
+				"line" : 120,
+				"parent" : 0
+			},
+			{
+				"command" : 14,
+				"file" : 0,
+				"line" : 220,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-DQT_QML_DEBUG -g -std=gnu++20 -fdiagnostics-color=always"
+				},
+				{
+					"backtrace" : 50,
+					"fragment" : "-fopenmp"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fopenmp"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 51,
+					"define" : "CCM_8UC3"
+				},
+				{
+					"backtrace" : 52,
+					"define" : "GYRO_PLATFORM_HOST"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_CORE_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_DBUS_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_NETWORK_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_SERIALPORT_LIB"
+				},
+				{
+					"backtrace" : 53,
+					"define" : "USE_CL"
+				},
+				{
+					"backtrace" : 54,
+					"define" : "class_name=trac_tmml"
+				},
+				{
+					"backtrace" : 55,
+					"define" : "create_name=create_track"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/app"
+				},
+				{
+					"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/app"
+				},
+				{
+					"backtrace" : 0,
+					"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/app/qgst-goen220_autogen/include"
+				},
+				{
+					"backtrace" : 56,
+					"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/app/$CMAKE_SOURCE_DIR}"
+				},
+				{
+					"backtrace" : 57,
+					"path" : "/home/projects/goen-220/sysroot/usr/include/gstreamer-1.0"
+				},
+				{
+					"backtrace" : 57,
+					"path" : "/home/projects/goen-220/sysroot/usr/include/glib-2.0"
+				},
+				{
+					"backtrace" : 57,
+					"path" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/glib-2.0/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/lib/gsp/Goen220GyroPlatformHost/include"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/projects/goen-220/qt_arm64_build/stage/include/QtCore"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/projects/goen-220/qt_arm64_build/stage/include"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/projects/goen-220/qt_arm64_build/stage/mkspecs/linux-g++"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/projects/goen-220/qt_arm64_build/stage/include/QtNetwork"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/projects/goen-220/qt_arm64_build/stage/include/QtDBus"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/projects/goen-220/qt_arm64_build/stage/include/QtSerialPort"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/projects/goen-220/sysroot/usr/include/opencv4"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					3,
+					3,
+					3
+				],
+				"standard" : "20"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				4,
+				6,
+				8,
+				10,
+				12,
+				14,
+				16,
+				19,
+				21,
+				23,
+				25,
+				27,
+				28,
+				30,
+				32,
+				34,
+				37,
+				38,
+				40,
+				42
+			],
+			"sysroot" : 
+			{
+				"path" : "/home/projects/goen-220/sysroot"
+			}
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "Goen220Vdb::@73e52c1eccf86e964046"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "Goen220GyroPlatformHost::@02af3b5a86ba2dba43e7"
+		},
+		{
+			"id" : "qgst-goen220_autogen_timestamp_deps::@5f5a17c01335469806cb"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "qgst-goen220_autogen::@5f5a17c01335469806cb"
+		}
+	],
+	"id" : "qgst-goen220::@5f5a17c01335469806cb",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "bin"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/../build"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-DQT_QML_DEBUG -g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/home/projects/goen-220/qt_arm64_build/stage/lib:",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libOpenCL.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libOpenCL.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_stitching.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_alphamat.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_aruco.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_barcode.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_bgsegm.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_bioinspired.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_ccalib.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_cvv.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_dnn_objdetect.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_dnn_superres.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_dpm.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_face.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_freetype.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_fuzzy.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_hdf.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_hfs.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_img_hash.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_intensity_transform.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_line_descriptor.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_mcc.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_quality.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_rapid.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_reg.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_rgbd.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_saliency.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_shape.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_stereo.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_structured_light.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_superres.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_surface_matching.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_tracking.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_videostab.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_viz.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_wechat_qrcode.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_xobjdetect.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_xphoto.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libgstreamer-1.0.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libglib-2.0.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libdbus-1.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libgobject-2.0.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-L\"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/../../build/gst/\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-l_trac_tmml_8_CL",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-L\"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/../../build/gst/\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lfpsmonitor",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-L\"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/../../build/gst/\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lgoentrack",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "lib/gsp/Goen220GyroPlatformHost/libGoen220GyroPlatformHost.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "/usr/lib/gcc-cross/aarch64-linux-gnu/11/libgomp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "/home/projects/goen-220/sysroot/lib/aarch64-linux-gnu/libpthread.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_highgui.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_datasets.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_plot.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_text.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_ml.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_phase_unwrapping.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_optflow.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_ximgproc.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_video.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_videoio.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_imgcodecs.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_objdetect.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_calib3d.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_dnn.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_features2d.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_flann.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_photo.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libopencv_core.so.4.6.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "lib/gsp/Goen220Vdb/libGoen220Vdb.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6Network.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6SerialPort.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 9,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6Scxml.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 9,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6StateMachine.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 22,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6Gui.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 25,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libGLESv2.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 26,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6Scxml.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 26,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6StateMachine.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 39,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6Gui.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6DBus.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/projects/goen-220/qt_arm64_build/stage/lib/libQt6Core.so.6.7.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 42,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libGLESv2.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 49,
+				"fragment" : "/home/projects/goen-220/sysroot/usr/lib/aarch64-linux-gnu/libEGL.so",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX",
+		"sysroot" : 
+		{
+			"path" : "/home/projects/goen-220/sysroot"
+		}
+	},
+	"name" : "qgst-goen220",
+	"nameOnDisk" : "qgst-goen220",
+	"paths" : 
+	{
+		"build" : "app",
+		"source" : "app"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				4,
+				6,
+				8,
+				10,
+				12,
+				14,
+				16,
+				19,
+				21,
+				23,
+				25,
+				27,
+				28,
+				30,
+				32,
+				34,
+				37,
+				38,
+				40,
+				42
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				3,
+				5,
+				7,
+				9,
+				11,
+				13,
+				15,
+				17,
+				20,
+				22,
+				24,
+				26,
+				29,
+				31,
+				33,
+				35,
+				36,
+				39,
+				41,
+				43
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				18,
+				44
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				45
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/app/qgst-goen220_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/main.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/cmd_parser.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/cmd_parser.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/main_app.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/main_app.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/network.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/network.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/settingsmanager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/settingsmanager.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/telemetry.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/telemetry.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ldc20i/ldc20i_controller.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ldc20i/ldc20i_controller.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ldc20i/ldc20i_qserial.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ldc20i/ldc20i_qserial.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ldc20i/ldc20i_worker.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ldc20i/ldc20i_worker.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/lib/lib_trac_tmml_8_CL.so",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/mini640/mini640_controller.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/mini640/mini640_controller.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/mini640/mini640_qserial.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/mini640/mini640_qserial.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/mini640/mini640_worker.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/mini640/mini640_worker.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ev9500m/visca/libvisca.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ev9500m/visca/libvisca.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ev9500m/visca/libvisca_posix.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ev9500m/camera_ev9500m.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ev9500m/camera_ev9500m.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/ev9500m/camera_ev9500m_worker.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/ev9500m/camera_ev9500m_worker.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/j200/lens_j200.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/j200/lens_j200.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/j200/lens_j200_controller.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/j200/lens_j200_controller.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/j200/lens_j200_wrapper.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/j200/lens_j200_wrapper.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/gst_wrapper.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/gst_wrapper.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/j200/lens_j200_worker.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/j200/lens_j200_worker.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "app/gpf/GyroPlatformHandler.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "app/gpf/GyroPlatformHandler.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/app/qgst-goen220_autogen/timestamp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/runtime/Khadas_Edge_Qt_6_7_0_ARM64-Debug/app/qgst-goen220_autogen/timestamp.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "EXECUTABLE"
+}

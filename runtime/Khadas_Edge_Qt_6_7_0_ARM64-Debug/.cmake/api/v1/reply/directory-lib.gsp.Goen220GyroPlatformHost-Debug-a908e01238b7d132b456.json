@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "lib/gsp/Goen220GyroPlatformHost",
+		"source" : "lib/gsp/Goen220GyroPlatformHost"
+	}
+}

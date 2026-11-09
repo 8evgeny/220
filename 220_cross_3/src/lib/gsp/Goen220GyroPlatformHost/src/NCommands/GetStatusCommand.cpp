@@ -1,0 +1,27 @@
+
+#include "GetStatusCommand.h"
+
+#include "CommandExecutor.h"
+#include "GyroPlatformProtocol.h"
+
+GetStatusCommand::GetStatusCommand(const uint8_t srcDevice, const uint8_t dstDevice,
+                                   CommandExecutor *const commandExecutor) : ReadRequestCommand(srcDevice, dstDevice, GOEN_220__GYRO_PLATFORM__CMD__STATUS, QByteArray())
+{
+
+} // GetStatusCommand::GetStatusCommand
+
+GetStatusCommand::GetStatusCommand(const QByteArray &header, CommandExecutor *const commandExecutor) : ReadRequestCommand(header, commandExecutor)
+{
+
+} // GetStatusCommand::GetStatusCommand
+
+void GetStatusCommand::execute()
+{
+    if (m_pCommandExecutor == nullptr)
+        return;
+
+    if (m_pCommandExecutor->getDeviceId() != getDstDeviceId())
+        return;
+
+    m_pCommandExecutor->getStatus();
+} // GetStatusCommand::execute

@@ -1,0 +1,45 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"lib/gst/gst-goen-fps-mon-plugin/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 109,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/build/gst/libfpsmonitor.so"
+			],
+			"targetId" : "libfpsmonitor::@d0c7915ed2d05c0b62e9",
+			"targetIndex" : 6,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "lib/gst/gst-goen-fps-mon-plugin",
+		"source" : "lib/gst/gst-goen-fps-mon-plugin"
+	}
+}

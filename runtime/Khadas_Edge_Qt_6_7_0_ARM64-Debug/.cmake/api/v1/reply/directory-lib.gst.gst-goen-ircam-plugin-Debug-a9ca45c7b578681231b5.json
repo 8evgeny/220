@@ -1,0 +1,45 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"lib/gst/gst-goen-ircam-plugin/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 155,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/build/gst/libgray16togray8.so"
+			],
+			"targetId" : "libgray16togray8::@3c9ec72b3e7d95ada48d",
+			"targetIndex" : 8,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "lib/gst/gst-goen-ircam-plugin",
+		"source" : "lib/gst/gst-goen-ircam-plugin"
+	}
+}

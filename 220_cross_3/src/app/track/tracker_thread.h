@@ -1,0 +1,112 @@
+#ifndef TRACKER_THREAD_H
+#define TRACKER_THREAD_H
+
+#include "trsh_wrapper.h"
+#include <QMutex>
+#include <QThread>
+#include <atomic>
+#include <opencv2/core.hpp>
+#include <string>
+
+// ─── Lock-free single-slot (seqlock) ─────────────────────────────
+struct FrameSlot
+{
+    std::atomic<uint64_t> seq{0};
+    cv::Mat data;
+    int channel = -1;
+
+    void write(const cv::Mat &mat, int ch)
+    {
+        uint64_t s = seq.load(std::memory_order_relaxed);
+        seq.store(s + 1, std::memory_order_release);
+        data = mat.clone();
+        channel = ch;
+        seq.store(s + 2, std::memory_order_release);
+    } // write
+
+    bool read(cv::Mat &out, int &ch)
+    {
+        uint64_t s1 = seq.load(std::memory_order_acquire);
+        if ((s1 & 1) || s1 == 0)
+            return false;
+
+        cv::Mat tmp = data.clone();
+        ch = channel;
+
+        uint64_t s2 = seq.load(std::memory_order_acquire);
+        if (s1 != s2)
+            return false;
+
+        out = std::move(tmp);
+        return true;
+    } // read
+}; // struct FrameSlot
+
+// ─── Команды трекеру ──────────────────────────────────────────────
+struct TrackerCmd
+{
+    enum Type
+    {
+        NONE,
+        SET_TARGET,
+        STOP,
+        REINIT,
+        SWITCH
+    }; // enum Type
+    Type type = NONE;
+    TrShWrapper::Rect target{};
+    std::string iniPath;
+}; // struct TrackerCmd
+class TrackerThread : public QThread
+{
+  public:
+    explicit TrackerThread(FrameSlot *slot, QObject *parent = nullptr);
+    ~TrackerThread() override;
+
+    void submitCmd(TrackerCmd cmd);
+    void setActiveChannel(int ch);
+
+    /// Немедленно обнуляет результаты (вызывается из внешнего потока).
+    /// После этого isActive()/isLockedOn() вернут false,
+    /// а objectRect()/roiRect() — пустой прямоугольник.
+    void forceResetResults();
+
+    /// Останавливает цикл run() и ждёт выхода потока.
+    /// ВАЖНО: QThread::quit() здесь не работает — у класса собственный run()-цикл
+    /// без event loop, поэтому остановка идёт флагом m_running + requestInterruption().
+    /// Возвращает true, если поток завершился за timeout_ms.
+    bool stop(int timeoutMs = 1500);
+
+    TrShWrapper::Rect objectRect() const;
+    TrShWrapper::Rect roiRect() const;
+    bool isActive() const;
+    bool isLockedOn() const;
+
+  protected:
+    void run() override;
+
+  private:
+    FrameSlot *m_slot = nullptr;
+
+    mutable QMutex m_cmdMutex;
+    TrackerCmd m_pendingCmd;
+
+    mutable QMutex m_resultMutex;
+    TrShWrapper::Rect m_obj{};
+    TrShWrapper::Rect m_roi{};
+    bool m_active = false;
+    bool m_locked = false;
+
+    std::atomic<bool> m_running{false};
+    std::atomic<int> m_activeChannel{-1};
+
+    // Размеры последнего обработанного кадра — для валидации целевого ROI
+    int m_frameWidth = 0;
+    int m_frameHeight = 0;
+
+    /// Проверяет и при необходимости корректирует rect в границы кадра.
+    /// учитывает фактор расширения ROI (roiExt) — ROI трекера шире цели.
+    /// Возвращает true, если rect допустим (после clamping).
+    bool clampTarget(TrShWrapper::Rect &rect, float roiExt) const;
+}; // class TrackerThread
+#endif // TRACKER_THREAD_H

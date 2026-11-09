@@ -1,0 +1,4 @@
+/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/../build/bin/qgst-goen220
+/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/../build/lib/libfpsmonitor.so
+/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/../build/lib/libgray16togray8.so
+/home/projects/goen-220_firefly/project/goen220_rk3588_daemon/Software/src/../build/lib/libgoentrack.so
