@@ -2071,7 +2071,7 @@ GstElement *GST_Wrapper::run_GST_TVStream(QString videoDevice, QString clientIP,
         return nullptr;
     } // if (!gst_element_link_many(src, capsfilter, queue, tee, videorate, capsfilter1, encoder, rtppay, sink, nullptr))
 
-    GstPad *ts = gst_element_get_request_pad(tee, "src_%u");
+    GstPad *ts = gst_element_request_pad_simple(tee, "src_%u");
     GstPad *qs = gst_element_get_static_pad(queue2, "sink");
     if (gst_pad_link(ts, qs) != GST_PAD_LINK_OK)
     {
@@ -2187,7 +2187,7 @@ GstElement *GST_Wrapper::run_GST_IRStreamISP(QString videoDevice, QString client
         return nullptr;
     } // if (!gst_element_link_many(src, capsfilter, queue, tee, videorate, capsfilter1, g16, capsfilter2, convert2, encoder, ...
 
-    GstPad *ts = gst_element_get_request_pad(tee, "src_%u");
+    GstPad *ts = gst_element_request_pad_simple(tee, "src_%u");
     GstPad *qs = gst_element_get_static_pad(queue2, "sink");
     if (gst_pad_link(ts, qs) != GST_PAD_LINK_OK)
     {
