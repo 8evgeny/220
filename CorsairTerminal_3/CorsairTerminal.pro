@@ -30,7 +30,7 @@ DEFINES += OMP_EN=1 OMP_THR=4
 ## vlx_stream_type_rtp_mpeg_ts
 ## vlx_stream_type_srt_mpeg_ts
 
-CONFIG += vlx_stream_type_srt_mpeg_ts
+CONFIG += vlx_stream_type_rtp_mpeg_ts
 
 ## ===========================================
 
