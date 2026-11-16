@@ -1,0 +1,240 @@
+{
+    "joysticks": [
+        {
+            "axes": [
+                {
+                    "axis": 1,
+                    "cmd": "Axis_Pitch",
+                    "deadZone": 50,
+                    "inverted": false,
+                    "sensitivity": 1,
+                    "smoothing": 0.9
+                },
+                {
+                    "axis": 0,
+                    "cmd": "Axis_Yaw",
+                    "deadZone": 50,
+                    "inverted": false,
+                    "sensitivity": 1,
+                    "smoothing": 0.9
+                },
+                {
+                    "axis": 2,
+                    "cmd": "Axis_TrackingTargetSize",
+                    "deadZone": 50,
+                    "inverted": false,
+                    "sensitivity": 1,
+                    "smoothing": 0.9
+                }
+            ],
+            "buttons": [
+                {
+                    "button": 6,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                        "Action_GspPark"
+                    ],
+                    "release": [
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": 7,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                    ],
+                    "release": [
+                    ],
+                    "toggle": true,
+                    "toggleA": [
+                        "Action_GspStabilizationOn"
+                    ],
+                    "toggleB": [
+                        "Action_GspStabilizationOff"
+                    ]
+                },
+                {
+                    "button": 8,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                        "Action_GspGotoZero"
+                    ],
+                    "release": [
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": 9,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                    ],
+                    "release": [
+                    ],
+                    "toggle": true,
+                    "toggleA": [
+                        "Action_ChannelTv"
+                    ],
+                    "toggleB": [
+                        "Action_ChannelIr"
+                    ]
+                },
+                {
+                    "button": 0,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                        "Action_LrfSingle"
+                    ],
+                    "release": [
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": 4,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                    ],
+                    "release": [
+                    ],
+                    "toggle": true,
+                    "toggleA": [
+                        "Action_LrfStart"
+                    ],
+                    "toggleB": [
+                        "Action_LrfStop"
+                    ]
+                },
+                {
+                    "button": 1,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                        "Action_TrackingOn",
+                        "Action_TrackingCapture"
+                    ],
+                    "release": [
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": 5,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                    ],
+                    "release": [
+                    ],
+                    "toggle": true,
+                    "toggleA": [
+                        "Action_LrfOn"
+                    ],
+                    "toggleB": [
+                        "Action_LrfOff"
+                    ]
+                },
+                {
+                    "button": -1,
+                    "hat": 0,
+                    "hatMask": 1,
+                    "press": [
+                        "Action_ZoomIn"
+                    ],
+                    "release": [
+                        "Action_ZoomStop"
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": -1,
+                    "hat": 0,
+                    "hatMask": 4,
+                    "press": [
+                        "Action_ZoomOut"
+                    ],
+                    "release": [
+                        "Action_FocusStop"
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": -1,
+                    "hat": 0,
+                    "hatMask": 8,
+                    "press": [
+                        "Action_FocusNear"
+                    ],
+                    "release": [
+                        "Action_FocusStop"
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": -1,
+                    "hat": 0,
+                    "hatMask": 2,
+                    "press": [
+                        "Action_FocusFar"
+                    ],
+                    "release": [
+                        "Action_FocusStop"
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                },
+                {
+                    "button": 2,
+                    "hat": -1,
+                    "hatMask": 0,
+                    "press": [
+                        "Action_TrackingOff"
+                    ],
+                    "release": [
+                    ],
+                    "toggle": false,
+                    "toggleA": [
+                    ],
+                    "toggleB": [
+                    ]
+                }
+            ],
+            "name": "Logitech Extreme 3D"
+        }
+    ],
+    "version": 1
+}

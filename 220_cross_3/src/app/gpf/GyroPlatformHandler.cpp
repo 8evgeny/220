@@ -13,7 +13,12 @@
 #include <limits>
 
 GyroPlatformHandler::GyroPlatformHandler(Goen220GyroPlatformHost *const host, QObject *parent)
-    : QObject(parent), m_pHost(host), m_zero(false), m_pohod(false), m_pilot(false), m_park(false), m_stabilization(false), m_yawAngle(0.0f), m_pitchAngle(0.0f), m_yawSpeed(0.0f), m_pitchSpeed(0.0f), m_tracking(false), m_tvFieldWGrad(0.0f), m_tvFieldHGrad(0.0f), m_enableStabAfterZero(false), m_pPidW(new Pid(0.05f, 0.0f, 0.0f)), m_pPidH(new Pid(0.025f, 0.0f, 0.0f)), m_pTimerForUpdateSpeed(new QTimer()), m_compensateGyroDrift(false), m_lockCompensateGyroDrift(false), m_yawCorr(-0.355f), m_pitchCorr(-0.530f)
+    : QObject(parent), m_pHost(host), m_zero(false), m_pohod(false), m_pilot(false), m_park(false), m_stabilization(false),
+    m_yawAngle(0.0f), m_pitchAngle(0.0f), m_yawSpeed(0.0f), m_pitchSpeed(0.0f), m_tracking(false), m_tvFieldWGrad(0.0f),
+    m_tvFieldHGrad(0.0f), m_enableStabAfterZero(false),
+    m_pPidW(new Pid(0.05f, 0.0f, 0.0f)), m_pPidH(new Pid(0.025f, 0.0f, 0.0f)),
+    m_pTimerForUpdateSpeed(new QTimer()), m_compensateGyroDrift(false), m_lockCompensateGyroDrift(false),
+    m_yawCorr(-0.355f), m_pitchCorr(-0.530f)
 {
     initGyroPlatform();
 
