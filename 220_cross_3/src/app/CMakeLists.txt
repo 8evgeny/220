@@ -212,7 +212,14 @@ if( GYRO_PLATFORM_HOST_ENABLE)
         gpf/GyroPlatformHandler.cpp
         gpf/GyroPlatformHandler.h
         gpf/Pid.cpp
-        gpf/Pid.h)
+        gpf/Pid.h
+        gpf/vdb_vrt_tracker_adapter/vdb_vrt_tracker_adapter_impl.hpp
+        gpf/vdb_vrt_tracker_adapter/vdb_vrt_tracker_adapter_impl.cpp
+        gpf/vdb_vrt_tracker_adapter/PIDCoefs.hpp
+        gpf/vdb_vrt_tracker_adapter/pid_regulator.hpp
+        gpf/vdb_vrt_tracker_adapter/pid_regulator.cpp
+        gpf/vdb_vrt_tracker_adapter/simple_exponential_filter.hpp
+        gpf/vdb_vrt_tracker_adapter/slewRatelimiter.hpp)
 endif()
 
 file(GLOB LDC20I_SOURCES CONFIGURE_DEPENDS

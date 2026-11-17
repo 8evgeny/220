@@ -32,6 +32,7 @@ GyroPlatformHandler::GyroPlatformHandler(Goen220GyroPlatformHost *const host, QO
     , m_enableStabAfterZero(false)
     , m_pPidW(new Pid(0.05f, 0.0f, 0.0f))
     , m_pPidH(new Pid(0.025f, 0.0f, 0.0f))
+    , m_trAdapt(new TrackerAdapter(coefs.getCoefs()))
     , m_pTimerForUpdateSpeed(new QTimer())
     , m_compensateGyroDrift(false)
     , m_lockCompensateGyroDrift(false)
@@ -179,8 +180,8 @@ void GyroPlatformHandler::setControlSpeed(const float z, const float x)
 
         if (m_compensateGyroDrift)
         {
-            const bool isZero = (z > -0.01f && z < 0.01f && x > -0.01f && x < 0.01f);
-            m_lockCompensateGyroDrift = !isZero;
+            const bool isZerovoid = (z > -0.01f && z < 0.01f && x > -0.01f && x < 0.01f);
+            m_lockCompensateGyroDrift = !isZerovoid;
 
             m_pHost->setControlSpeed((-x * fieldWGrad) + m_yawCorr,
                                      ( z * fieldHGrad) + m_pitchCorr);
@@ -273,6 +274,8 @@ void GyroPlatformHandler::updateTrackerObject(uint32_t cx_out, uint32_t cy_out,
     int32_t frameH = 1080;
     float fieldWGrad = 0.0f;
     float fieldHGrad = 0.0f;
+    TrackerAdapter::PldTrackerStatus trAdaptParam;
+    trAdaptParam.enableSlowdownByPrepareScore = false;
 
     switch (m_ChannelId) {
     case 0x80:  // TV
@@ -281,6 +284,7 @@ void GyroPlatformHandler::updateTrackerObject(uint32_t cx_out, uint32_t cy_out,
         { QMutexLocker lock(&m_tvFieldMutex);
             fieldWGrad = m_tvFieldWGrad;
             fieldHGrad = m_tvFieldHGrad; }
+        trAdaptParam.curChannel = Channel::TV;
         break;
     case 0x81:  // IR
         frameW = 640;
@@ -288,6 +292,7 @@ void GyroPlatformHandler::updateTrackerObject(uint32_t cx_out, uint32_t cy_out,
         { QMutexLocker lock(&m_tvFieldMutex);
             fieldWGrad = m_irFieldWGrad;
             fieldHGrad = m_irFieldHGrad; }
+        trAdaptParam.curChannel = Channel::TPV;
         break;
     default:
         return;
@@ -299,24 +304,41 @@ void GyroPlatformHandler::updateTrackerObject(uint32_t cx_out, uint32_t cy_out,
     const int32_t errorWPix = (static_cast<int32_t>(cx_out) - wCenter);
     const int32_t errorHPix = (static_cast<int32_t>(cy_out) - hCenter);
 
+    //Относительное смещение рамки от центра кадра [-1;1]
+    float errAbsX = 0 + (1 - 0)*(errorWPix - 0)/(frameW - 0);
+    float errAbsY = 0 + (1 - 0)*(errorHPix - 0)/(frameH - 0);
+    trAdaptParam.distX = errAbsX;
+    trAdaptParam.distY = errAbsY;
+    trAdaptParam.sizeX = 0;//Не используется
+    trAdaptParam.sizeY = 0;//Не используется
+    trAdaptParam.fov = fieldWGrad;
+
     // ★ СТАРОЕ масштабирование — НЕ МЕНЯТЬ ★
-    const float kW = -50.0f;
-    const float kH = -50.0f;
+    //const float kW = -50.0f;
+    //const float kH = -50.0f;
 
-    const float errorWGrad = ((fieldWGrad / frameW) * errorWPix) * kW;
-    const float errorHGrad = ((fieldHGrad / frameH) * errorHPix) * kH;
+    //const float errorWGrad = ((fieldWGrad / frameW) * errorWPix) * kW;
+    //const float errorHGrad = ((fieldHGrad / frameH) * errorHPix) * kH;
 
-    const float pidW = m_pPidW->getPidOutput(errorWGrad);
-    const float pidH = m_pPidH->getPidOutput(errorHGrad);
+    //const float pidW = m_pPidW->getPidOutput(errorWGrad);
+    //const float pidH = m_pPidH->getPidOutput(errorHGrad);
 
-    // ★ Компенсация дрейфа как bias ★
-    m_lockCompensateGyroDrift = true;
 
-    if (m_compensateGyroDrift) {
-        m_pHost->setControlSpeed(pidW + m_yawCorr, pidH + m_pitchCorr);
-    } else {
-        m_pHost->setControlSpeed(pidW, pidH);
+
+    m_trAdapt->setTrackerStatusUpdate(trAdaptParam);
+    m_trAdapt->runtime();
+    if(m_trAdapt->isNewSpeedReady()){
+        m_trAdapt->resetNewSpeedReady();
+    //m_pHost->setControlSpeed(m_trAdapt->getSpeedX(),m_trAdapt->getSpeedY());
     }
+    // ★ Компенсация дрейфа как bias ★
+    // m_lockCompensateGyroDrift = true;
+
+    // if (m_compensateGyroDrift) {
+    //     m_pHost->setControlSpeed(pidW + m_yawCorr, pidH + m_pitchCorr);
+    // } else {
+    //     m_pHost->setControlSpeed(pidW, pidH);
+    // }
 }
 
 void GyroPlatformHandler::setTvField( const float tvFieldWGrad, const float tvFieldHGrad)

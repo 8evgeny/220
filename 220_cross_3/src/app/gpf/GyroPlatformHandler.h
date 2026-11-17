@@ -7,6 +7,8 @@
 #include <QSettings>
 #include <QTimer>
 #include <QVector>
+#include "vdb_vrt_tracker_adapter/vdb_vrt_tracker_adapter_impl.hpp"
+#include "vdb_vrt_tracker_adapter/PIDCoefs.hpp"
 
 #define YAW_ACCEL_LIMIT (20.0f)
 #define PITCH_ACCEL_LIMIT (20.0f)
@@ -100,6 +102,8 @@ class GyroPlatformHandler : public QObject
 
     Pid *const m_pPidW;
     Pid *const m_pPidH;
+    pidCoefs coefs;
+    TrackerAdapter *m_trAdapt;
 
     QTimer *m_pTimerForUpdateSpeed;
 
