@@ -183,14 +183,14 @@ void GyroPlatformHandler::setControlSpeed(const float z, const float x)
             const bool isZerovoid = (z > -0.01f && z < 0.01f && x > -0.01f && x < 0.01f);
             m_lockCompensateGyroDrift = !isZerovoid;
 
-            m_pHost->setControlSpeed((-x * fieldWGrad) + m_yawCorr,
-                                     ( z * fieldHGrad) + m_pitchCorr);
+            // m_pHost->setControlSpeed((-x * fieldWGrad) + m_yawCorr,
+            //                          ( z * fieldHGrad) + m_pitchCorr);
         }
         else
         {
             m_lockCompensateGyroDrift = false;
-            m_pHost->setControlSpeed((-x * fieldWGrad),
-                                     ( z * fieldHGrad));
+            // m_pHost->setControlSpeed((-x * fieldWGrad),
+            //                          ( z * fieldHGrad));
         }
     }
     else
@@ -401,8 +401,8 @@ void GyroPlatformHandler::updateSpeed()
 
     //    qDebug() << Q_FUNC_INFO;
     //  курс (Yaw) Z, тангаж (Pitch) X
-    if( m_compensateGyroDrift)
-        m_pHost->setControlSpeed( m_yawCorr, m_pitchCorr);
+    // if( m_compensateGyroDrift)
+        // m_pHost->setControlSpeed( m_yawCorr, m_pitchCorr);
 }
 
 
