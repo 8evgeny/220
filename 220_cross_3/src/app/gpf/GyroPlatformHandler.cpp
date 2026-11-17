@@ -244,10 +244,10 @@ void GyroPlatformHandler::setActiveLockTracking(bool active, bool tracking)
             m_lockCompensateGyroDrift = false;
 
             // ПОДАЁМ КОМПЕНСАЦИЮ
-            if (m_compensateGyroDrift)
-                m_pHost->setControlSpeed(m_yawCorr, m_pitchCorr);
-            else
-                m_pHost->setControlSpeed(0.0f, 0.0f);
+            // if (m_compensateGyroDrift)
+                // m_pHost->setControlSpeed(m_yawCorr, m_pitchCorr);
+            // else
+            //     m_pHost->setControlSpeed(0.0f, 0.0f);
 
         } else {
             // Трекинг начался — блокируем updateSpeed()
