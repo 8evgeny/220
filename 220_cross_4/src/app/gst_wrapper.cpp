@@ -707,7 +707,7 @@ void GST_Wrapper::restartTransportPipeline()
     stopTransportPipeline();
 
     // Exponential backoff: 1s, 2s, 4s, 8s ... capped at 30s
-    const int delay = qMin(1000 * (1 << qMin(m_transportRestartCount, 5)),
+    const int delay = qMin(1000 * (1 << qMin(m_transportRestartCount, 10)),
                            TRANSPORT_RESTART_MAX_DELAY_MS);
     ++m_transportRestartCount;
     g_printerr("[Transport] Scheduling restart in %d ms (attempt %d)\n",
