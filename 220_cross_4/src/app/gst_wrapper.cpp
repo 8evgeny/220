@@ -1333,8 +1333,8 @@ GstElement* GST_Wrapper::run_GST_StreamMPEG_TS(
                                        cfg.cam_frame_restart_count);
     }
     if (irEn) {
-        irEn = v4l2CtlCheckWithRetries("IR", cfg.ir_cam_isp_video_device,
-                                       cfg.ir_cam_width, cfg.ir_cam_height, "NV12",
+        irEn = v4l2CtlCheckWithRetries("IR", cfg.ir_cam_video_device,
+                                       cfg.ir_cam_width*2, cfg.ir_cam_height, "GREY",
                                        cfg.ir_cam_first_frame_timeout_ms,
                                        cfg.cam_frame_retry_timeout_ms,
                                        cfg.cam_frame_restart_count);
