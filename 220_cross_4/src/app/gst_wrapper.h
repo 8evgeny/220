@@ -40,6 +40,16 @@ public:
     // пишется из worker-потока — поэтому флаг атомарный.
     bool isSyntheticVideoMode() const { return m_syntheticVideo.load(std::memory_order_relaxed); }
 
+    // Идёт первичное определение доступных камер (рестарт ISP + v4l2-ctl с таймаутом
+    // до 7 с и повторами). Стартовый watchdog Main_app не должен завершать процесс
+    // в этот период: сервис всё равно поднимется на доступной камере(ах).
+    bool isStartupInProgress() const { return m_startupInProgress.load(std::memory_order_relaxed); }
+
+    // Worker-поток стартует явно, после того как Main_app подключил sig_STREAM_RDY.
+    // Иначе первый ready-сигнал из gst_PipelineInit() излучается без получателей и
+    // теряется, из-за чего watchdog обрывает запуск во время проверки камер.
+    void startWorker();
+
 signals:
     void sig_STREAM_RDY();
     // MPEG-TS пайп поднят с РЕАЛЬНОЙ TV-камерой (ветка не videotestsrc). Main_app
@@ -109,6 +119,7 @@ private:
     bool m_tvUseTestSrc    = false;
     bool m_irUseTestSrc    = false;
     std::atomic<bool> m_syntheticVideo{false};  // обе ветки на videotestsrc (камеры недоступны)
+    std::atomic<bool> m_startupInProgress{true}; // пока идёт рестарт ISP + проверка камер
     bool m_IsActive_MPEG_TS = false;
     bool m_IsActiveTV       = false;
     bool m_IsActiveIR       = false;

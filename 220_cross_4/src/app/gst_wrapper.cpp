@@ -138,8 +138,18 @@ GST_Wrapper::GST_Wrapper(SettingsManager *sm, QObject *parent)
     QObject::connect(thread, &QThread::finished, this, &GST_Wrapper::proc_Thread_Finished);
 
     moveToThread(thread);
-    thread->start();
+    // ВАЖНО: поток стартует не здесь, а через startWorker() — после того как Main_app
+    // подключил sig_STREAM_RDY. Первый emit в gst_PipelineInit() делается сразу при
+    // старте потока; при старом порядке он уходил в никуда (QueuedConnection без
+    // получателей), и watchdog видеоинициализации убивал сервис, пока шла проверка
+    // отсутствующей камеры (7 с + повторы), хотя вторая камера была исправна.
     gst_wrapper_inst = this;
+}
+
+void GST_Wrapper::startWorker()
+{
+    if (thread && !thread->isRunning())
+        thread->start();
 }
 
 // Остановка потока трекера — единая точка. quit() не используется: у TrackerThread
@@ -707,7 +717,7 @@ void GST_Wrapper::restartTransportPipeline()
     stopTransportPipeline();
 
     // Exponential backoff: 1s, 2s, 4s, 8s ... capped at 30s
-    const int delay = qMin(1000 * (1 << qMin(m_transportRestartCount, 10)),
+    const int delay = qMin(1000 * (1 << qMin(m_transportRestartCount, 5)),
                            TRANSPORT_RESTART_MAX_DELAY_MS);
     ++m_transportRestartCount;
     g_printerr("[Transport] Scheduling restart in %d ms (attempt %d)\n",
@@ -1000,6 +1010,11 @@ void GST_Wrapper::gst_PipelineInit()
         gst_StartIRPipeline();
     }
     emit sig_STREAM_RDY();
+
+    // Проверка камер завершена: дальше сервис работает на доступной(ых) камере(ах).
+    // Снимаем «стартовый» режим, чтобы настоящий зависший пайп всё ещё отслеживался
+    // watchdog'ом Main_app.
+    m_startupInProgress.store(false, std::memory_order_relaxed);
 }
 
 void GST_Wrapper::serviceIspCtrl(const char* s_action = "restart")

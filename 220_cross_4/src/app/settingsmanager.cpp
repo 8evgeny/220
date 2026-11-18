@@ -228,8 +228,11 @@ void SettingsManager::writeAllSettings()
     writeSetting("Network.IP_Edge2",          settings_store.ip_dev);
     writeSetting("Network.IP_HostPC",         settings_store.ip_host);
     writeSetting("Network.IP_Telemetry",      settings_store.ip_telemetry);
-    writeSetting("Network.UDP_Port_Edge2",    settings_store.udp_port_dev);
-    writeSetting("Network.UDP_Port_HostPC",   settings_store.udp_port_host);
+    // ВАЖНО: ключи соответствуют loadSettings():
+    //   UDP_Port_Edge2 ↔ udp_port_host, UDP_Port_HostPC ↔ udp_port_dev.
+    // Ранее стояла перестановка — writeAllSettings() менял порты местами.
+    writeSetting("Network.UDP_Port_Edge2",    settings_store.udp_port_host);
+    writeSetting("Network.UDP_Port_HostPC",   settings_store.udp_port_dev);
 
     // --- MPEG-TS general ---
     writeSetting("MPEG-TS.Enable",            settings_store.mpeg_ts_en);
@@ -244,7 +247,8 @@ void SettingsManager::writeAllSettings()
     writeSetting("MPEG-TS.SRT.TS_Packet_Count",   settings_store.mpeg_ts_srt_ts_packet_count);
 
     // --- MPEG-TS SRT FEC ---
-    writeSetting("1",       settings_store.mpeg_ts_srt_fec_enabled);
+    // Исправлен ключ: было writeSetting("1", …) — Enabled не сохранялся.
+    writeSetting("MPEG-TS.SRT.FEC.Enabled",   settings_store.mpeg_ts_srt_fec_enabled);
     writeSetting("MPEG-TS.SRT.FEC.Cols",          settings_store.mpeg_ts_srt_fec_cols);
     writeSetting("MPEG-TS.SRT.FEC.Rows",          settings_store.mpeg_ts_srt_fec_rows);
     writeSetting("MPEG-TS.SRT.FEC.Layout",        settings_store.mpeg_ts_srt_fec_layout);

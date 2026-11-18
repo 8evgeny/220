@@ -286,6 +286,13 @@ Main_app::Main_app(QCoreApplication *app, QObject *parent)
    connect(gst_wrp, &GST_Wrapper::sig_rdyActiveLockTracking, net_conn, &Network::procUpdateActiveLockTracking , Qt::QueuedConnection);
    connect(gst_wrp, &GST_Wrapper::sig_rdyOutObject, net_conn, &Network::procUpdateTrackerObject , Qt::QueuedConnection);
 
+   // Стартуем GST только теперь, когда sig_STREAM_RDY уже имеет получателей.
+   // Раньше worker стартовал в конструкторе GST_Wrapper и первый ready-сигнал
+   // терялся; при отсутствии одной камеры проверка v4l2-ctl (7 с + повторы)
+   // затягивала запуск и video_init_timer завершал процесс вместо запуска
+   // с доступной камерой.
+   gst_wrp->startWorker();
+
    connect(this, &Main_app::sig_GST_StopCapture , gst_wrp, &GST_Wrapper::proc_stopCapture);
 
     // ─── EV9500M (UART-контроллер TV-камеры) ───────────────────────────────
@@ -636,6 +643,14 @@ void Main_app::proc_video_init_timeout()
     video_init_timer.stop();
 
     qDebug() << "GST subsystem timeout:" << QDateTime::currentMSecsSinceEpoch()-starttime;
+
+    // Первичный запуск ещё идёт (рестарт ISP + проверка v4l2-ctl с таймаутом 7 с
+    // и повторами). Это не сбой: сервис поднимется на доступной камере(ах), просто
+    // чуть позже. Завершать процесс из-за медленной проверки нельзя.
+    if (gst_wrp && gst_wrp->isStartupInProgress()) {
+        qWarning() << "[GST] video_init timeout IGNORED: camera detection still in progress";
+        return;
+    }
 
     // Синтетический режим: реальные камеры недоступны, обе ветки encode подняты
     // на videotestsrc — видеотракт полностью рабочий, завершать процесс по watchdog
