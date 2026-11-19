@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorSession>
-<!-- Written by QtCreator 21.0.82, 2026-10-13T07:10:19. -->
+<!-- Written by QtCreator 21.0.82, 2026-10-28T18:29:05. -->
 <qtcreator>
  <data>
   <variable>AutoTest.MessageFilter</variable>
   <valuelist type="QVariantList">
-   <value type="int">0</value>
-   <value type="int">9</value>
-   <value type="int">15</value>
-   <value type="int">21</value>
-   <value type="int">12</value>
+   <value type="int">16</value>
+   <value type="int">22</value>
    <value type="int">4</value>
    <value type="int">7</value>
-   <value type="int">20</value>
-   <value type="int">14</value>
-   <value type="int">10</value>
-   <value type="int">13</value>
-   <value type="int">1</value>
-   <value type="int">5</value>
-   <value type="int">16</value>
-   <value type="int">2</value>
-   <value type="int">22</value>
-   <value type="int">8</value>
-   <value type="int">3</value>
-   <value type="int">11</value>
+   <value type="int">12</value>
+   <value type="int">0</value>
    <value type="int">6</value>
+   <value type="int">11</value>
+   <value type="int">15</value>
+   <value type="int">2</value>
+   <value type="int">14</value>
+   <value type="int">5</value>
+   <value type="int">13</value>
+   <value type="int">3</value>
+   <value type="int">20</value>
+   <value type="int">1</value>
+   <value type="int">21</value>
+   <value type="int">8</value>
+   <value type="int">10</value>
+   <value type="int">9</value>
   </valuelist>
  </data>
  <data>
@@ -45,7 +45,7 @@
  </data>
  <data>
   <variable>EditorSettings</variable>
-  <value type="QByteArray">AAAAD0VkaXRvck1hbmFnZXJWNwAAAAEAAABsAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AdABlAHMAdABfAGwAZABjADIAMABfAHMAaQBtAHAAbABlAC8AbQBhAGkAbgAuAGMAcABwAAAADAAAAAAgAAAAAgAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABsAAAAAACWOjgAAAAAAAAAJAAAABWVtcHR5AAAAAAAAAAA=</value>
+  <value type="QByteArray">AAAAD0VkaXRvck1hbmFnZXJWNwAAAAEAAABsAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AdABlAHMAdABfAGwAZABjADIAMABfAHMAaQBtAHAAbABlAC8AbQBhAGkAbgAuAGMAcABwAAAADAAAAAAgAAAAAgAADOkAAAAAAAAAAQAAAAAAAAAAAAAAjwAAAK4AAAAAACWOngAAAAEAAABsAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AdABlAHMAdABfAGwAZABjADIAMABfAHMAaQBtAHAAbABlAC8AbQBhAGkAbgAuAGMAcABwAAAAEABtAGEAaQBuAC4AYwBwAHAAAAATQ3BwRWRpdG9yLkMrK0VkaXRvcgAAAAH2AAAADWN1cnJlbnRlZGl0b3IAAABsAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AdABlAHMAdABfAGwAZABjADIAMABfAHMAaQBtAHAAbABlAC8AbQBhAGkAbgAuAGMAcABwAAAAJgBDAHAAcABFAGQAaQB0AG8AcgAuAEMAKwArAEUAZABpAHQAbwByAAAAIAAAAAIAAAzpAAAAAAAAAAEAAAAAAAAAAAAAAI8AAACuAAAAAQAAAKsAAABsAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AdABlAHMAdABfAGwAZABjADIAMABfAHMAaQBtAHAAbABlAC8AbQBhAGkAbgAuAGMAcABwAAAAE0NwcEVkaXRvci5DKytFZGl0b3IAAAAgAAAAAgAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAB8AAAABAAAAbAAvAG0AZQBkAGkAYQAvAHUAcwBlAHIALwBXAE8AUgBLAC8ARwBpAHQAaAB1AGIALwAyADIAMAAvAHQAZQBzAHQAXwBsAGQAYwAyADAAXwBzAGkAbQBwAGwAZQAvAG0AYQBpAG4ALgBjAHAAcAAAAAAAAAAA</value>
  </data>
  <data>
   <variable>ProjectDependencies</variable>
@@ -67,7 +67,7 @@
  </data>
  <data>
   <variable>value-ActiveMode</variable>
-  <value type="QString">Project</value>
+  <value type="QString">Edit</value>
  </data>
  <data>
   <variable>value-Breakpoints</variable>
@@ -137,8 +137,8 @@
   <valuelist type="QVariantList">
    <valuelist type="QVariantList">
     <value type="QString">/media/user/WORK/Github/220/test_ldc20_simple</value>
-    <value type="int">200000</value>
-    <value type="QString">LdcLaserDriverProject</value>
+    <value type="int">200005</value>
+    <value type="QString">Source Files</value>
    </valuelist>
    <valuelist type="QVariantList">
     <value type="QString">/media/user/WORK/Github/220/test_ldc20_simple</value>
@@ -147,8 +147,8 @@
    </valuelist>
    <valuelist type="QVariantList">
     <value type="QString">/media/user/WORK/Github/220/test_ldc20_simple</value>
-    <value type="int">200005</value>
-    <value type="QString">Source Files</value>
+    <value type="int">200000</value>
+    <value type="QString">LdcLaserDriverProject</value>
    </valuelist>
   </valuelist>
  </data>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QtCreatorSession>
+<!-- Written by QtCreator 21.0.82, 2026-11-11T12:19:26. -->
+<qtcreator>
+ <data>
+  <variable>AutoTest.MessageFilter</variable>
+  <valuelist type="QVariantList">
+   <value type="int">9</value>
+   <value type="int">13</value>
+   <value type="int">0</value>
+   <value type="int">10</value>
+   <value type="int">8</value>
+   <value type="int">12</value>
+   <value type="int">7</value>
+   <value type="int">6</value>
+   <value type="int">14</value>
+   <value type="int">16</value>
+   <value type="int">15</value>
+   <value type="int">22</value>
+   <value type="int">20</value>
+   <value type="int">3</value>
+   <value type="int">5</value>
+   <value type="int">21</value>
+   <value type="int">2</value>
+   <value type="int">11</value>
+   <value type="int">1</value>
+   <value type="int">4</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>AutoTest.ShowDurations</variable>
+  <value type="bool">true</value>
+ </data>
+ <data>
+  <variable>CascadeSetActive</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>Color</variable>
+  <value type="QString">#666666</value>
+ </data>
+ <data>
+  <variable>DeployProjectDependencies</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>EditorSettings</variable>
+  <value type="QByteArray">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LwAyADIAMAAvAEMAbwByAHMAYQBpAHIAVABlAHIAbQBpAG4AYQBsAF8AMgAvAGIAdQBpAGwAZABfAGMAbwB1AG4AdABlAHIALgB0AHgAdAAAACIAYgB1AGkAbABkAF8AYwBvAHUAbgB0AGUAcgAuAHQAeAB0AAAAFENvcmUuUGxhaW5UZXh0RWRpdG9yAAAAAHwALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbABfADIALwBiAHUAaQBsAGQAXwBuAHUAbQBiAGUAcgAuAHQAeAB0AAAAIABiAHUAaQBsAGQAXwBuAHUAbQBiAGUAcgAuAHQAeAB0AAAAFENvcmUuUGxhaW5UZXh0RWRpdG9yAAAAAIIALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbABfADIALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbAAuAHAAcgBvAAAAJgBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbAAuAHAAcgBvAAAAEVF0NC5wcm9GaWxlRWRpdG9yAAAAANQAZABvAGMAawBlAHIAOgAvAC8AYgB1AGkAbABkAF8AYwBvAHIAcwBhAGkAcgAuAGwAYQB0AGUAcwB0AC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AQwBvAHIAcwBhAGkAcgBUAGUAcgBtAGkAbgBhAGwAXwAyAC8AbQBvAGQAdQBsAGUAcwAvAGUAdABoAC8AZQB0AGgALwBlAHQAaABjAG8AbgB0AHIAbwBsAGwAZQByAC4AaAAAAB4AZQB0AGgAYwBvAG4AdAByAG8AbABsAGUAcgAuAGgAAAATQ3BwRWRpdG9yLkMrK0VkaXRvcgAAAAD+AGQAbwBjAGsAZQByADoALwAvAGIAdQBpAGwAZABfAGMAbwByAHMAYQBpAHIALgBsAGEAdABlAHMAdAAvAG0AZQBkAGkAYQAvAHUAcwBlAHIALwBXAE8AUgBLAC8ARwBpAHQAaAB1AGIALwAyADIAMAAvAEMAbwByAHMAYQBpAHIAVABlAHIAbQBpAG4AYQBsAF8AMgAvAHMAcgBjAC8AZABlAHYAaQBjAGUAXwBwAGEAcgB0AHMALwB2AGwAeAAvAHYAbAB4AF8AbQBlAGQAaQBhAC8AdgBsAHgAXwBhAHYAXwBkAGEAdABhAF8AbQBhAG4AYQBnAGUAcgAuAGgAAAAqAHYAbAB4AF8AYQB2AF8AZABhAHQAYQBfAG0AYQBuAGEAZwBlAHIALgBoAAAAE0NwcEVkaXRvci5DKytFZGl0b3IAAAAA9ABkAG8AYwBrAGUAcgA6AC8ALwBiAHUAaQBsAGQAXwBjAG8AcgBzAGEAaQByAC4AbABhAHQAZQBzAHQALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbABfADIALwBzAHIAYwAvAGQAZQB2AGkAYwBlAF8AcABhAHIAdABzAC8AdgBsAHgALwB2AGwAeABfAG0AZQBkAGkAYQAvAHYAbAB4AF8AYQB2AF8AZABlAGMAbwBkAGUAcgAuAGgAAAAgAHYAbAB4AF8AYQB2AF8AZABlAGMAbwBkAGUAcgAuAGgAAAATQ3BwRWRpdG9yLkMrK0VkaXRvcgAAAAD6AGQAbwBjAGsAZQByADoALwAvAGIAdQBpAGwAZABfAGMAbwByAHMAYQBpAHIALgBsAGEAdABlAHMAdAAvAG0AZQBkAGkAYQAvAHUAcwBlAHIALwBXAE8AUgBLAC8ARwBpAHQAaAB1AGIALwAyADIAMAAvAEMAbwByAHMAYQBpAHIAVABlAHIAbQBpAG4AYQBsAF8AMgAvAHMAcgBjAC8AZABlAHYAaQBjAGUAXwBwAGEAcgB0AHMALwB2AGwAeAAvAHYAbAB4AF8AbQBlAGQAaQBhAC8AdgBsAHgAXwBhAHYAXwBpAG4AcAB1AHQAXwBkAGEAdABhAC4AaAAAACYAdgBsAHgAXwBhAHYAXwBpAG4AcAB1AHQAXwBkAGEAdABhAC4AaAAAABNDcHBFZGl0b3IuQysrRWRpdG9yAAAAAQAAZABvAGMAawBlAHIAOgAvAC8AYgB1AGkAbABkAF8AYwBvAHIAcwBhAGkAcgAuAGwAYQB0AGUAcwB0AC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AQwBvAHIAcwBhAGkAcgBUAGUAcgBtAGkAbgBhAGwAXwAyAC8AcwByAGMALwBkAGUAdgBpAGMAZQBfAHAAYQByAHQAcwAvAHYAbAB4AC8AdgBsAHgAXwBtAGUAZABpAGEALwB2AGwAeABfAGEAdgBfAGkAbgBwAHUAdABfAGQAZQBtAHUAeABlAHIALgBoAAAALAB2AGwAeABfAGEAdgBfAGkAbgBwAHUAdABfAGQAZQBtAHUAeABlAHIALgBoAAAAE0NwcEVkaXRvci5DKytFZGl0b3IAAAAA7ABkAG8AYwBrAGUAcgA6AC8ALwBiAHUAaQBsAGQAXwBjAG8AcgBzAGEAaQByAC4AbABhAHQAZQBzAHQALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbABfADIALwBzAHIAYwAvAGQAZQB2AGkAYwBlAF8AcABhAHIAdABzAC8AdgBsAHgALwB2AGwAeABfAHMAdAByAGUAYQBtAF8AYwBoAGEAbgBuAGUAbAAuAGMAcABwAAAALAB2AGwAeABfAHMAdAByAGUAYQBtAF8AYwBoAGEAbgBuAGUAbAAuAGMAcABwAAAAE0NwcEVkaXRvci5DKytFZGl0b3IAAAAA6ABkAG8AYwBrAGUAcgA6AC8ALwBiAHUAaQBsAGQAXwBjAG8AcgBzAGEAaQByAC4AbABhAHQAZQBzAHQALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbABfADIALwBzAHIAYwAvAGQAZQB2AGkAYwBlAF8AcABhAHIAdABzAC8AdgBsAHgALwB2AGwAeABfAHMAdAByAGUAYQBtAF8AYwBoAGEAbgBuAGUAbAAuAGgAAAAoAHYAbAB4AF8AcwB0AHIAZQBhAG0AXwBjAGgAYQBuAG4AZQBsAC4AaAAAABNDcHBFZGl0b3IuQysrRWRpdG9yAAAAAPIAZABvAGMAawBlAHIAOgAvAC8AYgB1AGkAbABkAF8AYwBvAHIAcwBhAGkAcgAuAGwAYQB0AGUAcwB0AC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AQwBvAHIAcwBhAGkAcgBUAGUAcgBtAGkAbgBhAGwAXwAyAC8AcwByAGMALwBkAGUAdgBpAGMAZQBfAHAAYQByAHQAcwAvAHYAbAB4AC8AdgBsAHgAXwB0AGUAbABlAG0AZQB0AHIAeQBfAGMAaABhAG4AbgBlAGwALgBjAHAAcAAAADIAdgBsAHgAXwB0AGUAbABlAG0AZQB0AHIAeQBfAGMAaABhAG4AbgBlAGwALgBjAHAAcAAAABNDcHBFZGl0b3IuQysrRWRpdG9yAAAAAjIAAAANY3VycmVudGVkaXRvcgAAAIIALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbABfADIALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbAAuAHAAcgBvAAAAIgBRAHQANAAuAHAAcgBvAEYAaQBsAGUARQBkAGkAdABvAHIAAAAgAAAAAgAAAAAAAAAAAAAAYwAAABEAAAAAAAAAAAAAAC0AAAABAAAAvwAAAIIALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbABfADIALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbAAuAHAAcgBvAAAAEVF0NC5wcm9GaWxlRWRpdG9yAAAAIAAAAAIAAAAAAAAAAAAAAGMAAAARAAAAAAAAAAAAAAAtAAAAAQAAAIIALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbABfADIALwBDAG8AcgBzAGEAaQByAFQAZQByAG0AaQBuAGEAbAAuAHAAcgBvAAAAAAAAAAA=</value>
+ </data>
+ <data>
+  <variable>ProjectDependencies</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>ProjectList</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/CorsairTerminal.pro</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>Single Project/ProjectPath</variable>
+  <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/CorsairTerminal.pro</value>
+ </data>
+ <data>
+  <variable>StartupProject</variable>
+  <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/CorsairTerminal.pro</value>
+ </data>
+ <data>
+  <variable>value-ActiveMode</variable>
+  <value type="QString">Edit</value>
+ </data>
+ <data>
+  <variable>value-Bookmarks</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">:docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/src/device_parts/vlx/vlx_telemetry_channel.cpp:56	</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>value-Breakpoints</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>value-DefaultFormats</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>value-Find</variable>
+  <valuemap type="QVariantMap">
+   <valuemap type="QVariantMap" key="AdvancedSearch">
+    <value type="QString" key="CurrentFilter">All Projects</value>
+    <valuemap type="QVariantMap" key="Files on Disk">
+     <value type="bool" key="GitGrepRecurse">false</value>
+    </valuemap>
+   </valuemap>
+   <valuemap type="QVariantMap" key="FindCompletions">
+    <valuelist type="QVariantList" key="Flags">
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">0</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">0</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+     <value type="int">64</value>
+    </valuelist>
+    <valuelist type="QVariantList" key="Text">
+     <value type="QString">MPEG-TS</value>
+     <value type="QString">ir_calib</value>
+     <value type="QString">ir_cam_enc_target_bps</value>
+     <value type="QString">g_printerr</value>
+     <value type="QString">pipeline</value>
+     <value type="QString">return pipeline</value>
+     <value type="QString">PIPELINE:</value>
+     <value type="QString">PIPELINE</value>
+     <value type="QString">mpeg_ts_use_srt</value>
+     <value type="QString">TVCam.TV_UART_Baudrate</value>
+     <value type="QString">settings_file_name</value>
+     <value type="QString">iniPath</value>
+     <value type="QString">class_init</value>
+     <value type="QString">gst_readKBTablesFromFile</value>
+     <value type="QString">kTableFile</value>
+     <value type="QString">frameT2File</value>
+     <value type="QString">frameT1File</value>
+     <value type="QString">bpTableFile</value>
+     <value type="QString">bTableFile</value>
+     <value type="QString">/home/khadas</value>
+     <value type="QString">Invalid address</value>
+     <value type="QString">arm64_toolchain.cmake</value>
+     <value type="QString">LFR_POWER_ON_PL</value>
+     <value type="QString">[Главный поток] Лог обновляется в фоне. Найдено целе</value>
+     <value type="QString">sig_LDC_CMD</value>
+     <value type="QString">send_LDC_State</value>
+     <value type="QString">ldc_worker</value>
+     <value type="QString">LDC20I.UART_Device</value>
+     <value type="QString">ldc_uart_port</value>
+     <value type="QString">trac_tmml</value>
+     <value type="QString">trak_tmml</value>
+     <value type="QString">prebuild</value>
+     <value type="QString">tmml</value>
+     <value type="QString">/media/user/WORK/Github/220/test_ldc20/src</value>
+     <value type="QString">qgst-goen220</value>
+     <value type="QString">qgst-goen220-daemon</value>
+     <value type="QString">LDC20I_QSerial</value>
+     <value type="QString">rxRawDataSerialPortText</value>
+     <value type="QString">Goen220GyroPlatformHost</value>
+     <value type="QString">sig_VISCA_CONNECT</value>
+     <value type="QString">comInitConnection</value>
+     <value type="QString">encoder</value>
+     <value type="QString">player</value>
+     <value type="QString">Goen220Vdb</value>
+     <value type="QString">CMD_Parser::CMD_Parser()</value>
+    </valuelist>
+   </valuemap>
+  </valuemap>
+ </data>
+ <data>
+  <variable>value-IndividualFormatTypes</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>value-IndividualFormats</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>value-ProjectTree.ExpandData</variable>
+  <valuelist type="QVariantList">
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/build_counter.pri</value>
+    <value type="int">400000</value>
+    <value type="QString">build_counter</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/media/user/WORK/Github/220/CorsairTerminal_2/src/device_parts/vlx</value>
+    <value type="int">200000</value>
+    <value type="QString">vlx</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/modules/QMV</value>
+    <value type="int">299999</value>
+    <value type="QString">Sources</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/media/user/WORK/Github/220/CorsairTerminal_2/src/device_parts/vlx/vlx_media</value>
+    <value type="int">200000</value>
+    <value type="QString">vlx_media</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/media/user/WORK/Github/220/CorsairTerminal_2/src/device_parts</value>
+    <value type="int">200000</value>
+    <value type="QString">device_parts</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/resource/corsairterminal_resources.qrc/</value>
+    <value type="int">200000</value>
+    <value type="QString">/</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/media/user/WORK/Github/220/CorsairTerminal_2/src</value>
+    <value type="int">200000</value>
+    <value type="QString">src</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2</value>
+    <value type="int">299999</value>
+    <value type="QString">Sources</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2</value>
+    <value type="int">200000</value>
+    <value type="QString">CorsairTerminal</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/modules/eth/eth</value>
+    <value type="int">200000</value>
+    <value type="QString">eth</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/modules/eth</value>
+    <value type="int">300000</value>
+    <value type="QString">Headers</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/modules/QMV/qmv/property</value>
+    <value type="int">200000</value>
+    <value type="QString">property</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/resource/docs</value>
+    <value type="int">200000</value>
+    <value type="QString">docs</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/media/user/WORK/Github/220/CorsairTerminal_2/src/tools/video</value>
+    <value type="int">200000</value>
+    <value type="QString">video</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2</value>
+    <value type="int">300000</value>
+    <value type="QString">Headers</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/modules/eth/ETH.pri</value>
+    <value type="int">400000</value>
+    <value type="QString">ETH</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2</value>
+    <value type="int">299994</value>
+    <value type="QString">Other files</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/media/user/WORK/Github/220/CorsairTerminal_2</value>
+    <value type="int">200000</value>
+    <value type="QString">CorsairTerminal_2</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/modules/QMV/qmv</value>
+    <value type="int">200000</value>
+    <value type="QString">qmv</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">docker://build_corsair.latest/media/user/WORK/Github/220/CorsairTerminal_2/modules/QMV/QMV.pri</value>
+    <value type="int">400000</value>
+    <value type="QString">QMV</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/media/user/WORK/Github/220/CorsairTerminal_2/src/vlx_input_control</value>
+    <value type="int">200000</value>
+    <value type="QString">vlx_input_control</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_3</value>
+    <value type="int">200000</value>
+    <value type="QString">CorsairTerminal</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2</value>
+    <value type="int">299998</value>
+    <value type="QString">Forms</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/CorsairTerminal_2/media/user/WORK/Github/220/CorsairTerminal_2/src/vlx_common</value>
+    <value type="int">200000</value>
+    <value type="QString">vlx_common</value>
+   </valuelist>
+  </valuelist>
+ </data>
+ <data>
+  <variable>value-TaskWindow.Categories</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">Task.Category.QmlAnalysis</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>value-TaskWindow.IncludeWarnings</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>value-Watchers</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>valueKeys</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">ActiveMode</value>
+   <value type="QString">Bookmarks</value>
+   <value type="QString">Breakpoints</value>
+   <value type="QString">DefaultFormats</value>
+   <value type="QString">Find</value>
+   <value type="QString">IndividualFormatTypes</value>
+   <value type="QString">IndividualFormats</value>
+   <value type="QString">ProjectTree.ExpandData</value>
+   <value type="QString">TaskWindow.Categories</value>
+   <value type="QString">TaskWindow.IncludeWarnings</value>
+   <value type="QString">Watchers</value>
+  </valuelist>
+ </data>
+</qtcreator>

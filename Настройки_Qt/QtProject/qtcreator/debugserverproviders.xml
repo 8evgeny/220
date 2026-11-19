@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QtCreatorDebugServerProviders>
+<!-- Written by QtCreator 21.0.82, 2026-11-19T11:36:04. -->
+<qtcreator>
+ <data>
+  <variable>DebugServerProvider.0</variable>
+  <valuemap type="QVariantMap">
+   <value type="QString" key="AdditionalArguments"></value>
+   <value type="QString" key="DisplayName">JLink</value>
+   <value type="int" key="EngineType">1</value>
+   <value type="QString" key="ExecutableFile"></value>
+   <value type="QString" key="Host">localhost</value>
+   <value type="QString" key="Id">BareMetal.GdbServerProvider.JLink:{fac26e61-6298-46b1-8504-7f59e18e0965}</value>
+   <value type="QString" key="InitCommands">set remote hardware-breakpoint-limit 6
+set remote hardware-watchpoint-limit 4
+monitor reset halt
+load
+monitor reset halt
+</value>
+   <value type="QString" key="JLinkDevice"></value>
+   <value type="QString" key="JLinkHostInterface">USB</value>
+   <value type="QString" key="JLinkHostInterfaceIPAddress"></value>
+   <value type="QString" key="JLinkTargetInterface">SWD</value>
+   <value type="QString" key="JLinkTargetInterfaceSpeed">12000</value>
+   <value type="int" key="Mode">0</value>
+   <value type="QString" key="PeripheralDescriptionFile"></value>
+   <value type="int" key="Port">2331</value>
+   <value type="QString" key="ResetCommands">monitor reset halt
+</value>
+   <value type="bool" key="UseExtendedRemote">false</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>DebugServerProvider.Count</variable>
+  <value type="int">1</value>
+ </data>
+ <data>
+  <variable>Version</variable>
+  <value type="int">1</value>
+ </data>
+</qtcreator>

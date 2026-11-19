@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QtCreatorSession>
+<!-- Written by QtCreator 21.0.82, 2026-11-09T12:56:52. -->
+<qtcreator>
+ <data>
+  <variable>AutoTest.MessageFilter</variable>
+  <valuelist type="QVariantList">
+   <value type="int">7</value>
+   <value type="int">0</value>
+   <value type="int">1</value>
+   <value type="int">22</value>
+   <value type="int">2</value>
+   <value type="int">11</value>
+   <value type="int">5</value>
+   <value type="int">12</value>
+   <value type="int">14</value>
+   <value type="int">8</value>
+   <value type="int">15</value>
+   <value type="int">13</value>
+   <value type="int">4</value>
+   <value type="int">21</value>
+   <value type="int">20</value>
+   <value type="int">9</value>
+   <value type="int">3</value>
+   <value type="int">6</value>
+   <value type="int">10</value>
+   <value type="int">16</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>AutoTest.ShowDurations</variable>
+  <value type="bool">true</value>
+ </data>
+ <data>
+  <variable>CascadeSetActive</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>Color</variable>
+  <value type="QString">#666666</value>
+ </data>
+ <data>
+  <variable>DeployProjectDependencies</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>EditorSettings</variable>
+  <value type="QByteArray">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SwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBTAFQATQAzADIALwBDAE0AYQBrAGUATABpAHMAdABzAC4AdAB4AHQAAAAYQ01ha2VQcm9qZWN0LkNNYWtlRWRpdG9yAAAAIAAAAAIAAAAAAAAAAAAAAGUAAAAAAAAAAAAAAAAAAAAtAAAABAAAAGAALwBtAGUAZABpAGEALwB1AHMAZQByAC8AVwBPAFIASwAvAEcAaQB0AGgAdQBiAC8AMgAyADAALwBTAFQATQAzADIALwBDAE0AYQBrAGUATABpAHMAdABzAC4AdAB4AHQAAABiAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AUwBUAE0AMwAyAC8AQwBvAHIAZQAvAFMAcgBjAC8AbQBhAGkAbgAuAGMAAABiAC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AUwBUAE0AMwAyAC8AQwBvAHIAZQAvAEkAbgBjAC8AbQBhAGkAbgAuAGgAAAB6AC8AbQBlAGQAaQBhAC8AdQBzAGUAcgAvAFcATwBSAEsALwBHAGkAdABoAHUAYgAvADIAMgAwAC8AUwBUAE0AMwAyAC8AQwBvAHIAZQAvAFMAcgBjAC8AcwB5AHMAdABlAG0AXwBzAHQAbQAzADIAZwA0AHgAeAAuAGMAAAAAAAAAAA==</value>
+ </data>
+ <data>
+  <variable>ProjectDependencies</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>ProjectList</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">/media/user/WORK/Github/220/STM32/CMakeLists.txt</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>Single Project/ProjectPath</variable>
+  <value type="QString">/media/user/WORK/Github/220/STM32/CMakeLists.txt</value>
+ </data>
+ <data>
+  <variable>StartupProject</variable>
+  <value type="QString">/media/user/WORK/Github/220/STM32/CMakeLists.txt</value>
+ </data>
+ <data>
+  <variable>value-ActiveMode</variable>
+  <value type="QString">Edit</value>
+ </data>
+ <data>
+  <variable>value-Breakpoints</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>value-Find</variable>
+  <valuemap type="QVariantMap">
+   <valuemap type="QVariantMap" key="AdvancedSearch">
+    <valuemap type="QVariantMap" key="All Projects">
+     <value type="QString" key="currentFilter"></value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="Current File">
+     <value type="QString" key="currentFilter"></value>
+    </valuemap>
+    <value type="QString" key="CurrentFilter">All Projects</value>
+    <valuemap type="QVariantMap" key="Files in All Project Directories">
+     <value type="QString" key="currentExclusionFilter"></value>
+     <value type="QString" key="currentFilter"></value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="Files on Disk">
+     <value type="bool" key="GitGrepRecurse">false</value>
+     <value type="QString" key="currentExclusionFilter"></value>
+     <value type="QString" key="currentFilter"></value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="Open Files">
+     <value type="QString" key="currentFilter"></value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="Single Project">
+     <value type="QString" key="currentFilter"></value>
+    </valuemap>
+   </valuemap>
+  </valuemap>
+ </data>
+ <data>
+  <variable>value-ProjectTree.ExpandData</variable>
+  <valuelist type="QVariantList">
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/Stm32CubeIde/test_STM32F103C8/Core/Src</value>
+    <value type="int">200000</value>
+    <value type="QString">Src</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/Stm32CubeIde/STM32F407-DISCOVERY</value>
+    <value type="int">-6</value>
+    <value type="QString">&lt;File System&gt;</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/Stm32CubeIde/test_STM32F103C8</value>
+    <value type="int">400900</value>
+    <value type="QString">test_F103C8.elf</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/Stm32CubeIde/test_STM32F103C8</value>
+    <value type="int">200005</value>
+    <value type="QString">Source Files</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/STM32</value>
+    <value type="int">400900</value>
+    <value type="QString">STM32G431RBT6.elf</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/STM32</value>
+    <value type="int">200000</value>
+    <value type="QString">STM32G431RBT6</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/STM32/Middlewares/Third_Party/LwIP/src</value>
+    <value type="int">200000</value>
+    <value type="QString">src</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/STM32</value>
+    <value type="int">200005</value>
+    <value type="QString">Source Files</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/Stm32CubeIde/STM32F407-DISCOVERY</value>
+    <value type="int">200000</value>
+    <value type="QString">11_Converter_F407_DT</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/Stm32CubeIde/test_STM32F103C8</value>
+    <value type="int">200000</value>
+    <value type="QString">test_F103C8</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/Stm32CubeIde/test_STM32F103C8</value>
+    <value type="int">-6</value>
+    <value type="QString">&lt;File System&gt;</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/STM32/Core/Src</value>
+    <value type="int">200000</value>
+    <value type="QString">Src</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/Stm32CubeIde/test_STM32F103C8/Drivers/STM32F1xx_HAL_Driver/Src</value>
+    <value type="int">200000</value>
+    <value type="QString">Src</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/STM32/Middlewares/Third_Party/LwIP/src/netif</value>
+    <value type="int">200000</value>
+    <value type="QString">netif</value>
+   </valuelist>
+   <valuelist type="QVariantList">
+    <value type="QString">/media/user/WORK/Github/220/STM32</value>
+    <value type="int">200000</value>
+    <value type="QString">11_Converter_F407_DT</value>
+   </valuelist>
+  </valuelist>
+ </data>
+ <data>
+  <variable>value-TaskWindow.Categories</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">Task.Category.QmlAnalysis</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>value-TaskWindow.IncludeWarnings</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>valueKeys</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">ActiveMode</value>
+   <value type="QString">Breakpoints</value>
+   <value type="QString">Find</value>
+   <value type="QString">ProjectTree.ExpandData</value>
+   <value type="QString">TaskWindow.Categories</value>
+   <value type="QString">TaskWindow.IncludeWarnings</value>
+  </valuelist>
+ </data>
+</qtcreator>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorDebuggers>
-<!-- Written by QtCreator 21.0.82, 2026-10-14T15:06:53. -->
+<!-- Written by QtCreator 21.0.82, 2026-11-19T11:36:04. -->
 <qtcreator>
  <data>
   <variable>DebuggerItem.0</variable>
@@ -57,22 +57,39 @@
   <variable>DebuggerItem.3</variable>
   <valuemap type="QVariantMap">
    <valuelist type="QVariantList" key="Abis">
-    <value type="QString">arm-linux-generic-elf-64bit</value>
+    <value type="QString">x86-linux-generic-elf-64bit</value>
    </valuelist>
    <value type="bool" key="AutoDetected">false</value>
-   <value type="QString" key="Binary">ssh://khadas@192.168.1.108/usr/bin/gdb</value>
-   <value type="QString" key="DetectionSource">{1144a9cc-e911-4528-9d00-4fa369386980}</value>
+   <value type="QString" key="Binary">docker://build_corsair.latest/usr/bin/gdb</value>
+   <value type="QString" key="DetectionSource">{f8701dcd-1350-4731-aac8-ffe4528143b4}</value>
    <value type="QString" key="DisplayName"></value>
    <value type="int" key="EngineType">1</value>
-   <value type="QString" key="Id">{1fcc3020-c1cb-47b6-a561-3d8926edb559}</value>
+   <value type="QString" key="Id">{011755e0-4f65-41d4-9073-61f3c64e677d}</value>
    <value type="QDateTime" key="LastModified">2026-02-05T04:58:28.000</value>
    <value type="QString" key="Version">15.1.0</value>
    <value type="QString" key="WorkingDirectory"></value>
   </valuemap>
  </data>
  <data>
+  <variable>DebuggerItem.4</variable>
+  <valuemap type="QVariantMap">
+   <valuelist type="QVariantList" key="Abis">
+    <value type="QString">arm-linux-generic-elf-64bit</value>
+   </valuelist>
+   <value type="bool" key="AutoDetected">false</value>
+   <value type="QString" key="Binary">ssh://khadas@192.168.1.95/usr/bin/gdb</value>
+   <value type="QString" key="DetectionSource">{1144a9cc-e911-4528-9d00-4fa369386980}</value>
+   <value type="QString" key="DisplayName"></value>
+   <value type="int" key="EngineType">1</value>
+   <value type="QString" key="Id">{11747e6b-7ec0-41f4-960d-f7977afd9d9b}</value>
+   <value type="QDateTime" key="LastModified">2024-04-03T13:51:19.000</value>
+   <value type="QString" key="Version">15.0.50</value>
+   <value type="QString" key="WorkingDirectory"></value>
+  </valuemap>
+ </data>
+ <data>
   <variable>DebuggerItem.Count</variable>
-  <value type="int">4</value>
+  <value type="int">5</value>
  </data>
  <data>
   <variable>Version</variable>
