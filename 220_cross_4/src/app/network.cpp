@@ -83,7 +83,7 @@ void Network::initSocket()
         // ─── Telemetry timer (40 ms = 25 Hz) ─────────────────────
         telemetry_timer = new QTimer(this);
         connect(telemetry_timer, &QTimer::timeout, this, &Network::telemetry_timer_send);
-        telemetry_timer->start(30);
+        telemetry_timer->start(40);
 
         // ─── Command parser (runs in its own thread via moveToThread) ──
         connect(this, &Network::sig_checkCmd,
