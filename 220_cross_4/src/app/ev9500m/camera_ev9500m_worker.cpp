@@ -132,22 +132,24 @@ void Camera_EV9500M_Worker::timeout()
 {
     if (!m_isConnected) return;
 
-    if (!m_cam.isBusy()) {
-        bool allOk = true;
-        allOk &= m_cam.getTemperature();
-        allOk &= m_cam.getIris();
-        allOk &= m_cam.getShutter();
-        allOk &= m_cam.getGain();
-        allOk &= m_cam.getContrast();
-        allOk &= m_cam.getFocusValue();
-        allOk &= m_cam.getZoomValue();
-        allOk &= m_cam.getAWBDisplayMode();
+    // Запросы состояния отправляются на камеру ВСЕГДА — busy не должен
+    // останавливать опрос и телеметрию. busy запрещает только новые команды
+    // движения фокуса/зума (проверяется в TVCamera::executeCommand).
+    bool allOk = true;
+    allOk &= m_cam.getTemperature();
+    allOk &= m_cam.getIris();
+    allOk &= m_cam.getShutter();
+    allOk &= m_cam.getGain();
+    allOk &= m_cam.getContrast();
+    allOk &= m_cam.getFocusMode();    // VISCA_FOCUS_MODE_VALUE_AUTO / ..._MANUAL
+    allOk &= m_cam.getFocusValue();
+    allOk &= m_cam.getZoomValue();
+    allOk &= m_cam.getAWBDisplayMode();
 
-        if (!allOk) {
-            qDebug() << "EV9500M error status request";
-        }
-
-        CameraStatus status = *m_cam.status();
-        emit sig_sendStatus(status);
+    if (!allOk) {
+        qDebug() << "EV9500M error status request";
     }
+
+    CameraStatus status = *m_cam.status();
+    emit sig_sendStatus(status);
 }

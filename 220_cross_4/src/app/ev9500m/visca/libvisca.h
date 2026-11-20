@@ -143,6 +143,73 @@
 #define   VISCA_AF_MODE_ZOOM_TRIG_AF        0x02
 #define VISCA_AF_MODE_ACTIVE_INTERV_TIME 0x27
 
+/* ══════════════════════════════════════════════════════════════════════
+ *  Именованные константы VISCA-команд и их параметров (в стиле libvisca).
+ *  Числовые литералы в командах не используются — только эти имена.
+ * ══════════════════════════════════════════════════════════════════════ */
+
+/* Категории команд FCB-EV9500M (VISCA Command Packet, byte 2).
+ * ВНИМАНИЕ: VISCA_CATEGORY_CAMERA2 из общего VISCA здесь равен 0x07,
+ * но у EV9500M Spot Focus / Spot AWB находятся в категории 0x05. */
+#define VISCA_CAT_CAMERA1                   0x04
+#define VISCA_CAT_CAMERA2                   0x05
+
+/* Универсальные значения On/Off для команд VISCA */
+#define VISCA_ON_OFF_ON                     0x02
+#define VISCA_ON_OFF_OFF                    0x03
+
+/* Ведущий нулевой байт/nibble в составных параметрах VISCA */
+#define VISCA_PARAM_BYTE_ZERO               0x00
+
+/* Opcode-байты команд и инквайривов FCB-EV9500M, использованные в драйвере */
+#define VISCA_OPCODE_GAMMA                  0x5B
+#define VISCA_OPCODE_STABILIZER             0x34
+#define VISCA_OPCODE_AUTO_ICR               0x51
+#define VISCA_OPCODE_AUTO_ICR_THRESHOLD     0x21
+#define VISCA_OPCODE_PICTURE_FLIP           0x66
+#define VISCA_OPCODE_HLC                    0x14
+#define VISCA_OPCODE_WB_MODE                0x35
+#define VISCA_OPCODE_SPOT_AE_DISPLAY        0x16
+#define VISCA_OPCODE_SPOT_AWB_DISPLAY       0x17
+#define VISCA_OPCODE_DZOOM_POSITION         0x46
+#define VISCA_OPCODE_SPOT_FOCUS_PARAM       0x69
+#define VISCA_OPCODE_CONT_ZOOM_REPLY_MODE   0x69
+#define VISCA_OPCODE_CONT_ZOOM_REPLY_INTERVAL 0x6A
+#define VISCA_OPCODE_WD_VE_PARAMS           0x2D
+#define VISCA_OPCODE_CONTRAST_ADJ           0x5D
+#define VISCA_CONTRAST_ADJ_FIXED            0x01
+#define VISCA_OPCODE_MEM_SAVE               0x23
+#define VISCA_OPCODE_PRIVACY_PT_ANGLE       0x79
+#define VISCA_OPCODE_PRIVACY_PTZ_MASK       0x7B
+#define VISCA_OPCODE_NON_INTERLOCK_MASK     0x6F
+#define VISCA_OPCODE_MD_WINDOW_SET          0x1D
+#define VISCA_DISPLAY_SWITCH                0x10
+#define VISCA_TITLE_SET1_PREFIX             0x10
+#define VISCA_SPOT_AE_PARAM                 0x6A
+#define VISCA_EX_EXP_STEP_MASK              0x7F
+
+/* Значения параметров команд */
+#define VISCA_FOCUS_MODE_VALUE_AUTO         0x02
+#define VISCA_FOCUS_MODE_VALUE_MANUAL       0x03
+#define VISCA_FOCUS_MODE_VALUE_TOGGLE       0x10
+
+#define VISCA_GAMMA_MODE_STANDARD           0x00
+#define VISCA_GAMMA_MODE_STRAIGHT           0x01
+
+#define VISCA_STABILIZER_MODE_HOLD          0x00
+#define VISCA_STABILIZER_MODE_ON            0x02
+#define VISCA_STABILIZER_MODE_OFF           0x03
+
+#define VISCA_AUTO_ICR_MODE_ON              0x02
+#define VISCA_AUTO_ICR_MODE_OFF             0x03
+#define VISCA_AUTO_ICR_MODE_ON_COLOR        0x04
+
+#define VISCA_WB_MODE_SODIUM_OUTDOOR_AUTO   0x09
+
+#define VISCA_AF_MODE_VALUE_NORMAL          0x00
+#define VISCA_AF_MODE_VALUE_INTERVAL        0x01
+#define VISCA_AF_MODE_VALUE_ZOOM_TRIG       0x02
+
 #define VISCA_SPOT_FOCUS                 0x08
 #define   VISCA_SPOT_FOCUS_ON               0x02
 #define   VISCA_SPOT_FOCUS_OFF              0x03
@@ -248,7 +315,7 @@
 #define   VISCA_DEFOG_ON                   0x02
 #define     VISCA_DEFOG_LVL_1              0x01
 #define     VISCA_DEFOG_LVL_2              0x02
-#define     VISCA_DEFOG_LVL_3              0x02
+#define     VISCA_DEFOG_LVL_3              0x03
 #define   VISCA_DEFOG_OFF                   0x03
 
 #define VISCA_APERTURE                   0x02
@@ -651,6 +718,11 @@ typedef struct _VISCA_interface
   unsigned char ibuf[VISCA_INPUT_BUFFER_SIZE];
   int bytes;
   int type;
+
+  // Код ошибки из последнего ответа камеры (ibuf[2] при VISCA_RESPONSE_ERROR).
+  // 0 — ошибок не было. Возвращаемый код VISCA_SUCCESS при этом не меняется
+  // ради совместимости со старыми вызывающими.
+  unsigned char last_error;
 } VISCAInterface_t;
 
 #ifdef _MSC_VER
@@ -702,6 +774,7 @@ typedef struct _VISCA_interface
 	unsigned char ibuf[VISCA_INPUT_BUFFER_SIZE];
 	int bytes;
 	int type;
+	unsigned char last_error;
 } VISCAInterface_t;
 
 #else
@@ -732,6 +805,7 @@ typedef struct _VISCA_interface
   unsigned char ibuf[VISCA_INPUT_BUFFER_SIZE];
   uint32_t bytes;
   uint32_t type;
+  unsigned char last_error;   // ibuf[2] из ответа VISCA_RESPONSE_ERROR, 0 = нет ошибки
 
 } VISCAInterface_t;
 
@@ -868,6 +942,22 @@ VISCA_set_focus_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint32_t f
 
 VISCA_API uint32_t
 VISCA_set_focus_auto(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t power);
+
+// Режим фокуса FCB-EV9500M (CAM_Focus, 8x 01 04 38 pp FF):
+//   Auto    = VISCA_FOCUS_AUTO_ON  (0x02)
+//   Manual  = VISCA_FOCUS_AUTO_OFF (0x03) — это и есть "АФ выключен"
+//   Toggle  = VISCA_FOCUS_AUTO_MAN (0x10)
+VISCA_API uint32_t
+VISCA_set_focus_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t mode);
+
+VISCA_API uint32_t
+VISCA_set_focus_mode_auto(VISCAInterface_t *iface, VISCACamera_t *camera);
+
+VISCA_API uint32_t
+VISCA_set_focus_mode_manual(VISCAInterface_t *iface, VISCACamera_t *camera);
+
+VISCA_API uint32_t
+VISCA_set_focus_mode_toggle(VISCAInterface_t *iface, VISCACamera_t *camera);
 
 VISCA_API uint32_t
 VISCA_set_focus_one_push(VISCAInterface_t *iface, VISCACamera_t *camera);
@@ -1143,7 +1233,8 @@ VISCA_API uint32_t
 VISCA_set_spot_ae_off(VISCAInterface_t *iface, VISCACamera_t *camera);
 
 VISCA_API uint32_t
-VISCA_set_spot_ae_position(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t x_position, uint8_t y_position);
+VISCA_set_spot_ae_position(VISCAInterface_t *iface, VISCACamera_t *camera,
+                            uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
 /* INQUIRIES */
 
@@ -1307,6 +1398,8 @@ VISCA_set_md_mode_onoff(VISCAInterface_t *iface, VISCACamera_t *camera);
 VISCA_API uint32_t
 VISCA_set_md_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t power);
 
+// Устаревший вариант: шлёт opcode 0x09, которого нет в Command List EV9500M.
+// Для CAM_MD Window Set (01 04 1D ...) использовать VISCA_set_md_window().
 VISCA_API uint32_t
 VISCA_set_md_frame(VISCAInterface_t *iface, VISCACamera_t *camera);
 
@@ -1450,9 +1543,6 @@ VISCA_API uint32_t VISCA_get_ae_response_value(VISCAInterface_t *iface, VISCACam
 /* Gain Limit */
 VISCA_API uint32_t VISCA_set_gain_limit(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t value);
 
-/* Focus Near Limit */
-VISCA_API uint32_t VISCA_get_focus_near_limit(VISCAInterface_t *iface, VISCACamera_t *camera, uint16_t *value);
-
 /* Backlight */
 VISCA_API uint32_t VISCA_set_backlight_on(VISCAInterface_t *iface, VISCACamera_t *camera);
 VISCA_API uint32_t VISCA_set_backlight_off(VISCAInterface_t *iface, VISCACamera_t *camera);
@@ -1514,11 +1604,192 @@ VISCA_API uint32_t VISCA_get_min_shutter_mode(VISCAInterface_t *iface, VISCACame
 VISCA_API uint32_t VISCA_get_icr_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
 VISCA_API uint32_t VISCA_get_auto_icr_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
 
-/* Focus Mode Inquiry */
+/* Focus Mode Inquiry: 8x 09 04 38 FF -> y0 50 02 (Auto) / 03 (Manual) */
 VISCA_API uint32_t VISCA_get_focus_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *mode);
+
+/* AF Movement Mode (CAM_AFMode, 8x 01 04 57 pp FF) и его запрос */
+VISCA_API uint32_t VISCA_set_normal_af_mode(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_interval_af_mode(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_zoom_trig_af_mode(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_active_interval_af_mode(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                     uint16_t move_time, uint16_t interval);
+VISCA_API uint32_t VISCA_get_af_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *mode);
+
+/* ══════════════════════════════════════════════════════════════════════
+ *  EV9500M: команды, описанные в протоколе ГОЭН-220 (табл. 6),
+ *  но отсутствовавшие в заголовке libvisca.
+ * ══════════════════════════════════════════════════════════════════════ */
+/* Управление экспозицией / изображением */
+VISCA_API uint32_t VISCA_set_flicker_reduction_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_flicker_reduction_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_gamma(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t mode);
+VISCA_API uint32_t VISCA_set_gamma_offset_value(VISCAInterface_t *iface, VISCACamera_t *camera, int8_t gamma_offset);
+VISCA_API uint32_t VISCA_set_stabilizer(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t mode);
+VISCA_API uint32_t VISCA_set_auto_icr(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t mode);
+VISCA_API uint32_t VISCA_set_auto_icr_threshold(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t value);
+VISCA_API uint32_t VISCA_set_picture_flip(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t on_off);
+VISCA_API uint32_t VISCA_set_hlc(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t level, uint8_t mask);
+VISCA_API uint32_t VISCA_set_wb_sodium_outdoor_auto(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_spot_ae_display(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t on_off);
+VISCA_API uint32_t VISCA_set_spot_awb_display(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t on_off);
+
+/* Расширенная компенсация экспозиции (8x 01 04 1F ...) */
+VISCA_API uint32_t VISCA_set_ex_exp_comp_up(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t step);
+VISCA_API uint32_t VISCA_set_ex_exp_comp_down(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t step);
+VISCA_API uint32_t VISCA_set_ex_exp_comp_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint32_t value);
+VISCA_API uint32_t VISCA_set_spot_awb_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_spot_awb_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_get_spot_awb_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_spot_awb_position(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+VISCA_API uint32_t VISCA_get_spot_awb_display_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_on_highsens(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_off_highsens(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_on_min_shutter(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_off_min_shutter(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_shutter_limit(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t value);
+VISCA_API uint32_t VISCA_get_shutter_limit(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+
+/* Spot Focus / IR-коррекция / Freeze (реализованы в libvisca.cpp, но не были объявлены) */
+VISCA_API uint32_t VISCA_set_on_spot_focus(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_off_spot_focus(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_get_spot_focus(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_spot_focus_param(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                               uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+VISCA_API uint32_t VISCA_get_spot_focus_param(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                               uint8_t *x1, uint8_t *y1, uint8_t *x2, uint8_t *y2);
+VISCA_API uint32_t VISCA_set_on_spot_focus_display(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_off_spot_focus_display(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_get_spot_focus_display(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_standard_ir_correction(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_light_ir_correction(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_get_ir_correction(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_freeze_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_freeze_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_get_freeze_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+
+/* Недостающие inquiry объектива */
+VISCA_API uint32_t VISCA_get_af_time_setting(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                              uint16_t *move_time, uint16_t *interval);
+VISCA_API uint32_t VISCA_get_dzoom_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *mode);
+VISCA_API uint32_t VISCA_get_dzoom_pos(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *pos);
+VISCA_API uint32_t VISCA_get_cont_zoom_pos_reply_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_get_cont_zoom_pos_interval(VISCAInterface_t *iface, VISCACamera_t *camera, uint16_t *interval);
 
 /* NR Inquiry */
 VISCA_API uint32_t VISCA_get_nr_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint16_t *value);
+
+/* ══════════════════════════════════════════════════════════════════════
+ *  Экспорт функций, реализованных в libvisca.cpp, но отсутствовавших
+ *  в заголовке (команды Command List FCB-EV9500M, стр. 37-42).
+ * ══════════════════════════════════════════════════════════════════════ */
+/* Auto ICR / Alarm */
+VISCA_API uint32_t VISCA_get_auto_icr_alarm(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_get_auto_icr_threshold(VISCAInterface_t *iface, VISCACamera_t *camera, uint16_t *value);
+VISCA_API uint32_t VISCA_set_on_auto_zero_lux(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_on_color_auto_zero_lux(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_off_auto_zero_lux(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_auto_zero_lux_treshold(VISCAInterface_t *iface, VISCACamera_t *camera, uint16_t treshold);
+VISCA_API uint32_t VISCA_set_on_auto_zero_lux_alarm_reply(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_off_auto_zero_lux_alarm_reply(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_ex_auto_zero_lux_threshold_on_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t th);
+VISCA_API uint32_t VISCA_set_ex_auto_zero_lux_threshold_off_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t th);
+
+/* Цвет: Chroma Suppress / Color Gain / Color Hue / Contrast */
+VISCA_API uint32_t VISCA_get_chroma_suppress(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_chroma_suppress(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t chroma);
+VISCA_API uint32_t VISCA_get_color_gain_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_color_gain_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t color_gain);
+VISCA_API uint32_t VISCA_set_ex_color_gain_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t gain);
+VISCA_API uint32_t VISCA_get_color_hue_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_color_hue_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t color_hue);
+VISCA_API uint32_t VISCA_set_ex_color_hue_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t hue);
+VISCA_API uint32_t VISCA_set_contr_adj_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint16_t value);
+
+/* Picture Flip / Mute / Display */
+VISCA_API uint32_t VISCA_get_flip_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_flip_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_flip_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_get_mute_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_mute_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_mute_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_mute_onoff(VISCAInterface_t *iface, VISCACamera_t *camera);
+
+/* Wide-D / VE */
+VISCA_API uint32_t VISCA_get_wd_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_get_wd_parameters(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                           uint8_t *brightness, uint8_t *br_compensation_sel,
+                                           uint8_t *compensation_lvl);
+VISCA_API uint32_t VISCA_set_wd_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_wd_on_cam1(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_wd_parameters(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                           uint8_t brightness, uint8_t br_compensation_sel,
+                                           uint8_t compensation_lvl);
+
+/* HLC / Flicker / WB / Gamma Offset / Spot AWB */
+VISCA_API uint32_t VISCA_set_hlc_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t hlc_level, uint8_t mask_level);
+VISCA_API uint32_t VISCA_set_flicker_reduction_on_simple(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_flicker_reduction_off_simple(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_wb_outdoor_auto(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_wb_sodium_auto(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_wb_sodium_fixed(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_get_gamma_offset_value(VISCAInterface_t *iface, VISCACamera_t *camera, int16_t *value);
+VISCA_API uint32_t VISCA_get_spot_awb_parameter(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                 uint8_t *x1, uint8_t *y1, uint8_t *x2, uint8_t *y2);
+VISCA_API uint32_t VISCA_set_spot_awb_display_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+
+/* Motion Detection / Continuous Position Reply / Privacy Zone / Stabilizer (legacy) */
+VISCA_API uint32_t VISCA_get_md_mode_cam(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_set_md_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_md_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_md_function(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                         uint8_t mode, uint8_t sensitivity,
+                                         uint8_t detect_area_x1, uint8_t detect_area_y1,
+                                         uint8_t detect_area_x2, uint8_t detect_area_y2);
+VISCA_API uint32_t VISCA_get_continous_zoompos_reply_mode(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t *value);
+VISCA_API uint32_t VISCA_get_continous_zoompos_reply_interval(VISCAInterface_t *iface, VISCACamera_t *camera, uint16_t *v_interval);
+VISCA_API uint32_t VISCA_set_continous_zoompos_reply_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_continous_zoompos_reply_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_continous_zoompos_reply_interval(VISCAInterface_t *iface, VISCACamera_t *camera, uint16_t v_interval);
+VISCA_API uint32_t VISCA_set_privacy_zone_mask(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                               uint8_t zone_id, uint8_t modify,
+                                               uint8_t width, uint8_t height);
+VISCA_API uint32_t VISCA_set_privacy_zone_display(VISCAInterface_t *iface, VISCACamera_t *camera, uint32_t mask);
+VISCA_API uint32_t VISCA_set_privacy_zone_color(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                uint32_t color, uint8_t brightness, uint8_t saturation);
+VISCA_API uint32_t VISCA_set_cam_stabilizer(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t power);
+VISCA_API uint32_t VISCA_set_center_line_on(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_center_line_off(VISCAInterface_t *iface, VISCACamera_t *camera);
+
+// Устаревшее имя: на самом деле читает SpotFocus Parameter (01 05 69 00).
+// Предпочтительно VISCA_get_spot_focus_param().
+VISCA_API uint32_t VISCA_get_active_interval_af_mode(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                     uint8_t *x1, uint8_t *y1, uint8_t *x2, uint8_t *y2);
+
+/* Extended Exposure */
+VISCA_API uint32_t VISCA_set_ex_exp_comp_reset(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_ex_aperture_reset(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_ex_aperture_up(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t step);
+VISCA_API uint32_t VISCA_set_ex_aperture_down(VISCAInterface_t *iface, VISCACamera_t *camera, uint8_t step);
+VISCA_API uint32_t VISCA_set_ex_aperture_value(VISCAInterface_t *iface, VISCACamera_t *camera, uint32_t value);
+
+/* Команды Command List, добавленные по даташиту FCB-EV9500M */
+VISCA_API uint32_t VISCA_set_mem_save(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                      uint8_t addr, uint16_t data);
+VISCA_API uint32_t VISCA_set_privacy_zone_pan_tilt_angle(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                         uint16_t pan, uint16_t tilt);
+VISCA_API uint32_t VISCA_set_privacy_zone_ptz_mask(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                   uint8_t zone, uint16_t pan, uint16_t tilt, uint16_t zoom);
+VISCA_API uint32_t VISCA_set_non_interlock_mask(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                uint8_t zone, uint8_t x, uint8_t y, uint8_t w, uint8_t h);
+VISCA_API uint32_t VISCA_set_md_window(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                       uint8_t frame, uint8_t x, uint8_t y, uint8_t stop_h, uint8_t stop_v);
+VISCA_API uint32_t VISCA_set_display_switch(VISCAInterface_t *iface, VISCACamera_t *camera);
+VISCA_API uint32_t VISCA_set_multiline_title_set1(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                  uint8_t line, uint8_t hpos, uint8_t color, uint8_t blink);
+VISCA_API uint32_t VISCA_set_multiline_title_set2_3(VISCAInterface_t *iface, VISCACamera_t *camera,
+                                                    uint8_t set_num, uint8_t line,
+                                                    const uint8_t chars[10]);
 
 /* Utility */
 VISCA_API uint32_t

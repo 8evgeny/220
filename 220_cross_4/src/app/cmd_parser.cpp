@@ -477,6 +477,11 @@ qint32 CMD_Parser::processCmdGowinMini640()
          break;
 
      case 1:
+         // Запрет термостабилизации: команду "включить кулер" на Говин не шлём.
+         if (!m_thermoEnabled) {
+             qWarning() << "[GOWIN] thermostabilization disabled by config (IRCam.IR_Cam_Thermo_Enable=false)";
+             break;
+         }
          emit sig_MINI640_CMD(MINI640_COOLER_ON,0);
          break;
 
@@ -706,8 +711,14 @@ qint32 CMD_Parser::proc_AUTOFOCUS ()
     qDebug() <<Q_FUNC_INFO;
     AUTOFOCUS_PL* af;
     af =(AUTOFOCUS_PL*) &msg->PAYLOAD;
-    //cam.setFocus(Camera::FocusMode,0);
-    emit sig_VISCA_CMD(TVCamera::FocusMode,0);
+
+    // AUTOFOCUS — команда ТВ-камеры: VISCA понимает только её объектив.
+    // Каналы ТПВ (3/0x81) управляются своими контроллерами — не маршрутизируем.
+    if ((af->ch_id == 0) || (af->ch_id == 0x80)) {
+        emit sig_VISCA_CMD(TVCamera::FocusMode, 0);
+    } else {
+        qDebug() << "AUTOFOCUS ignored: channel is not TV";
+    }
 
     qDebug() <<"AUTOFOCUS. Ch.ID: "<< af->ch_id;
     return 0;

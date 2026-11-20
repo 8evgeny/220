@@ -58,6 +58,12 @@ private:
 
         bool    mpeg_ts_en;
         bool    mpeg_ts_telemetry_en;
+        // Режим автономной UDP-телеметрии (25 Гц, udp_service_pack):
+        //   "false"     — выключена (KLV в MPEG-TS),
+        //   "true"      — обычный unicast на Network.IP_Telemetry (текущая реализация),
+        //   "multicast" — multicast на Network.IP_Telemetry (должен быть 224.0.0.0/4).
+        // Здесь хранится нормализованное значение: false / true / multicast.
+        QString udp_telemetry_mode;
         // Периодическая диагностика моста encode→transport ([Bridge]/[Diag] в логах).
         // false — тихо (по умолчанию), true — печатать раз в ~2 с (для отладки).
         bool    mpeg_ts_diag_logs;
@@ -110,6 +116,9 @@ private:
         qint32  ir_cam_bpp;
         bool    ir_cam_en;
         bool    ir_cam_flip_180;
+        // Разрешение термостабилизации ИК-камеры (команда на Говин '+' / MINI640_COOLER_ON).
+        // false — запрещать включение термостабилизации по команде терминала.
+        bool    ir_cam_thermo_en;
 
         QString ir_cam_uart_port;
         qint32  ir_cam_uart_baudrate;

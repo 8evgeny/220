@@ -30,6 +30,18 @@ void SettingsManager::loadSettings()
     // ================================================================
     settings_store.mpeg_ts_en            = settings.value("MPEG-TS.Enable", true).toBool();
     settings_store.mpeg_ts_telemetry_en  = settings.value("MPEG-TS.Telemetry_Enable", true).toBool();
+    // Режим автономной UDP-телеметрии: false (выкл) / true (unicast) / multicast.
+    // Значение нормализуется: any невалидное → false.
+    {
+        const QString raw = settings.value("Network.UDP_Telemetry_Enable", "false")
+                                .toString().trimmed().toLower();
+        if (raw == "true" || raw == "1" || raw == "unicast")
+            settings_store.udp_telemetry_mode = "true";
+        else if (raw == "multicast" || raw == "mc")
+            settings_store.udp_telemetry_mode = "multicast";
+        else
+            settings_store.udp_telemetry_mode = "false";
+    }
     settings_store.mpeg_ts_port          = settings.value("MPEG-TS.UDP_Port", 5016).toInt();
     // Периодическая диагностика [Bridge]/[Diag]: по умолчанию ВЫКЛЮЧЕНА (тихо в
     // проде); true — включить периодический дамп моста encode→transport для отладки.
@@ -39,16 +51,22 @@ void SettingsManager::loadSettings()
     // MPEG-TS SRT (включая FEC — только для SRT)
     // ================================================================
     settings_store.mpeg_ts_use_srt           = settings.value("MPEG-TS.SRT.Use_SRT", true).toBool();
-    settings_store.mpeg_ts_srt_latency_ms    = settings.value("MPEG-TS.SRT.Latency_MS", 300).toInt();
+    // Latency выровнена с клиентом ISTOK CorsairTerminal (FFmpeg SRT listener latency=200000).
+    // Расхождение latency caller/listener вызывает constant tlpktdrop и «зависание» потока.
+    settings_store.mpeg_ts_srt_latency_ms    = settings.value("MPEG-TS.SRT.Latency_MS", 200).toInt();
     settings_store.mpeg_ts_srt_tlpktdrop     = settings.value("MPEG-TS.SRT.TLPKTDROP", true).toBool();
 
     // Кол-во TS-пакетов (188 байт) в одной SRT payload-посылке.
     // Диапазон: 1..7. Итоговый payload = count * 188.
-    const int tsPktCount = settings.value("MPEG-TS.SRT.TS_Packet_Count", 4).toInt();
+    // 7 * 188 = 1316 — совпадает с payload_size по умолчанию у клиента (FFmpeg/libsrt),
+    // а также с PUMP_CHUNK в GST_Wrapper: границы SRT-payload и TS-пакетов совпадают.
+    const int tsPktCount = settings.value("MPEG-TS.SRT.TS_Packet_Count", 7).toInt();
     settings_store.mpeg_ts_srt_ts_packet_count  = qBound(1, tsPktCount, 7);
 
-    // FEC (вложен в SRT)
-    settings_store.mpeg_ts_srt_fec_enabled = settings.value("MPEG-TS.SRT.FEC.Enabled", true).toBool();
+    // FEC (вложен в SRT). По умолчанию ВЫКЛЮЧЕН: клиент (FFmpeg 6.1 / libavformat)
+    // не умеет пробрасывать SRTO_PACKETFILTER и не может принять FEC от сервера —
+    // односторонний FEC давал лишние задержки и потери потока.
+    settings_store.mpeg_ts_srt_fec_enabled = settings.value("MPEG-TS.SRT.FEC.Enabled", false).toBool();
     settings_store.mpeg_ts_srt_fec_cols    = qBound(2,   settings.value("MPEG-TS.SRT.FEC.Cols", 5).toInt(), 255);
     settings_store.mpeg_ts_srt_fec_rows    = qBound(1,   settings.value("MPEG-TS.SRT.FEC.Rows", 36).toInt(), 255);
 
@@ -134,6 +152,8 @@ void SettingsManager::loadSettings()
     // IR Cam
     // ================================================================
     settings_store.ir_cam_en             = settings.value("IRCam.IR_Cam_Enable", true).toBool();
+    // Термостабилизация ИК-камеры (кулер на Говин): по умолчанию разрешена.
+    settings_store.ir_cam_thermo_en      = settings.value("IRCam.IR_Cam_Thermo_Enable", true).toBool();
     settings_store.ir_cam_width          = settings.value("IRCam.IR_Cam_Width", 640).toInt();
     settings_store.ir_cam_height         = settings.value("IRCam.IR_Cam_Height", 512).toInt();
     settings_store.ir_cam_timeout        = settings.value("IRCam.IR_Cam_Timeout", 15000).toInt();
@@ -237,6 +257,7 @@ void SettingsManager::writeAllSettings()
     // --- MPEG-TS general ---
     writeSetting("MPEG-TS.Enable",            settings_store.mpeg_ts_en);
     writeSetting("MPEG-TS.Telemetry_Enable",  settings_store.mpeg_ts_telemetry_en);
+    writeSetting("Network.UDP_Telemetry_Enable", settings_store.udp_telemetry_mode);
     writeSetting("MPEG-TS.UDP_Port",          settings_store.mpeg_ts_port);
     writeSetting("MPEG-TS.Diag_Logs",         settings_store.mpeg_ts_diag_logs);
 
@@ -304,6 +325,7 @@ void SettingsManager::writeAllSettings()
 
     // --- IR Cam ---
     writeSetting("IRCam.IR_Cam_Enable",           settings_store.ir_cam_en);
+    writeSetting("IRCam.IR_Cam_Thermo_Enable",    settings_store.ir_cam_thermo_en);
     writeSetting("IRCam.IR_Cam_Width",            settings_store.ir_cam_width);
     writeSetting("IRCam.IR_Cam_Height",           settings_store.ir_cam_height);
     writeSetting("IRCam.IR_Cam_Timeout",          settings_store.ir_cam_timeout);

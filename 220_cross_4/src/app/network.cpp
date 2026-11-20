@@ -59,11 +59,27 @@ void Network::initSocket()
 
         connect(socket, &QUdpSocket::readyRead, this, &Network::processPendingDatagrams);
 
+        // Запрет термостабилизации ИК-камеры (команда кулера на Говин).
+        cmd_parser.setThermoEnabled(sm->settings_store.ir_cam_thermo_en);
+        qDebug() << "[IR] Thermostabilization (GOWIN cooler)" << (sm->settings_store.ir_cam_thermo_en ? "enabled" : "disabled");
+
         // ─── UDP Send (телеметрия → отдельный IP назначения) ──────
         udpSocketSend = new QUdpSocket(this);
         dst_host = QHostAddress(sm->settings_store.ip_telemetry);
         dst_port = sm->settings_store.udp_port_host;
-        qDebug() << "[UDP] Telemetry destination:" << dst_host.toString() << "port" << dst_port;
+
+        const bool mcMode = (sm->settings_store.udp_telemetry_mode == "multicast");
+        if (mcMode) {
+            if (!dst_host.isMulticast()) {
+                qWarning() << "[UDP] multicast mode but IP_Telemetry" << dst_host.toString()
+                           << "is not multicast — packet will be sent as unicast";
+            }
+            // TTL=2: хватает для выхода за локальную подсеть через маршрутизатор.
+            udpSocketSend->setSocketOption(QAbstractSocket::MulticastTtlOption, QVariant(2));
+            udpSocketSend->setSocketOption(QAbstractSocket::MulticastLoopbackOption, QVariant(1));
+        }
+        qDebug() << "[UDP] Telemetry destination:" << dst_host.toString() << "port" << dst_port
+                 << "mode:" << sm->settings_store.udp_telemetry_mode;
 
         connect(udpSocketSend, &QUdpSocket::bytesWritten, this, [this](qint64) {
             dequeuePacket();
@@ -219,13 +235,17 @@ void Network::telemetry_timer_send()
     auto ba_sdata = m_telemetry.setServiceData();
 
     if (sm->settings_store.mpeg_ts_telemetry_en) {
-        // Embed into MPEG-TS as KLV
-        ba_sdata[0] = 0x04;
-        ba_sdata.prepend(m_TelemPreamb);
-        emit sig_MPEG_TS_Telemetry(ba_sdata);
-    } else {
-        // Standalone UDP telemetry
-        m_udpFifo.push_back(ba_sdata);
+        // Embed into MPEG-TS as KLV (преамбула + 0x04 — только для KLV-ветки).
+        QByteArray klv = ba_sdata;
+        klv[0] = 0x04;
+        klv.prepend(m_TelemPreamb);
+        emit sig_MPEG_TS_Telemetry(klv);
+    }
+
+    // Автономная UDP-телеметрия — НЕЗАВИСИМЫЙ режим (false / true / multicast):
+    // шлём всегда при включении, в том числе одновременно с KLV.
+    if (sm->settings_store.udp_telemetry_mode != "false") {
+        m_udpFifo.push_back(ba_sdata);   // "чистый" udp_service_pack без преамбулы
     }
 
     dequeuePacket();

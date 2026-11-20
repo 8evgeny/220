@@ -18,10 +18,15 @@ public:
     CMD_Parser();
     ~CMD_Parser();
 
+    // Разрешение термостабилизации ИК-камеры (команда кулера на Говин).
+    // По умолчанию true; false запрещает приказ "включить кулер".
+    void setThermoEnabled(bool en) { m_thermoEnabled = en; }
+
 
  private:
    ucp* cm;
    usm* msg;
+   bool m_thermoEnabled = true;   // IRCam.IR_Cam_Thermo_Enable
 
    qint32 processCmd();
    qint32 processCmdGowinMini640();

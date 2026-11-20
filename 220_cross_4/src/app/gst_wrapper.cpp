@@ -72,11 +72,22 @@ gboolean bus_call(GstBus* bus, GstMessage* msg, gpointer ptr)
                                 desc.contains("Connection timeout", Qt::CaseInsensitive);
 
         if (isSrtIssue && self) {
-            // SRT warning → let srtsink auto-reconnect handle it; log-only throttled
             const qint64 now = QDateTime::currentMSecsSinceEpoch();
             if (now - self->m_lastSrtLogMs.load() > GST_Wrapper::SRT_LOG_INTERVAL_MS) {
                 g_printerr("[SRT] WARNING: %s\n", desc.toUtf8().constData());
                 self->m_lastSrtLogMs.store(now);
+            }
+            // В caller-режиме srtsink НЕ эмитит caller-added при auto-reconnect —
+            // поэтому вручную сбрасываем кольцо и запрашиваем IDR, иначе клиент
+            // получает «протухшие» TS-пакеты и кадр без ключевого (зависание).
+            if (desc.contains("reconnect", Qt::CaseInsensitive)) {
+                QMetaObject::invokeMethod(self, [self]() {
+                    if (!self->m_shutdownMode.load(std::memory_order_relaxed)) {
+                        self->m_tsRing.clear();
+                        self->requestKeyframes();
+                        g_printerr("[SRT] reconnect: ring cleared, IDR requested\n");
+                    }
+                }, Qt::QueuedConnection);
             }
         } else {
             g_printerr("[GST WARN] %s: %s\n", srcName, warning ? warning->message : "?");
@@ -620,10 +631,12 @@ bool GST_Wrapper::startTransportPipeline()
         gst_caps_unref(tcaps);
     }
 
-    // На GStreamer >= 1.20 appsrc сам выбрасывает старое при переполнении;
-    // на более старых выручает проверка уровня в pumpLoop.
-    if (transport_src && g_object_class_find_property(G_OBJECT_GET_CLASS(transport_src), "leaky-type"))
-        gst_util_set_object_arg(G_OBJECT(transport_src), "leaky-type", "downstream");
+    // НЕ включаем leaky-type на appsrc. По проверке на реальном GStreamer
+    // leaky-type=downstream выбрасывает СТАРЫЕ буферы (PAT/PMT/IDR), а уровень
+    // current_level_bytes при этом залипает на max-bytes и проверка в pumpLoop
+    // (> APPSRC_MAX_BYTES) никогда не срабатывает — кольцо дропает неконтролируемо.
+    // Без leaky уровень растёт, pump корректно останавливается, а кольцо дропает
+    // старые ЦЕЛЫЕ TS-пакеты по своей проверке.
 
     // Сигнал caller-added есть только в listener-режиме srtsink (GStreamer >= 1.18).
     // В caller-режиме он не срабатывает, но проверка g_signal_lookup безопасна.
@@ -1029,10 +1042,18 @@ void GST_Wrapper::serviceIspCtrl(const char* s_action = "restart")
                    p.readAllStandardError().constData());
     }
 
-    // Ждём, пока узел IR снова станет доступен (до ~6 с).
     const QByteArray dev = sm->settings_store.ir_cam_isp_video_device.toLocal8Bit();
-    for (int i = 0; i < 30 && access(dev.constData(), R_OK | W_OK) != 0; ++i)
-        QThread::msleep(200);
+    const QString action = QString::fromLatin1(s_action);
+
+    if (action == QLatin1String("stop")) {
+        // При остановке ждём, пока ISP-узел исчезнет (до ~6 с).
+        for (int i = 0; i < 30 && access(dev.constData(), R_OK | W_OK) == 0; ++i)
+            QThread::msleep(200);
+    } else {
+        // При запуске/рестарте ждём, пока узел IR снова станет доступен.
+        for (int i = 0; i < 30 && access(dev.constData(), R_OK | W_OK) != 0; ++i)
+            QThread::msleep(200);
+    }
 }
 
 void GST_Wrapper::gst_Start_MPEG_TS_Pipeline()
@@ -1049,8 +1070,10 @@ void GST_Wrapper::gst_Start_MPEG_TS_Pipeline()
     // Легитимный restart обнуляет m_mpegTsPipeline заранее, поэтому сюда не попадёт.
     if (m_mpegTsPipeline) return;
 
-    serviceIspCtrl("restart");
-
+    // Перед запуском пайплайна только останавливаем сервис — он может
+    // остаться запущенным от предыдущего запуска. Рестарт делается внутри
+    // run_GST_StreamMPEG_TS после проверки флагов ИК-камеры.
+    serviceIspCtrl("stop");
 
     m_mpegTsPipeline = run_GST_StreamMPEG_TS(
         sm->settings_store.tv_cam_video_device,
@@ -1348,6 +1371,11 @@ GstElement* GST_Wrapper::run_GST_StreamMPEG_TS(
     } else {
         m_syntheticVideo.store(false, std::memory_order_relaxed);
     }
+
+    // Рестарт ISP делается здесь, после проверки флагов ИК: сервис нужен
+    // только если ИК-ветвь реальная (не videotestsrc).
+    if (irEn && !m_irUseTestSrc)
+        serviceIspCtrl("restart");
 
     m_tvEnInPipeline = tvEn;
     m_irEnInPipeline = irEn;
@@ -1698,7 +1726,7 @@ GstElement *GST_Wrapper::run_GST_TVStream(QString videoDevice, QString clientIP,
         g_printerr("TV encoder link failed\n"); gst_object_unref(pipeline); return nullptr;
     }
 
-    GstPad *ts = gst_element_get_request_pad(tee, "src_%u");
+    GstPad *ts = gst_element_request_pad_simple(tee, "src_%u");
     GstPad *qs = gst_element_get_static_pad(queue2, "sink");
     if (gst_pad_link(ts, qs) != GST_PAD_LINK_OK) { gst_object_unref(ts); gst_object_unref(qs); gst_object_unref(pipeline); return nullptr; }
     gst_object_unref(qs);
@@ -1778,7 +1806,7 @@ GstElement *GST_Wrapper::run_GST_IRStreamISP(QString videoDevice, QString client
         g_printerr("IR encoder link failed\n"); gst_object_unref(pipeline); return nullptr;
     }
 
-    GstPad *ts = gst_element_get_request_pad(tee,"src_%u");
+    GstPad *ts = gst_element_request_pad_simple(tee, "src_%u");
     GstPad *qs = gst_element_get_static_pad(queue2,"sink");
     if (gst_pad_link(ts,qs)!=GST_PAD_LINK_OK) { gst_object_unref(ts); gst_object_unref(qs); gst_object_unref(pipeline); return nullptr; }
     gst_object_unref(qs);

@@ -1,0 +1,59 @@
+[General]
+IRCam.IR_Cam_BytesPerPixel=0
+IRCam.IR_Cam_Device=/dev/video11
+# Термостабилизация ИК-камеры (кулер, команда на Говин '+'): true — разрешена (по умолчанию).
+# false — запрещать включение по команде терминала.
+IRCam.IR_Cam_Thermo_Enable=true
+IRCam.IR_Cam_Height=512
+IRCam.IR_Cam_Timeout=15000
+IRCam.IR_Cam_Width=640
+IRCam.IR_UART_Baudrate=0
+IRCam.IR_UART_Device=/dev/ttyS8
+IRCam.IR_ExpPeriod=92600
+#192500
+#IRCam.IR_Exp=40000
+IRCam.IR_Exp=40000
+IRCam.IR_GPOL=820.000
+IRLens.UART_Baudrate=19200
+IRLens.UART_Device=/dev/ttyS0
+LDC20I.UART_Baudrate=115200
+LDC20I.UART_Device=/dev/ttyS7
+Network.IP_Edge2=192.168.1.93
+# IP назначения видео (MPEG-TS/RTP/SRT)
+Network.IP_HostPC=192.168.1.105
+# IP назначения UDP-телеметрии (если не задан — используется IP_HostPC)
+Network.IP_Telemetry=192.168.1.105
+# Автономная UDP-телеметрия (25 Гц, udp_service_pack) — НЕЗАВИСИМЫЙ режим от KLV:
+#   false     — выключена;
+#   true      — unicast на Network.IP_Telemetry:Network.UDP_Port_Edge2;
+#   multicast — multicast на Network.IP_Telemetry (адрес 224.0.0.0/4).
+Network.UDP_Telemetry_Enable=false
+Network.UDP_Port_Edge2=52515
+Network.UDP_Port_HostPC=52516
+TVCam.TV_Cam_BytesPerPixel=0
+TVCam.TV_Cam_Device=/dev/video0
+TVCam.TV_Cam_Height=1080
+TVCam.TV_Cam_Timeout=15000
+TVCam.TV_Cam_Width=1920
+TVCam.TV_UART_Baudrate=115200
+TVCam.TV_UART_Device=/dev/ttyS9
+# Периодическая диагностика MPEG-TS моста encode->transport ([Bridge]/[Diag] в логах).
+# true — печатать раз в ~2 с (отладка), false — тихо в проде.
+MPEG-TS.Diag_Logs=false
+
+# ─── MPEG-TS / SRT ───
+MPEG-TS.SRT.Use_SRT=true
+# Порт SRT = MPEG-TS.UDP_Port (дефолт 5016; явного ключа в конфиге нет).
+# Latency выровнена с клиентом ISTOK CorsairTerminal (FFmpeg SRT listener: 200000 мкс).
+MPEG-TS.SRT.Latency_MS=200
+MPEG-TS.SRT.TLPKTDROP=true
+# 7 TS-пакетов × 188 = 1316 байт — совпадает с payload_size client и PUMP_CHUNK.
+MPEG-TS.SRT.TS_Packet_Count=7
+# FEC выключен: клиент FFmpeg 6.1 не поддерживает SRTO_PACKETFILTER.
+MPEG-TS.SRT.FEC.Enabled=false
+
+# ─── TrackerControl: трекерный контур vdb_vrt_tracker_adapter ───
+# true — новый адаптер (PID с gain scheduling по FOV), false — старый Pid-контур.
+# Полный набор параметров и значения по умолчанию — в config_test.ini.
+TrackerControl.Use_Adapter=true
+TrackerControl.Step_MS=20
