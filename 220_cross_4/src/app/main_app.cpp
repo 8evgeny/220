@@ -564,8 +564,8 @@ void Main_app::proc_Switch_Channel(quint32 channel, quint8 en)
                 net_conn, &Network::procSetNewZeroAngleZ, Qt::QueuedConnection);
 
 
-        m_pGyroPlatform->setTimeoutWaitingResponse( 10);
-        m_pGyroPlatform->setTimeBetweenStatusRequests( 10);
+        m_pGyroPlatform->setTimeoutWaitingResponse( 30);
+        m_pGyroPlatform->setTimeBetweenStatusRequests( 12);
 
         //  Для отладки:
 
