@@ -1,0 +1,473 @@
+Камера
+  → кадр BGR/RGB
+  → TrackerThread
+  → алгоритм TracShats
+  → рамка объекта
+  → Network/GyroPlatformHandler
+  → PID
+  → команда скоростей гироплатформе
+
+Захват цели
+Команда TRACKING EN 4 передаёт:
+cx, cy — центр рамки;
+width, height — размер рамки;
+channel ID — TV или ИК.
+GST_Wrapper передаёт рамку в TrackerThread, который проверяет размеры и границы кадра и выполняет захват в следующем кадре.
+Размер поиска вокруг цели задаётся ROI. По умолчанию используется:
+
+ROI = рамка объекта × 3
+
+Обработка кадра
+TrackerThread читает кадры из общего FrameSlot, фильтрует по активному каналу TV/ИК и передаёт кадр в TrShWrapper::trackFrame().
+Внутри TrShWrapper рассчитывается:
+
+obj_xy_x, obj_xy_y — центр объекта [0..1]
+obj_wh_2_w, obj_wh_2_h — половина ширины и высоты объекта [0..1]
+roi_l, roi_t — левый верхний угол области поиска
+roi_w, roi_h — размеры области поиска
+
+Алгоритм TracShats ищет цель внутри ROI и обновляет положение и размер рамки.
+
+Состояния трекера
+active — трекер создан и режим сопровождения включён;
+locked — алгоритм подтвердил совпадение объекта на текущем кадре;
+потеря цели — возвращаются нулевые координаты и управление платформой прекращает сопровождение.
+При потере захвата старые координаты очищаются, чтобы платформа не продолжала двигаться по устаревшей рамке.
+Сопровождение платформой
+Текущая рамка объекта передаётся в GyroPlatformHandler.
+Он рассчитывает отклонение центра рамки от центра кадра:
+
+ошибка X = центр объекта X − центр кадра X
+ошибка Y = центр объекта Y − центр кадра Y
+
+Затем адаптивный контур PID преобразует угловые ошибки с учётом FOV камеры в управляющие скорости по курсу и тангажу.
+Выполняемые последовательность и ограничения:
+экспоненциальное сглаживание ошибки;
+расчёт PID;
+ограничение интегральной составляющей;
+ограничение выходной скорости;
+лимит скорости изменения через SlewRateLimiter;
+компенсация дрейфа гироплатформы.
+При потере объекта платформа переводится в режим удержания с нулевой скоростью сопровождения или компенсирует её собственный дрейф.
+
+Основные настройки
+Для TV параметры находятся в секции TrackerControl.TV, для ИК — TrackerControl.TPV:
+Kp, Ki, Kd — коэффициенты PID;
+OutLim — максимальная скорость;
+ILim — ограничение интегральной составляющей;
+коэффициенты Wide/Tele — интерполяция управления по оптическому увеличению;
+TrackerControl.Step_MS — период расчёта скоростей.
+
+flowchart TD
+    A[Камера TV или ИК] --> B[Захват кадра GStreamer]
+    B --> C[Передача кадра в FrameSlot]
+    C --> D[TrackerThread]
+
+    E[Команда TRACKING EN 4] --> F{Выбор канала}
+    F -->|TV| G1[Установка активного канала TV]
+    F -->|ИК| G2[Установка активного канала ИК]
+
+    G1 --> H[Проверка рамки захвата]
+    G2 --> H
+    E --> H
+
+    H --> I[Корректировка рамки и границ кадра]
+    I --> J[Расчёт ROI]
+    J --> K[Инициализация TracShats]
+
+    D --> L[Получение очередного кадра]
+    K --> L
+    L --> M[Поиск объекта внутри ROI]
+    M --> N{Совпадение найдено?}
+
+    N -->|Нет| O[Очистка старой рамки]
+    O --> P[Состояние: active, no lock]
+    P --> Q[Удержание или компенсация дрейфа платформы]
+
+    N -->|Да| R[Расчёт новой рамки объекта]
+    R --> S[Передача координат и размеров]
+    S --> T[Расчёт отклонения от центра кадра]
+
+    T --> U[Учёт FOV камеры]
+    U --> V[Экспоненциальное сглаживание]
+    V --> W[PID-регулятор]
+    W --> X[Ограничение интеграла и выходной скорости]
+    X --> Y[Slew Rate Limiter]
+    Y --> Z[Команда скоростей гироплатформе]
+
+    P --> AA[Телеметрия состояния трекера]
+    Z --> AA
+
+
+sequenceDiagram
+    autonumber
+    participant App as Main_app
+    participant GST as GST_Wrapper
+    participant Frame as FrameSlot
+    participant TT as TrackerThread
+    participant Wrap as TrShWrapper
+    participant Alg as TracShats
+    participant Net as Network
+    participant GPH as GyroPlatformHandler
+    participant Adapter as TrackerAdapter
+    participant GSP as GyroPlatformHost
+
+    Note over App,GST: Создание приложения
+    App->>GST: create GST_Wrapper(SettingsManager)
+    GST->>GST: GST_Wrapper::gst_PipelineInit()
+    GST->>GST: GST_Wrapper::gst_Start_MPEG_TS_Pipeline()
+
+    Note over GST,TT: Создание трекера
+    GST->>Frame: create FrameSlot
+    GST->>TT: new TrackerThread(&FrameSlot)
+    GST->>TT: start()
+    TT->>TT: run()
+    TT->>Wrap: create TrShWrapper
+
+    Note over GST,Frame: Публикация кадров
+    GST->>GST: tvFrameProbe()
+    GST->>Frame: FrameSlot::write(Mat, TV/IR)
+    TT->>Frame: FrameSlot::read(Mat, channel)
+    TT->>Wrap: trackFrame(Mat)
+
+    Note over TT,Alg: Инициализация алгоритма
+    Wrap->>Wrap: update(Mat)
+    Wrap->>Wrap: createTracker(Mat)
+    Wrap->>Alg: create_track(tracking.ini)
+    Alg-->>Wrap: trac_tmml
+    Wrap->>Wrap: setReinitFrame()
+
+    Note over Net,GST: Захват цели
+    Net->>Net: CMD_Parser::proc_TRACKING_EN_4()
+    Net->>GST: sig_TrackingSetTargetObject(cx, cy, w, h)
+    GST->>GST: proc_setTargetObject()
+    GST->>TT: submitCmd(SET_TARGET)
+    TT->>TT: clampTarget()
+    TT->>Wrap: setTargetObject(Rect)
+    Wrap->>Wrap: stopTracking()
+    Wrap->>Wrap: setReinitFrame()
+    TT->>Frame: read очередного кадра
+    TT->>Wrap: trackFrame(Mat)
+    Wrap->>Wrap: initTracker()
+    Wrap->>Alg: передать obj_xy_xy, obj_wh_xy и ROI
+    Alg->>Alg: get_trac()
+    Alg-->>Wrap: obj_xy_xy, obj_wh_xy, ok_match
+    Wrap-->>TT: objectRect(), active(), lockedOn()
+
+    Note over GST,GPH: Передача результата
+    Net->>GST: poll proc_getOutObject()
+    GST->>TT: objectRect()
+    TT-->>GST: cx, cy, w, h
+    GST-->>Net: sig_rdyOutObject()
+
+    Net->>GST: poll proc_getActiveLockTracking()
+    GST->>TT: active(), lockedOn()
+    GST-->>GPH: sig_rdyActiveLockTracking(active, locked)
+
+    GPH->>GPH: setActiveLockTracking()
+    GPH->>GPH: initTrackerAdapter()
+    GPH->>Adapter: create TrackerAdapter
+    GPH->>Adapter: startTracking()
+    GPH->>GPH: adapter timer start(Step_MS)
+
+    Note over GPH,GSP: Расчёт управления при lock
+    GST-->>GPH: sig_rdyOutObject(cx, cy, w, h)
+    GPH->>GPH: updateTrackerObject()
+    GPH->>Adapter: setTrackerStatusUpdate(FOV, frame, channel)
+    GPH->>Adapter: timer step() по Step_MS
+    Adapter->>Adapter: calcAngles()
+    Adapter->>Adapter: PID calc()
+    Adapter->>Adapter: SlewRateLimiter limit()
+    Adapter->>GPH: onTrackerSpeed(pitch, yaw)
+    GPH->>GSP: setControlSpeed(yaw, pitch)
+
+    Note over TT,GPH: Потеря объекта
+    Alg-->>Wrap: ok_match = false
+    Wrap-->>TT: lockedOn() = false
+    TT->>TT: очистить objectRect и roiRect
+    GST-->>GPH: cx=0, cy=0, w=0, h=0
+    GPH->>Adapter: stopTracking()
+    GPH->>GSP: удержание или компенсация дрейфа
+    
+Ключевые создаваемые объекты
+GST_Wrapper создаёт FrameSlot и TrackerThread.
+TrackerThread::run() создаёт TrShWrapper.
+Первый вызов trackFrame() вызывает TrShWrapper::createTracker().
+createTracker() создаёт низкоуровневый объект trac_tmml через create_track().
+При включении сопровождения GyroPlatformHandler создаёт TrackerAdapter.
+TrackerAdapter создаёт два PID-регулятора и два SlewRateLimiter.
+Результат кадра передаётся по цепочке:
+    
+TracShats
+  → TrShWrapper
+  → TrackerThread
+  → GST_Wrapper
+  → Network / GyroPlatformHandler
+  → TrackerAdapter
+  → GyroPlatformHost    
+    
+Кадр создаётся двумя GStreamer-потоками из камер:    
+TV:  v4l2src / videotestsrc
+   → queue
+   → tee
+   → видеоконвертер
+   → fakesink tv_trk_sink
+
+ИК:  v4l2src / videotestsrc
+   → queue
+   → videorate
+   → tee
+   → видеоконвертер
+   → fakesink ir_trk_sink   
+     
+Для TV кадр приводится к RGB, 1920×1080. Для ИК — к RGB, 640×512.
+Кадр для трекера берётся не из MPEG-TS потока и не из закодированного H265-потока. Он идёт по отдельной ветви непосредственно из исходного видео.
+
+Получение кадра через pad probe
+На sink-pad элементов tv_trk_sink или ir_trk_sink установлен trackerFrameProbe():
+
+fakesink sink-pad
+       |
+       | GstBuffer
+       v
+trackerFrameProbe()
+       |
+       | GstVideoInfo + GstBuffer map
+       v
+cv::Mat
+       |
+       v
+FrameSlot::write()
+    
+В функции trackerFrameProbe() выполняется:
+Получение родительского GStreamer-элемента.
+Определение канала:
+
+if (name starts with "tv_") ch = 0;
+if (name starts with "ir_") ch = 1;
+
+Проверка, активен ли сейчас этот канал.
+Получение текущих GstCaps.
+Чтение ширины, высоты и формата через GstVideoInfo.
+Маппирование памяти GstBuffer.
+Создание cv::Mat:
+
+cv::Mat frame(height, width, CV_8UC3, map.data);
+
+Запись кадра в FrameSlot:
+
+m_frameSlot.write(frame, ch);
+  
+Затем буфер освобождается вызовом gst_buffer_unmap().
+Передача кадра трекеру
+FrameSlot использует блокирующую последовательность записи и чтения:
+
+FrameSlot::write(frame, ch)
+       ↓
+data = mat.clone()
+channel = ch
+       ↓
+FrameSlot::read(frame, ch)
+       ↓
+cv::Mat tmp = data.clone()
+
+Кадр копируется дважды:
+при записи в FrameSlot;
+при чтении трекером.
+Это предотвращает изменение кадра по указателю GStreamer-памяти.  
+  
+Поток TrackerThread периодически вызывает:
+
+FrameSlot::read(frame, ch)
+
+Затем проверяет активный канал:
+
+if (ch != activeChannel)
+    continue;
+
+После этого выполняется:
+
+tracker.trackFrame(frame)
+  
+Итоговая последовательность  
+sequenceDiagram
+    participant Cam as Камера
+    participant GST as GStreamer tee
+    participant Sink as trk_fakesink
+    participant Probe as trackerFrameProbe
+    participant Slot as FrameSlot
+    participant Thread as TrackerThread
+    participant Tracker as TrShWrapper
+
+    Cam->>GST: сырые кадры TV или ИК
+    GST->>Sink: копия кадра для трекера
+    Sink->>Probe: GstBuffer
+    Probe->>Probe: определить TV или ИК
+    Probe->>Probe: получить width/height/caps
+    Probe->>Probe: создать cv::Mat
+    Probe->>Slot: write(cv::Mat, channel)
+    Thread->>Slot: read(cv::Mat, channel)
+    Slot-->>Thread: независимая копия кадра
+    Thread->>Tracker: trackFrame(cv::Mat)  
+Таким образом, трекер получает свежую копию кадра из отдельной ветви GStreamer, а не декодирует выходной MPEG-TS или задержанный сетевой поток.  
+  
+TV-конвейер в этом проекте
+TV-конвейер создаётся в GST_Wrapper::run_GST_StreamMPEG_TS(). Сначала выбирается источник:
+
+/dev/video0
+  или videotestsrc при недоступной реальной камере
+
+Полный pipeline
+
+TV источник
+  → video/x-raw, BGR
+  → queue
+  → tee tv_tee
+      ├→ encode-ветвь
+      │    → videoconvert
+      │    → NV12
+      │    → videoflip
+      │    → videorate
+      │    → mpph265enc
+      │    → h265parse
+      │    → queue
+      │    → mpegtsmux.sink_256
+      │
+      └→ tracker-ветвь
+           → queue
+           → videoconvert
+           → RGB
+           → videoflip
+           → fakesink
+
+TV источник
+Для реальной камеры используется:
+
+v4l2src device=/dev/video0 do-timestamp=true
+  ! video/x-raw,format=BGR,width=1920,height=1080
+
+Если камера недоступна:
+
+videotestsrc
+  ! video/x-raw,format=BGR,width=1920,height=1080,framerate=25/1
+
+Параметры берутся из настроек:
+TVCam.TV_Cam_Device;
+TVCam.TV_Cam_Width;
+TVCam.TV_Cam_Height;
+TVCam.TV_Cam_Target_FPS;
+TVCam.TV_Cam_Flip_180.
+Общая очередь и tee
+После источника кадр проходит короткую очередь:
+
+! queue leaky=2 max-size-buffers=2
+
+leaky=2 означает отбрасывание старых буферов при переполнении.
+Дальше создаётся разветвление:
+
+tee name=tv_tee
+
+Каждая ветвь получает копию потока для независимой обработки.
+Кодирующая ветвь
+
+tv_tee.
+  ! queue leaky=2 max-size-buffers=4
+  ! videoconvert
+  ! video/x-raw,format=NV12
+  ! videoflip
+  ! videorate framerate=25/1
+  ! mpph265enc
+  ! h265parse
+  ! video/x-h265,alignment=au
+  ! queue
+  ! mux.sink_256
+
+Шаги:
+Очередь защищает tee от блокировки.
+videoconvert преобразует кадр в формат NV12.
+videoflip применяет поворот на 180°, если включён.
+videorate приводит поток к целевой частоте кадров.
+mpph265enc кодирует кадр в H265.
+h265parse формирует поток в режиме access unit.
+Результат отправляется в mpegtsmux на вход sink_256.
+Кодирование MPEG-TS в этой ветви настраивается параметрами:
+TV_Cam_Enc_Mode;
+TV_Cam_Enc_BPS;
+TV_Cam_Target_FPS.
+Ветвь трекера
+
+tv_tee.
+  ! queue leaky=2 max-size-buffers=1
+  ! videoconvert
+  ! video/x-raw,format=RGB,width=1920,height=1080
+  ! videoflip
+  ! fakesink name=tv_trk_sink sync=false
+
+Эта ветвь предназначена для алгоритма сопровождения:
+кадр преобразуется в RGB;
+применяется тот же поворот изображения;
+очереди ограничены одной рамкой;
+fakesink не блокируется по системному времени;
+pad probe получает буфер кадра и создаёт cv::Mat.
+Связь с трекером не проходит через мпег-мультиплексор и H265-кодер.
+Инициализация трекера
+После построения pipeline в pipeline устанавливаются два типа проб:
+
+trackerFrameProbe
+  → кадр для cv::Mat и TracShats
+tvFrameProbe
+  → отслеживает наличие свежего кадра для watchdog
+
+Затем создаются:
+
+FrameSlot
+TrackerThread
+TrShWrapper
+
+Общая схема TV-ветви
+
+flowchart LR
+    V4L2[v4l2src<br>/dev/video0] --> Q[queue]
+    TEST[videotestsrc<br>тестовый источник] --> Q
+    Q --> T{tee tv_tee}
+
+    T --> EQ[queue leaky=2]
+    EQ --> VC1[videoconvert]
+    VC1 --> NV12[NV12]
+    NV12 --> FLIP1[videoflip]
+    FLIP1 --> RATE[videorate]
+    RATE --> ENC[mpph265enc]
+    ENC --> PARSE[h265parse]
+    PARSE --> EQ2[queue leaky=2]
+    EQ2 --> MUX[mpegtsmux sink_256]
+
+    T --> TQ[queue leaky=2]
+    TQ --> VC2[videoconvert]
+    VC2 --> RGB[RGB]
+    RGB --> FLIP2[videoflip]
+    FLIP2 --> FAKE[fakesink tv_trk_sink]
+    FAKE --> PROBE[trackerFrameProbe]
+    PROBE --> MAT[cv::Mat]
+    MAT --> SLOT[FrameSlot]
+    SLOT --> THREAD[TrackerThread]
+
+Сборка строки pipeline выполняется динамически через QString::appendPipe(), а реальные элементы создаются после вызова gst_parse_launch().
+leaky=2 в очередях кодирования и трекера не даёт старому потоку заблокировать разветвление tee, поскольку при переполнении выкидываются старые буферы.  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+                         
