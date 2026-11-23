@@ -57,49 +57,22 @@ bool TrackerThread::clampTarget(TrShWrapper::Rect &rect, float roiExt) const
         return false;
     }
 
-    // rect.cx/cy — левый/верхний край (после конвертации из центра).
-    // Трекер расширяет ROI в roiExt раз вокруг цели.
-    // Рассчитываем эффективные границы ROI:
-    //   roi_left   = cx - (w/2)*roiExt
-    //   roi_right  = cx + w + (w/2)*roiExt = cx + w*(1 + roiExt/2)
-    // Нужно чтобы roi_left >= 0 и roi_right <= frameWidth.
+    // rect.cx/cy — центр рамки. Трекер расширяет ROI вокруг этой точки.
     const int halfW_ext = static_cast<int>(rect.w * roiExt / 2.0f);
     const int halfH_ext = static_cast<int>(rect.h * roiExt / 2.0f);
-    const int roiTotalW = static_cast<int>(rect.w) + 2 * halfW_ext;
-    const int roiTotalH = static_cast<int>(rect.h) + 2 * halfH_ext;
+    const int cxMin = halfW_ext;
+    const int cxMax = m_frameWidth - halfW_ext;
+    const int cyMin = halfH_ext;
+    const int cyMax = m_frameHeight - halfH_ext;
 
-    // Если ROI целиком больше кадра — трекер не сможет корректно работать
-    if (roiTotalW > m_frameWidth || roiTotalH > m_frameHeight) {
-        std::cerr << "[TrackerThread] SET_TARGET rejected: ROI (" << roiTotalW
-                  << "x" << roiTotalH << ") larger than frame ("
-                  << m_frameWidth << "x" << m_frameHeight << ")" << std::endl;
+    if (cxMax < cxMin || cyMax < cyMin) {
+        std::cerr << "[TrackerThread] SET_TARGET rejected: ROI too large for frame"
+                  << std::endl;
         return false;
     }
 
-    // Допустимый диапазон для левого края цели, чтобы ROI помещался:
-    //   cx >= halfW_ext  (чтобы roi_left >= 0)
-    //   cx <= frameWidth - w - halfW_ext  (чтобы roi_right <= frameWidth)
-    const int cxMin = halfW_ext;
-    const int cxMax = m_frameWidth - static_cast<int>(rect.w) - halfW_ext;
-    const int cyMin = halfH_ext;
-    const int cyMax = m_frameHeight - static_cast<int>(rect.h) - halfH_ext;
-
-    int left = static_cast<int>(rect.cx);
-    int top  = static_cast<int>(rect.cy);
-
-    // Сдвигаем в допустимые границы
-    if (left < cxMin) left = cxMin;
-    if (left > cxMax) left = cxMax;
-    if (top  < cyMin) top  = cyMin;
-    if (top  > cyMax) top  = cyMax;
-
-    // Проверяем, что после сдвига значение не стало отрицательным
-    // (возможно если cxMin > cxMax при очень малом кадре)
-    if (left < 0) left = 0;
-    if (top  < 0) top  = 0;
-
-    rect.cx = static_cast<unsigned short>(left);
-    rect.cy = static_cast<unsigned short>(top);
+    rect.cx = static_cast<unsigned short>(std::clamp(static_cast<int>(rect.cx), cxMin, cxMax));
+    rect.cy = static_cast<unsigned short>(std::clamp(static_cast<int>(rect.cy), cyMin, cyMax));
 
     return true;
 }
@@ -158,6 +131,11 @@ void TrackerThread::run() {
                 }
                 break;
 
+            case TrackerCmd::SET_ROI_EXT:
+                tracker.setRoiExt(m_pendingCmd.roiExt);
+                std::cerr << "[TrackerThread] ROI_EXT=" << tracker.roiExt() << std::endl;
+                break;
+
             case TrackerCmd::STOP:
                 tracker.stopTracking();
                 {
@@ -197,10 +175,15 @@ void TrackerThread::run() {
         // Результаты
         {
             QMutexLocker lock(&m_resultMutex);
-            m_obj    = tracker.objectRect();
-            m_roi    = tracker.roiRect();
             m_active = tracker.active();
             m_locked = tracker.lockedOn();
+            if (m_locked) {
+                m_obj = tracker.objectRect();
+                m_roi = tracker.roiRect();
+            } else {
+                m_obj = {};
+                m_roi = {};
+            }
         }
     }
 

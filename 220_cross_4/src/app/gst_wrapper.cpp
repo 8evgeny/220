@@ -812,6 +812,10 @@ void GST_Wrapper::proc_Switch_Channel(quint32 channel, quint8 en)
 void GST_Wrapper::proc_getOutObject()
 {
     if (!m_trackerThread) return;
+    if (!m_trackerThread->isLockedOn()) {
+        emit sig_rdyOutObject(0, 0, 0, 0);
+        return;
+    }
     auto r = m_trackerThread->objectRect();
     emit sig_rdyOutObject(r.cx, r.cy, r.w, r.h);
 }
@@ -833,19 +837,14 @@ void GST_Wrapper::proc_setTargetObject(uint cx, uint cy, uint w, uint h)
 {
     if (!m_trackerThread) return;
 
-    // Защита от underflow: центр должен быть не меньше половины размера
-    if (cx < w / 2 || cy < h / 2) {
-        std::cerr << "[GST_Wrapper] proc_setTargetObject: center too close to edge ("
-                  << cx << "," << cy << " w=" << w << " h=" << h << ")" << std::endl;
-        return;
-    }
-
+    if (w < 2 || h < 2) return;
     TrShWrapper::Rect rect;
-    rect.cx = static_cast<unsigned short>(cx - (w / 2));
-    rect.cy = static_cast<unsigned short>(cy - (h / 2));
+    rect.cx = static_cast<unsigned short>(cx);
+    rect.cy = static_cast<unsigned short>(cy);
     rect.w  = static_cast<unsigned short>(w);
     rect.h  = static_cast<unsigned short>(h);
 
+    m_trackerThread->forceResetResults();
     TrackerCmd cmd;
     cmd.type   = TrackerCmd::SET_TARGET;
     cmd.target = rect;
@@ -860,7 +859,15 @@ void GST_Wrapper::proc_setStopTracking()
     m_trackerThread->submitCmd(cmd);
 }
 
-void GST_Wrapper::proc_setRoiExt(double ext) { Q_UNUSED(ext); }
+void GST_Wrapper::proc_setRoiExt(double ext)
+{
+    if (!m_trackerThread) return;
+    const float roiExt = std::clamp(static_cast<float>(ext), 1.0f, 8.0f);
+    TrackerCmd cmd;
+    cmd.type = TrackerCmd::SET_ROI_EXT;
+    cmd.roiExt = roiExt;
+    m_trackerThread->submitCmd(cmd);
+}
 
 // ═══════════════════════════════════════════════════════════════════
 //  FPS handlers (non-MPEGTS mode)

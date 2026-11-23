@@ -133,7 +133,7 @@ public:
     std::string m_iniFileName;
 
     trac_struct m_t_ctl;
-    float m_ext_wh = 8; //2.f * m_ext_wh_2;
+    float m_ext_wh = 3.0f;
     std::shared_ptr<trac_tmml> m_t = nullptr;
 
     long long m_f_cnt = 0;
@@ -183,6 +183,8 @@ void TrShWrapper::reset()
     m_d->m_reinit_frm = -1;
     m_d->m_obj = {};
     m_d->m_roi = {};
+    m_d->m_objF = {};
+    m_d->m_t_ctl.ok_match = 0;
     std::cerr << "[TrShWrapper] reset() — tracker destroyed" << std::endl;
 }
 
@@ -196,13 +198,17 @@ void TrShWrapper::setTargetObject(const Rect &objectRect)
 
     if (!objectRect.valid())
         return;
-    if (objectRect.cx < 0 ||
+    if (objectRect.cx < objectRect.w / 2 ||
         objectRect.cx > (m_d->m_t_ctl.fr_w0 - objectRect.w / 2))
         return;
-    if (objectRect.cy < 0 ||
+    if (objectRect.cy < objectRect.h / 2 ||
         objectRect.cy > (m_d->m_t_ctl.fr_h0 - objectRect.h / 2))
         return;
 
+    m_d->m_obj = {};
+    m_d->m_roi = {};
+    m_d->m_objF = {};
+    m_d->m_t_ctl.ok_match = 0;
     m_d->m_targetObj = objectRect;
 
     m_d->setReinitFrame();

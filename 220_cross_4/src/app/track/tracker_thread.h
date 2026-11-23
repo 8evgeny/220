@@ -39,9 +39,10 @@ struct FrameSlot {
 
 // ─── Команды трекеру ──────────────────────────────────────────────
 struct TrackerCmd {
-    enum Type { NONE, SET_TARGET, STOP, REINIT, SWITCH };
+    enum Type { NONE, SET_TARGET, SET_ROI_EXT, STOP, REINIT, SWITCH };
     Type                type = NONE;
     TrShWrapper::Rect   target{};
+    float               roiExt = 3.0f;
     std::string         iniPath;
 };
 class TrackerThread : public QThread {
